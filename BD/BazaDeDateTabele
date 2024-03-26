@@ -1,0 +1,95 @@
+CREATE TABLE User (
+    idUser INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    role VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Review (
+    idReview INT AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    Description TEXT NOT NULL,
+    Note TEXT,
+    idUserProfile INT,
+    idMechanic INT,
+    FOREIGN KEY (idUserProfile) REFERENCES userProfile(idProfile),
+    FOREIGN KEY (idMechanic) REFERENCES mechanicProfile(idMechanic)
+);
+
+CREATE TABLE userProfile (
+    idProfile INT AUTO_INCREMENT PRIMARY KEY,
+    idUser INT,
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
+    phone VARCHAR(255) NOT NULL UNIQUE,
+    points INT NOT NULL,
+    FOREIGN KEY (idUser) REFERENCES User(idUser)
+);
+
+CREATE TABLE mechanicProfile (
+    idMechanic INT AUTO_INCREMENT PRIMARY KEY,
+    idUser INT,
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
+    phone VARCHAR(255) NOT NULL UNIQUE,
+    points INT NOT NULL,
+    FOREIGN KEY (idUser) REFERENCES User(idUser)
+);
+
+CREATE TABLE Type (
+    idType INT AUTO_INCREMENT PRIMARY KEY,
+    nameType VARCHAR(255) NOT NULL,
+    price INT NOT NULL
+);
+
+CREATE TABLE Appointment (
+    idAppointment INT AUTO_INCREMENT PRIMARY KEY,
+    idUserProfile INT,
+    idMechanic INT,
+    date DATE NOT NULL,
+    idType INT,
+    FOREIGN KEY (idUserProfile) REFERENCES userProfile(idProfile),
+    FOREIGN KEY (idMechanic) REFERENCES mechanicProfile(idMechanic),
+    FOREIGN KEY (idType) REFERENCES Type(idType)
+);
+
+CREATE TABLE QuestionForum (
+    idQuestion INT AUTO_INCREMENT PRIMARY KEY,
+    idUser INT,
+    Title VARCHAR(255) NOT NULL,
+    Description TEXT NOT NULL,
+    FOREIGN KEY (idUser) REFERENCES user(idUser)
+);
+
+CREATE TABLE AnswearForum (
+    idAnswear INT AUTO_INCREMENT PRIMARY KEY,
+    idUser INT,
+    idQuestionForum INT,
+    Description TEXT NOT NULL,
+    FOREIGN KEY (idUser) REFERENCES User(idUser),
+    FOREIGN KEY (idQuestionForum) REFERENCES QuestionForum(idQuestion)
+);
+
+CREATE TABLE api (
+    idApi INT NOT NULL AUTO_INCREMENT,
+    namecomponent VARCHAR(1000) NOT NULL,
+    price DECIMAL(15,2) NOT NULL,
+    link VARCHAR(1000) NOT NULL,
+    company VARCHAR(20) NOT NULL,
+    PRIMARY KEY (idApi)
+);
+
+CREATE TABLE problem (
+    idProblem INT NOT NULL AUTO_INCREMENT,
+    nameproblem VARCHAR(255) NOT NULL,
+    score INT NOT NULL,
+    PRIMARY KEY (idProblem)
+);
+
+CREATE TABLE question (
+    idQuestion INT NOT NULL AUTO_INCREMENT,
+    namequestion VARCHAR(255) NOT NULL,
+    PRIMARY KEY (idQuestion)
+);
+
