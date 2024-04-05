@@ -2,14 +2,9 @@ package service.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import service.entity.User;
 import service.entity.UserProfile;
-import service.exception.UserException;
-import service.exception.UserProfileException;
 import service.repository.UserProfileRepository;
-import service.repository.UserRepository;
 
-import java.nio.file.attribute.UserPrincipal;
 import java.util.List;
 
 @Service
@@ -27,8 +22,17 @@ public class UserProfileService {
         }
         return false;
     }
+
     public void addUserProfile(UserProfile userProfile){
         userProfileRepository.save(userProfile);
+    }
+    public int getUserProfileByUsername(String username){
+        UserProfile user = userProfileRepository.findByUsername(username);
+
+        return user.getIdProfile();
+    }
+    public UserProfile getUserProfileById(int id){
+        return userProfileRepository.findByIdProfile(id);
     }
 
 }

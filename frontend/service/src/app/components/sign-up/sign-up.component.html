@@ -1,0 +1,31 @@
+<div>
+    <h2>Înregistrare</h2>
+    <form (ngSubmit)="signUp()">
+      <div>
+        <div> <p>{{errorMessage}}</p></div>
+        <label for="username">Nume utilizator:</label>
+        <input type="text" id="username" name="username" [(ngModel)]="signUnDto.username" required>
+      </div>
+      <div>
+        <label for="password">Parolă:</label>
+        <input type="password" id="password" name="password" [(ngModel)]="signUnDto.password" required>
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" [(ngModel)]="signUnDto.email">
+      </div>
+      <div>
+        <label for="firstName">Prenume:</label>
+        <input type="text" id="firstName" name="firstName" [(ngModel)]="signUnDto.firstName">
+      </div>
+      <div>
+        <label for="lastName">Nume:</label>
+        <input type="text" id="lastName" name="lastName" [(ngModel)]="signUnDto.lastName">
+      </div>
+      <div>
+        <label for="phone">Telefon:</label>
+        <input type="tel" id="phone" name="phone" [(ngModel)]="signUnDto.phone">
+      </div>
+      <button type="submit">Înregistrează-te</button>
+    </form>
+  </div>

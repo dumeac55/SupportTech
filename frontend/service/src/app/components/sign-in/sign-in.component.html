@@ -1,0 +1,19 @@
+<div>
+    <h2>Autentificare</h2>
+    <form>
+        <div>
+            <p>
+                {{this.errorMessage}}
+            </p>
+        </div>
+        <div>
+            <label for="username">Nume utilizator:</label>
+            <input type="text" id="username" name="username" required [(ngModel)]="signinDto.username">
+        </div>
+        <div>
+            <label for="password">Parolă:</label>
+            <input type="password" id="password" name="password" required [(ngModel)]="signinDto.password">
+        </div>
+        <button type="submit" (click)="signIn()">Autentificare</button>
+    </form>
+</div>

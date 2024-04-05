@@ -32,6 +32,8 @@ public class UserProfile {
 
     @Column(name = "points", nullable = false)
     private int points;
+    @Column(name ="username", unique = true)
+    private String username;
 
     public int getIdProfile() {
         return idProfile;
@@ -87,5 +89,13 @@ public class UserProfile {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

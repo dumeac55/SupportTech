@@ -15,6 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import service.jwt.JwtFilter;
 import service.services.CustomUserDetailsService;
 import javax.sql.DataSource;
@@ -42,7 +45,7 @@ public class SecurityConfig {
         http.cors(withDefaults())
                 .csrf((csrf) -> csrf.disable())
                 .authorizeRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/api/authenticate/signup","/api/authenticate/signin", "api/utils/types").permitAll()
+                        .requestMatchers("/api/authenticate/signup","/api/authenticate/signin", "api/utils/types", "api/user/**").permitAll()
                         .requestMatchers("/api/authenticate/user-profile").authenticated()
                         .anyRequest().authenticated()
                 )
