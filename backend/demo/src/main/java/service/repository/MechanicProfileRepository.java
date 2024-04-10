@@ -9,5 +9,6 @@ import service.entity.Type;
 @Transactional
 @Repository
 public interface MechanicProfileRepository extends JpaRepository<MechanicProfile, Integer> {
-
+    MechanicProfile findByUsername(String username);
+    MechanicProfile findByIdMechanic(int id);
 }

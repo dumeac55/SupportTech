@@ -1,9 +1,9 @@
 package service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import service.dto.AppointmentDto;
 import service.entity.Appointment;
 import service.services.AppointmentService;
 
@@ -19,4 +19,10 @@ public class AppointmentController {
     private List<Appointment> getAppointments(){
         return appointmentService.getAppointments();
     }
+    @PostMapping("/create")
+    private ResponseEntity<?> addAppointment(@RequestBody AppointmentDto appointmentDto){
+        return appointmentService.addAppointment(appointmentDto);
+    }
+
+
 }

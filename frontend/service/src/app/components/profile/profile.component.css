@@ -1,0 +1,22 @@
+.profile, .appointments {
+    margin-bottom: 20px;
+  }
+  
+  .profile, .appointments div {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+  p {
+    margin: 5px 0;
+  }
+  
+  strong {
+    font-weight: bold;
+  }
+  

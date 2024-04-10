@@ -13,7 +13,6 @@ import java.util.Optional;
 @Repository
 public interface UserProfileRepository extends JpaRepository<UserProfile, Integer> {
     UserProfile findByPhone(String phone);
-    UserProfile findByEmail(String email);
-    UserProfile findByIdProfile(int id);
     UserProfile findByUsername(String username);
+    UserProfile findByUser_IdUser(int userId);
 }

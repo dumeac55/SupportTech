@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserProfileDto } from '../model/user-profile-dto';
 import { HttpClient } from '@angular/common/http';
+import { AppointmentDto } from '../model/appointment-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,12 @@ export class UserProfileService {
   
   async getUserIdByUserName(username: string | null): Promise<number | undefined> {
     return await this.http.get<number>(this.URL + "user/username=" + username).toPromise();
+  }
+
+  async getUserAppointment(): Promise <AppointmentDto | undefined>{
+    this.id = await this.getUserIdByUserName(localStorage.getItem('username'));
+    
+    return await this.http.get<AppointmentDto>(this.URL + "user/" + this.id + "/appointment").toPromise();
+
   }
 }

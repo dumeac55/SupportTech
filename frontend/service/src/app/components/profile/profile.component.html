@@ -1,1 +1,20 @@
-<p>profile works!</p>
+<div class="profile">
+  <h2>Profil utilizator</h2>
+  <div>
+    <p><strong>Username:</strong> {{ userProfile.username }}</p>
+    <p><strong>Email:</strong> {{ userProfile.email }}</p>
+    <p><strong>Puncte:</strong> {{ userProfile.points }}</p>
+    <p><strong>Nume:</strong> {{ userProfile.firstName }} {{ userProfile.lastName }}</p>
+    <p><strong>Telefon:</strong> {{ userProfile.phone }}</p>
+  </div>
+</div>
+
+<div class="appointments">
+  <div *ngFor="let appointment of this.appointments">
+    <h3>{{ appointment.nameType }}</h3>
+    <p><strong>Date:</strong> {{ appointment.date | date }}</p>
+    <p><strong>Mechanic:</strong> {{ appointment.mechanicFirstName }} {{ appointment.mechanicLastName }}</p>
+    <p><strong>Phone:</strong> {{ appointment.mechanicPhone }}</p>
+    <p><strong>Email:</strong> {{ appointment.mechanicEmail }}</p>
+  </div>
+</div>

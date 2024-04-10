@@ -8,5 +8,5 @@ import service.entity.Type;
 @Transactional
 @Repository
 public interface TypeRepository extends JpaRepository<Type, Integer> {
-
+    Type findByNameType(String name);
 }

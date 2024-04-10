@@ -68,11 +68,6 @@ public class AuthenticateController {
         }
     }
 
-    @GetMapping("/user-profile")
-    public List<UserProfile> getAllUserProfiless() {
-        return userProfileService.getAllUser();
-    }
-
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody SignUpDto signUpDto) {
         if (userService.existByUsername(signUpDto.getUsername())) {
