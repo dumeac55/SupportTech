@@ -7,7 +7,7 @@ import { AppointmentDto } from '../../model/appointment-dto';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
   userProfile: UserProfileDto = {};
@@ -26,21 +26,21 @@ export class ProfileComponent {
         if (userProfile) {
           if (Array.isArray(appointment)) {
             this.appointments = appointment;
-            console.log('Programările au fost încărcate:', appointment);
+            console.log('Appointments loaded successfully:', appointment);
           } else {
-            console.log('Programările nu au fost găsite sau nu sunt într-un format corect.');
+            console.log('Appointments not found or not in correct format.');
           }
           this.userProfile = userProfile;
-          console.log('Profilul a fost încărcat:', userProfile);
-          console.log('Programarile a fost încărcat:', appointment);
+          console.log('Profile loaded successfully:', userProfile);
+          console.log('Appointments loaded:', appointment);
         } else {
-          console.log('Nu s-a putut încărca profilul.');
+          console.log('Failed to load profile.');
         }
       } catch (error) {
-        console.error('Eroare la încărcarea profilului:', error);
+        console.error('Error loading profile:', error);
       }
     } else {
-      console.log('Tokenul este expirat sau lipsă. Redirecționare către pagina de autentificare...');
+      console.log('Token is expired or missing. Redirecting to login page...');
     }
   }
 }

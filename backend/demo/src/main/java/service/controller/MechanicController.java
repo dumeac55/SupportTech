@@ -2,10 +2,7 @@ package service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import service.entity.MechanicProfile;
 import service.repository.MechanicProfileRepository;
 import service.services.AppointmentService;
@@ -15,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/mechanics")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class MechanicController {
     @Autowired
     private MechanicProfileService mechanicProfileService;
@@ -23,7 +21,7 @@ public class MechanicController {
     private AppointmentService appointmentService;
 
     @GetMapping
-    private List<MechanicProfile> getMechanics(){
+    private ResponseEntity<?> getMechanics(){
         return mechanicProfileService.getMechanics();
     }
 
