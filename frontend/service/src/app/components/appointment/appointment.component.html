@@ -1,9 +1,30 @@
 <p>appointment works!</p>
 
-
-<div *ngFor="let mechanic of mechanics">
+<div *ngFor="let mechanic of mechanics" [ngClass]="{'selected': mechanic === selectedMechanic}">
     <p>{{ mechanic.firstName }} {{ mechanic.lastName }}</p>
     <p>Email: {{ mechanic.email }}</p>
     <p>Phone: {{ mechanic.phone }}</p>
+    <button (click)="selectMechanic(mechanic)">Select</button>
     <hr>
-  </div>
+</div>
+
+<div *ngFor="let type of types" [ngClass]="{'selected': type === selectedType}">
+    <p>Type: {{ type.nameType }}</p>
+    <p>Price: {{ type.price }}</p>
+    <button (click)="selectType(type)">Select</button>
+    <hr>
+</div>
+
+<div *ngIf="selectedMechanic && selectedType">
+    <input type="datetime-local" [(ngModel)]="selectedDateTime">
+</div>
+
+<div> 
+  <button on (click)="AddAppointment()"> adauga rezervare</button>
+</div>
+
+<style>
+  .selected {
+    border: 2px solid red;
+  }
+</style>

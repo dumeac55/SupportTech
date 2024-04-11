@@ -25,7 +25,7 @@ public class Appointment {
     private MechanicProfile mechanic;
 
     @Column(name = "date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
     @ManyToOne
