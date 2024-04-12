@@ -27,8 +27,6 @@ public class MechanicProfile {
     @Column(name = "phone", unique = true, nullable = false)
     private String phone;
 
-    @Column(name = "points", nullable = false)
-    private int points;
 
     @Column(name = "username")
     private String username;
@@ -90,14 +88,6 @@ public class MechanicProfile {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
     }
 
 }

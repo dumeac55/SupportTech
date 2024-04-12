@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import service.entity.Appointment;
-import service.entity.MechanicProfile;
 
 import java.util.List;
 
@@ -15,4 +14,5 @@ import java.util.List;
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
     @Query("SELECT a FROM Appointment a JOIN a.user u WHERE a.user.idUser = :userId")
     List<Appointment> findByUser(@Param("userId") int userId);
+
 }

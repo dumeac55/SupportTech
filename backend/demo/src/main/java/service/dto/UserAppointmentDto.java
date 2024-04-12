@@ -12,6 +12,24 @@ public class UserAppointmentDto {
     private String mechanicPhone;
     private String mechanicEmail;
     private Date date;
+    private String status;
+    private int idAppointment;
+
+    public int getIdAppointment() {
+        return idAppointment;
+    }
+
+    public void setIdAppointment(int idAppointment) {
+        this.idAppointment = idAppointment;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getNameType() {
         return nameType;

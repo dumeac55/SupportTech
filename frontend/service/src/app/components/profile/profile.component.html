@@ -3,18 +3,38 @@
   <div>
     <p><strong>Username:</strong> {{ userProfile.username }}</p>
     <p><strong>Email:</strong> {{ userProfile.email }}</p>
-    <p><strong>Puncte:</strong> {{ userProfile.points }}</p>
     <p><strong>Nume:</strong> {{ userProfile.firstName }} {{ userProfile.lastName }}</p>
     <p><strong>Telefon:</strong> {{ userProfile.phone }}</p>
   </div>
 </div>
 
-<div class="appointments">
-  <div *ngFor="let appointment of this.appointments">
-    <h3>{{ appointment.nameType }}</h3>
-    <p><strong>Date:</strong> {{ appointment.date | date }}</p>
-    <p><strong>Mechanic:</strong> {{ appointment.mechanicFirstName }} {{ appointment.mechanicLastName }}</p>
-    <p><strong>Phone:</strong> {{ appointment.mechanicPhone }}</p>
-    <p><strong>Email:</strong> {{ appointment.mechanicEmail }}</p>
-  </div>
-</div>
+<table class="appointments">
+  <thead>
+    <tr>
+      <th>Nume</th>
+      <th>Date</th>
+      <th>Mecanic</th>
+      <th>Telefon Mecanic</th>
+      <th>Email Mecanic</th>
+      <th>Status</th>
+      <th>Acțiuni</th> <!-- Adăugați coloana pentru butoanele cu funcții diferite -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let appointment of appointments">
+      <td>{{ appointment.nameType }}</td>
+      <td>{{ appointment.date | date }}</td>
+      <td>{{ appointment.mechanicFirstName }} {{ appointment.mechanicLastName }}</td>
+      <td>{{ appointment.mechanicPhone }}</td>
+      <td>{{ appointment.mechanicEmail }}</td>
+      <td>{{ appointment.status }}</td>
+      <td>{{appointment.idAppointment}}</td>
+      <td>
+        <button *ngIf="appointment.idAppointment !== undefined" (click)="updateAppointmentStatus(appointment.idAppointment, 'Pending')">Pending</button>
+        <button *ngIf="appointment.idAppointment !== undefined" (click)="updateAppointmentStatus(appointment.idAppointment, 'Canceled')">Canceled</button>
+        <button *ngIf="appointment.idAppointment !== undefined" (click)="updateAppointmentStatus(appointment.idAppointment, 'Done')">Done</button>
+
+      </td>
+    </tr>
+  </tbody>
+</table>

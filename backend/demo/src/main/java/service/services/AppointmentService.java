@@ -12,6 +12,7 @@ import service.repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AppointmentService {
@@ -44,6 +45,7 @@ public class AppointmentService {
             appointment.setMechanic(mechanicProfile);
             appointment.setUser(user);
             appointment.setType(type);
+            appointment.setStatus("Pending");
             appointmentRepository.save(appointment);
             return new ResponseEntity<>("Appointment create successfull", HttpStatus.OK);
         }
@@ -64,6 +66,8 @@ public class AppointmentService {
                 userAppointmentDto.setMechanicPhone(appointment.getMechanic().getPhone());
                 userAppointmentDto.setMechanicLastName(appointment.getMechanic().getLastName());
                 userAppointmentDto.setMehcanicFirstName(appointment.getMechanic().getFirstName());
+                userAppointmentDto.setStatus(appointment.getStatus());
+                userAppointmentDto.setIdAppointment(appointment.getId());
                 userAppointmentDtoList.add(userAppointmentDto);
             }
             return new ResponseEntity<>(userAppointmentDtoList, HttpStatus.OK);
@@ -77,4 +81,19 @@ public class AppointmentService {
         }
         return new ResponseEntity<>(appointmentList, HttpStatus.OK);
     }
+
+    public ResponseEntity<?> updateAppointment(int id, String newStatus) {
+        Optional<Appointment> existingAppointmentOptional = appointmentRepository.findById(id);
+        if (existingAppointmentOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Appointment not found");
+        }
+        Appointment existingAppointment = existingAppointmentOptional.get();
+        existingAppointment.setStatus(newStatus);
+        appointmentRepository.save(existingAppointment);
+
+        return new ResponseEntity<>(existingAppointment, HttpStatus.OK);
+
+    }
+
 }
+

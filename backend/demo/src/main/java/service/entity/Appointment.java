@@ -28,6 +28,9 @@ public class Appointment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
+    @Column(name = "status")
+    private String status;
+
     @ManyToOne
     @JoinColumn(name = "typeid", referencedColumnName = "idtype")
     private Type type;
@@ -70,5 +73,13 @@ public class Appointment {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

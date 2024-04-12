@@ -45,7 +45,6 @@ public class UserProfileService {
             userProfileDto.setEmail(userProfile.getEmail());
             userProfileDto.setFirstName(userProfile.getFirstName());
             userProfileDto.setPhone(userProfile.getPhone());
-            userProfileDto.setPoints(userProfile.getPoints());
             userProfileDto.setLastName(userProfile.getLastName());
             userProfileDto.setUsername(userProfile.getUsername());
             return new ResponseEntity<>(userProfileDto, HttpStatus.OK);

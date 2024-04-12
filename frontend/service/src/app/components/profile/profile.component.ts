@@ -3,6 +3,7 @@ import { JwtStorageService } from '../../service/jwt-storage.service';
 import { UserProfileService } from '../../service/user-profile.service';
 import { UserProfileDto } from '../../model/user-profile-dto';
 import { AppointmentDto } from '../../model/appointment-dto';
+import { AppointmentService } from '../../service/appointment.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +12,7 @@ import { AppointmentDto } from '../../model/appointment-dto';
 })
 export class ProfileComponent {
   userProfile: UserProfileDto = {};
-  constructor(private jwtStorage: JwtStorageService, private userProfileService: UserProfileService){}
+  constructor(private jwtStorage: JwtStorageService, private userProfileService: UserProfileService, private appointmentService:AppointmentService){}
   appointments: AppointmentDto[] = [];
   ngOnInit(){
     this.getProfile();
@@ -43,4 +44,19 @@ export class ProfileComponent {
       console.log('Token is expired or missing. Redirecting to login page...');
     }
   }
+
+  updateAppointmentStatus(id: number, newStatus: string): void {
+    this.appointmentService.updateAppointment(id, newStatus)
+      .subscribe(
+        response => {
+          console.log('Appointment updated successfully:', response);
+          // Actualizați lista de întâlniri sau faceți alte acțiuni necesare
+        },
+        error => {
+          console.error('Error updating appointment:', error);
+          // Tratați eroarea corespunzător
+        }
+      );
+  }
+
 }

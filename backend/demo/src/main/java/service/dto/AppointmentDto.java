@@ -10,6 +10,24 @@ public class AppointmentDto {
     private String usernameMechanic;
     private String type;
     private Date data;
+    private String status;
+    private int idAppointment;
+
+    public int getIdAppointment() {
+        return idAppointment;
+    }
+
+    public void setIdAppointment(int idAppointment) {
+        this.idAppointment = idAppointment;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getUsernameUser() {
         return usernameUser;
@@ -42,4 +60,5 @@ public class AppointmentDto {
     public void setData(Date data) {
         this.data = data;
     }
+
 }

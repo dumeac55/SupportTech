@@ -93,7 +93,6 @@ public class AuthenticateController {
             newProfile.setLastName(signUpDto.getLastName());
             newProfile.setPhone(signUpDto.getPhone());
             newProfile.setEmail(signUpDto.getEmail());
-            newProfile.setPoints(100);
             newProfile.setUsername(signUpDto.getUsername());
 
             userProfileService.addUserProfile(newProfile);

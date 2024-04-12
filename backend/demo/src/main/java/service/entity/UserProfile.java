@@ -30,8 +30,6 @@ public class UserProfile {
     @Column(name = "phone", unique = true, nullable = false)
     private String phone;
 
-    @Column(name = "points", nullable = false)
-    private int points;
     @Column(name ="username", unique = true)
     private String username;
 
@@ -73,14 +71,6 @@ public class UserProfile {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
     }
 
     public String getEmail() {
