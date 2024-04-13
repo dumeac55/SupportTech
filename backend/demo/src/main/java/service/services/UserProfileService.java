@@ -5,8 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import service.dto.UserProfileDto;
+import service.entity.MechanicProfile;
+import service.entity.User;
 import service.entity.UserProfile;
+import service.repository.MechanicProfileRepository;
 import service.repository.UserProfileRepository;
+import service.repository.UserRepository;
 
 import java.util.List;
 
@@ -15,6 +19,11 @@ public class UserProfileService {
 
     @Autowired
     private UserProfileRepository userProfileRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private MechanicProfileRepository mechanicProfileRepository;
+
     public List<UserProfile> getAllUser(){
         return userProfileRepository.findAll();
     }
@@ -30,9 +39,15 @@ public class UserProfileService {
         userProfileRepository.save(userProfile);
     }
     public int getUserProfileByUsername(String username){
-        UserProfile user = userProfileRepository.findByUsername(username);
+        if(getRoleByUsername(username).equals("custom") || getRoleByUsername(username).equals("da") ) {
+            UserProfile user = userProfileRepository.findByUsername(username);
+            return user.getUser().getIdUser();
+        }
+        else{
+            MechanicProfile mechanic = mechanicProfileRepository.findByUsername(username);
+            return mechanic.getUser().getIdUser();
+        }
 
-        return user.getUser().getIdUser();
     }
 
     public ResponseEntity<?> getUserProfileById(int id){
@@ -47,8 +62,14 @@ public class UserProfileService {
             userProfileDto.setPhone(userProfile.getPhone());
             userProfileDto.setLastName(userProfile.getLastName());
             userProfileDto.setUsername(userProfile.getUsername());
+            userProfileDto.setRole(getRoleByUsername(userProfile.getUsername()));
             return new ResponseEntity<>(userProfileDto, HttpStatus.OK);
         }
+    }
+
+    public String getRoleByUsername(String username){
+        User user = userRepository.findByUsername(username);
+        return user.getRole();
     }
 
 }

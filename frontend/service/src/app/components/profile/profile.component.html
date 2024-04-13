@@ -28,11 +28,9 @@
       <td>{{ appointment.mechanicPhone }}</td>
       <td>{{ appointment.mechanicEmail }}</td>
       <td>{{ appointment.status }}</td>
-      <td>{{appointment.idAppointment}}</td>
       <td>
-        <button *ngIf="appointment.idAppointment !== undefined" (click)="updateAppointmentStatus(appointment.idAppointment, 'Pending')">Pending</button>
-        <button *ngIf="appointment.idAppointment !== undefined" (click)="updateAppointmentStatus(appointment.idAppointment, 'Canceled')">Canceled</button>
-        <button *ngIf="appointment.idAppointment !== undefined" (click)="updateAppointmentStatus(appointment.idAppointment, 'Done')">Done</button>
+        <button *ngIf="appointment.idAppointment !== undefined && ( appointment.status === 'Pending')" (click)="updateAppointmentStatus(appointment.idAppointment, 'Canceled')">Canceled</button>
+        <button *ngIf="appointment.idAppointment !== undefined && (userProfile.role !== 'custom' || appointment.status === 'Pending')" (click)="updateAppointmentStatus(appointment.idAppointment, 'Done')">Done</button>
 
       </td>
     </tr>

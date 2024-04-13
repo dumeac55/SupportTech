@@ -4,4 +4,5 @@ export class UserProfileDto {
     firstName?: string;
     lastName?: string;
     phone?: string;
+    role?: string;
 }

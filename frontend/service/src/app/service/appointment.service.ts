@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { TypeDto } from '../model/type-dto';
 import { CreateAppointmentDto } from '../model/create-appointment-dto';
 import { Observable } from 'rxjs';
-import { AppointmentDto } from '../model/appointment-dto';
 @Injectable({
   providedIn: 'root'
 })

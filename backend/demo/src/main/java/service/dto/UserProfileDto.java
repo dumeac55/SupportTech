@@ -9,6 +9,15 @@ public class UserProfileDto {
     private String phone;
     private String email;
     private String username;
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getFirstName() {
         return firstName;

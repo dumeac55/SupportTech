@@ -1,7 +1,8 @@
 export class MechanicDto {
-    lastName?:String;
-    firstName?:String;
-    email?:String;
-    phone?:String;
-    username?:String;
+    username?: string;
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    phone?: string;
+    role?: string;
 }

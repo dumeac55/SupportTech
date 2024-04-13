@@ -75,11 +75,26 @@ public class AppointmentService {
     }
 
     public ResponseEntity<?> getMechanicAppointments(int id){
-        List<Appointment> appointmentList = appointmentRepository.findByUser(id);
+        List<Appointment> appointmentList = appointmentRepository.findByMechanic(id);
         if(appointmentList.isEmpty()){
             return new ResponseEntity<>("Mechanic Not Found", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(appointmentList, HttpStatus.OK);
+        else{
+            List<UserAppointmentDto> userAppointmentDtoList = new ArrayList<>();
+            for(Appointment appointment : appointmentList) {
+                UserAppointmentDto userAppointmentDto = new UserAppointmentDto();
+                userAppointmentDto.setDate(appointment.getDate());
+                userAppointmentDto.setNameType(appointment.getType().getNameType());
+                userAppointmentDto.setMechanicEmail(appointment.getMechanic().getEmail());
+                userAppointmentDto.setMechanicPhone(appointment.getMechanic().getPhone());
+                userAppointmentDto.setMechanicLastName(appointment.getMechanic().getLastName());
+                userAppointmentDto.setMehcanicFirstName(appointment.getMechanic().getFirstName());
+                userAppointmentDto.setStatus(appointment.getStatus());
+                userAppointmentDto.setIdAppointment(appointment.getId());
+                userAppointmentDtoList.add(userAppointmentDto);
+            }
+            return new ResponseEntity<>(userAppointmentDtoList, HttpStatus.OK);
+        }
     }
 
     public ResponseEntity<?> updateAppointment(int id, String newStatus) {

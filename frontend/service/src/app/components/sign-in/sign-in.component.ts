@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtStorageService } from '../../service/jwt-storage.service';
 import {Router} from '@angular/router'
+import { UserProfileService } from '../../service/user-profile.service';
 import { SignInDto } from '../../model/sign-in-dto';
 
 
@@ -13,7 +14,7 @@ export class SignInComponent implements OnInit {
   signinDto: SignInDto = {}
   errorMessage: string = '';
 
-  constructor(private jwt: JwtStorageService, private router:Router) { }
+  constructor(private jwt: JwtStorageService, private router:Router, private userProfile: UserProfileService) { }
 
   ngOnInit() {
   }

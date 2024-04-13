@@ -30,4 +30,8 @@ public class UserProfileController {
     private ResponseEntity<?> getUserAppointments(@PathVariable("id") int id){
         return appointmentService.getUserAppointments(id);
     }
+    @GetMapping(value = "/username={username}/role")
+    public String getUserRole(@PathVariable("username") String username){
+        return userProfileService.getRoleByUsername(username);
+    }
 }

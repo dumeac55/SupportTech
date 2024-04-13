@@ -11,7 +11,7 @@ import service.services.MechanicProfileService;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/mechanics")
+@RequestMapping("api/mechanic")
 @CrossOrigin(origins = "http://localhost:4200/")
 public class MechanicController {
     @Autowired
@@ -27,11 +27,16 @@ public class MechanicController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getMechanicById(@PathVariable("id") int id){
-        return mechanicProfileService.getUserProfileById(id);
+        return mechanicProfileService.getMechanicProfileByUserId(id);
     }
 
     @GetMapping("/{id}/appointment")
     private ResponseEntity<?> getUserAppointments(@PathVariable("id") int id){
         return appointmentService.getMechanicAppointments(id);
+    }
+
+    @GetMapping(value = "/username={username}")
+    public int getUserProfileById(@PathVariable("username") String username){
+        return mechanicProfileService.getMechanicProfileByUsername(username);
     }
 }
