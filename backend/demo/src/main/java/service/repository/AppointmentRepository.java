@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import service.entity.Appointment;
 
+import java.util.Date;
 import java.util.List;
 
 @Transactional
@@ -18,5 +19,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     @Query("SELECT a FROM Appointment a JOIN a.user u WHERE a.mechanic.idMechanic = :userId")
     List<Appointment> findByMechanic(@Param("userId") int userId);
 
+    @Query("SELECT a FROM Appointment a JOIN a.user u WHERE a.mechanic.idMechanic = :userId and a.date = :date")
+    List<Appointment> getAppointmentsByDateAndStatus(@Param("date") Date date, @Param("userId") int idMechanic);
 
 }

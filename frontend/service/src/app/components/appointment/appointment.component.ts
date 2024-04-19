@@ -12,6 +12,7 @@ import { CalendarEvent } from 'angular-calendar';
 export class AppointmentComponent {
   mechanics: MechanicDto[] = [];
   types: TypeDto[] = [];
+  orar: String[] = [];
   selectedMechanic: MechanicDto | null = null;
   selectedType: TypeDto | null = null;
   selectedDateTime: Date | null = null;

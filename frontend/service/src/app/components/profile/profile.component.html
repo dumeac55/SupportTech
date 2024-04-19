@@ -17,13 +17,13 @@
       <th>Telefon Mecanic</th>
       <th>Email Mecanic</th>
       <th>Status</th>
-      <th>Acțiuni</th> <!-- Adăugați coloana pentru butoanele cu funcții diferite -->
+      <th>Acțiuni</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let appointment of appointments">
       <td>{{ appointment.nameType }}</td>
-      <td>{{ appointment.date | date }}</td>
+      <td>{{ appointment.date | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
       <td>{{ appointment.mechanicFirstName }} {{ appointment.mechanicLastName }}</td>
       <td>{{ appointment.mechanicPhone }}</td>
       <td>{{ appointment.mechanicEmail }}</td>

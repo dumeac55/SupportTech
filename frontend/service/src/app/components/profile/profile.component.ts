@@ -43,16 +43,16 @@ export class ProfileComponent {
         }
         else{
           const userProfile = await this.mechanicService.getUserProfile();
-          const appointment = await this.mechanicService.getMechanicAppointment();
           console.log(userProfile?.role);
           if (userProfile) {
+            this.userProfile = userProfile;
+            const appointment = await this.mechanicService.getMechanicAppointment();
             if (Array.isArray(appointment)) {
               this.appointments = appointment;
               console.log('Appointments loaded successfully:', appointment);
             } else {
               console.log('Appointments not found or not in correct format.');
             }
-            this.userProfile = userProfile;
             console.log('Profile loaded successfully:', userProfile);
             console.log('Appointments loaded:', appointment);
           } else {

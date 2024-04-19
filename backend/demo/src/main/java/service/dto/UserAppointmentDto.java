@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class UserAppointmentDto {
     private String nameType;
-    private String mehcanicFirstName;
+    private String mechanicFirstName;
     private String mechanicLastName;
     private String mechanicPhone;
     private String mechanicEmail;
@@ -39,12 +39,12 @@ public class UserAppointmentDto {
         this.nameType = nameType;
     }
 
-    public String getMehcanicFirstName() {
-        return mehcanicFirstName;
+    public String getMechanicFirstName() {
+        return mechanicFirstName;
     }
 
-    public void setMehcanicFirstName(String mehcanicFirstName) {
-        this.mehcanicFirstName = mehcanicFirstName;
+    public void setMechanicFirstName(String mechanicFirstName) {
+        this.mechanicFirstName = mechanicFirstName;
     }
 
     public String getMechanicLastName() {

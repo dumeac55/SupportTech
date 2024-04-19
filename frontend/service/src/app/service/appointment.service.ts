@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { TypeDto } from '../model/type-dto';
 import { CreateAppointmentDto } from '../model/create-appointment-dto';
 import { Observable } from 'rxjs';
+import { DatePipe } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,10 +12,10 @@ export class AppointmentService {
 
   private URL = 'http://localhost:8080/api/';
   mechanicDto?:MechanicDto;
-  constructor(private http:HttpClient) {}
+  constructor(private http:HttpClient, private datePipe:DatePipe) {}
 
   async getMechanics(): Promise <MechanicDto | undefined>{
-    return await this.http.get<MechanicDto>(this.URL + "mechanics").toPromise();
+    return await this.http.get<MechanicDto>(this.URL + "mechanic").toPromise();
   }
 
   async getTypes(): Promise <TypeDto | undefined>{
@@ -40,5 +41,10 @@ export class AppointmentService {
     return this.http.post<any>(this.URL + 'appointment/update', updateAppointment);
   }
 
+  getMechanicOrar(id: number, date:Date) : Observable<any>{
+    const formattedDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+
+    return this.http.get<any>(this.URL+ "/orar2?idMechanic=" + id +"&date="+ formattedDate);
+  }
 
 }
