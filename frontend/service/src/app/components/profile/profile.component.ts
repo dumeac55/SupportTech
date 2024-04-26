@@ -5,6 +5,7 @@ import { UserProfileDto } from '../../model/user-profile-dto';
 import { AppointmentDto } from '../../model/appointment-dto';
 import { AppointmentService } from '../../service/appointment.service';
 import { MechanicService } from '../../service/mechanic.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -13,11 +14,26 @@ import { MechanicService } from '../../service/mechanic.service';
 })
 export class ProfileComponent {
   userProfile: UserProfileDto = {};
-  constructor(private jwtStorage: JwtStorageService, private userProfileService: UserProfileService, private appointmentService:AppointmentService, private mechanicService: MechanicService){}
+  haveAppointment: boolean = true;
   appointments: AppointmentDto[] = [];
+
+  constructor(private jwtStorage: JwtStorageService,
+              private userProfileService: UserProfileService,
+              private appointmentService:AppointmentService,
+              private mechanicService: MechanicService,
+              private router: Router){}
+
   ngOnInit(){
-    this.getProfile();
+    const token = localStorage.getItem('token');
+    if (token && !this.jwtStorage.isTokenExpired(token)) {
+      this.getProfile();
+    }
+    else {
+      alert("Session exirated");
+      this.redirectToLogin();
+    }
   }
+
   private async getProfile(): Promise<void> {
     const token = localStorage.getItem('token');
     if (token && !this.jwtStorage.isTokenExpired(token)) {
@@ -28,16 +44,17 @@ export class ProfileComponent {
           const appointment = await this.userProfileService.getUserAppointment();
           console.log(userProfile?.role);
           if (userProfile) {
-            if (Array.isArray(appointment)) {
-              this.appointments = appointment;
-              console.log('Appointments loaded successfully:', appointment);
-            } else {
-              console.log('Appointments not found or not in correct format.');
-            }
             this.userProfile = userProfile;
+            if (Array.isArray(appointment)) {
+                this.appointments = appointment;
+                this.haveAppointment = false;
+                console.log('Appointments loaded successfully:', appointment);
+            } else {
+                this.haveAppointment = true;
+                console.log('Appointments not found or not in correct format.');
+            }
             console.log('Profile loaded successfully:', userProfile);
-            console.log('Appointments loaded:', appointment);
-          } else {
+        } else {
             console.log('Failed to load profile.');
           }
         }
@@ -59,14 +76,15 @@ export class ProfileComponent {
             console.log('Failed to load profile.');
           }
         }
-        
-        
       } catch (error) {
         console.error('Error loading profile:', error);
       }
-    } else {
-      console.log('Token is expired or missing. Redirecting to login page...');
     }
+    else {
+      alert("Session exirated");
+      this.redirectToLogin();
+    }
+
   }
 
   updateAppointmentStatus(id: number, newStatus: string): void {
@@ -82,9 +100,15 @@ export class ProfileComponent {
           console.error('Error updating appointment:', error);
         }
       );
-    } else {
-      console.log('Token is expired or missing. Redirecting to login page...');
     }
+    else {
+      alert("Session exirated");
+      this.redirectToLogin();
+    }
+  }
+
+  redirectToLogin():void{
+    this.router.navigate(['/login']);
   }
 
 }

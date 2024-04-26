@@ -1,0 +1,59 @@
+
+  .mechanics-column, .types-column {
+    float: left;
+    width: 45%;
+    padding: 0 2%;
+    box-sizing: border-box;
+  }
+
+  .mechanic-info, .type-info {
+    background-color: #f2f2f2;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+
+  .orar-column{
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .div-nou{
+    width: 400px;
+    height: 300px;
+  }
+
+  .selected {
+    background-color: #ffcc00;
+  }
+
+  .selected-options {
+    clear: both;
+    margin-top: 20px;
+  }
+
+  .weekend-disabled::placeholder {
+    color: #999;
+  }
+
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }

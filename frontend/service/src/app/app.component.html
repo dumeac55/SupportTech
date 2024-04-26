@@ -1,1 +1,8 @@
+<ul>
+    <li *ngIf!="isLogged"><a routerLink="login">Login</a></li>
+    <li *ngIf!="isLogged"><a routerLink="register">register</a></li>
+    <li *ngIf="isLogged"><a routerLink="profile">Profile</a></li>
+    <li *ngIf="isLogged"><a routerLink="appointment">Appointment</a></li>
+</ul>
+
 <router-outlet></router-outlet>

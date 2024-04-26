@@ -1,0 +1,30 @@
+/* Stilul pentru lista de meniu */
+ul {
+    list-style-type: none; /* Elimină marcatorul implicit de listă */
+    padding: 0;
+    margin: 0;
+}
+
+/* Stilul pentru fiecare element de meniu */
+ul li {
+    display: inline; /* Așază elementele de meniu unul lângă altul */
+    margin-right: 20px; /* Spațiu între elementele de meniu */
+}
+
+/* Stilul pentru link-urile din meniu */
+ul li a {
+    text-decoration: none; /* Elimină sublinierea implicită */
+    color: #333; /* Culorea textului */
+    font-weight: bold; /* Text îngroșat */
+    font-size: 16px; /* Dimensiunea textului */
+}
+
+/* Stilul pentru link-urile atunci când sunt hoverate */
+ul li a:hover {
+    color: #666; /* Schimbă culoarea textului când este hoverat */
+}
+
+ul li.disabled {
+    opacity: 0.5; /* Reducerea opacității pentru a indica dezactivarea */
+    pointer-events: none; /* Dezactivează evenimentele de cursor pentru a preveni clicurile */
+}

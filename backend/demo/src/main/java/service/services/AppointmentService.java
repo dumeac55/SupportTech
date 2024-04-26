@@ -1,35 +1,28 @@
 package service.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import service.dto.AppointmentDto;
-import service.dto.ChechMechanicAppointmentDto;
 import service.dto.UserAppointmentDto;
 import service.entity.*;
 import service.repository.*;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
+@RequiredArgsConstructor
 public class AppointmentService {
-    @Autowired
-    private AppointmentRepository appointmentRepository;
+    private final AppointmentRepository appointmentRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private MechanicProfileRepository mechanicProfileRepository;
+    private final MechanicProfileRepository mechanicProfileRepository;
 
-    @Autowired
-    private TypeRepository typeRepository;
+    private final TypeRepository typeRepository;
 
     public List<Appointment> getAppointments() {
         return appointmentRepository.findAll();
@@ -56,7 +49,7 @@ public class AppointmentService {
     public ResponseEntity<?> getUserAppointments(int id) {
         List<Appointment> appointmentList = appointmentRepository.findByUser(id);
         if (appointmentList.isEmpty()) {
-            return new ResponseEntity<>("User Not Found", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("", HttpStatus.NO_CONTENT);
         } else {
             List<UserAppointmentDto> userAppointmentDtoList = new ArrayList<>();
             for (Appointment appointment : appointmentList) {
@@ -78,7 +71,7 @@ public class AppointmentService {
     public ResponseEntity<?> getMechanicAppointments(int id) {
         List<Appointment> appointmentList = appointmentRepository.findByMechanic(id);
         if (appointmentList.isEmpty()) {
-            return new ResponseEntity<>("Appointment for mechanic Not Found", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(" ", HttpStatus.NO_CONTENT);
         } else {
             List<UserAppointmentDto> userAppointmentDtoList = new ArrayList<>();
             for (Appointment appointment : appointmentList) {
@@ -112,7 +105,6 @@ public class AppointmentService {
 
 
     public List<String> getFreeTimeSlots(int mechanicId, Date data) {
-
         List<Appointment> mechanicAppointments = appointmentRepository.getAppointmentsByDateAndStatus(data, mechanicId);
         List<String> busyHours = new ArrayList<>();
         List<String> freeHours = new ArrayList<>();
@@ -123,21 +115,18 @@ public class AppointmentService {
         for (int hour = startHour; hour <= endHour; hour++) {
             String timeSlot = String.format("%02d:00", hour);
             freeHours.add(timeSlot);
-//            System.out.println(timeSlot);
+            System.out.println(timeSlot);
         }
 
         for (Appointment appointment : mechanicAppointments) {
-            if(appointment.getStatus().equals("Pending") || appointment.getStatus().equals("Done")){
+            if (appointment.getStatus().equals("Pending") || appointment.getStatus().equals("Done")) {
                 Date appointmentStart = appointment.getDate();
                 String formattedTime = timeFormat.format(appointmentStart);
                 busyHours.add(formattedTime);
             }
-
         }
         freeHours.removeAll(busyHours);
         return freeHours;
     }
-
-
 }
 

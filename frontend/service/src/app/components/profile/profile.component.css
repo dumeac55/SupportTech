@@ -1,22 +1,58 @@
-.profile, .appointments {
-    margin-bottom: 20px;
-  }
-  
-  .profile, .appointments div {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  h2 {
-    color: #333;
-  }
-  
-  p {
-    margin: 5px 0;
-  }
-  
-  strong {
-    font-weight: bold;
-  }
-  
+/* Stilizare pentru containerul profilului */
+.profile {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Stilizare pentru titlul profilului */
+.profile h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Stilizare pentru detaliile profilului */
+.profile div {
+  margin-bottom: 10px;
+}
+
+/* Stilizare pentru lista de programări */
+.appointments {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Stilizare pentru antetul tabelei de programări */
+.appointments th {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Stilizare pentru celulele tabelei de programări */
+.appointments td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+td button:first-child{
+margin-right: 16px;
+}
+
+/* Stilizare pentru butoanele de acțiuni */
+.appointments button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Stilizare pentru mesajul "Nu aveți programări" */
+.no-appointments {
+  font-style: italic;
+  color: #999;
+}
