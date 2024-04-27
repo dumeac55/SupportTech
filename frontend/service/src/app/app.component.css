@@ -1,30 +1,40 @@
-/* Stilul pentru lista de meniu */
-ul {
-    list-style-type: none; /* Elimină marcatorul implicit de listă */
-    padding: 0;
+/* Reset CSS */
+* {
     margin: 0;
-}
-
-/* Stilul pentru fiecare element de meniu */
-ul li {
-    display: inline; /* Așază elementele de meniu unul lângă altul */
-    margin-right: 20px; /* Spațiu între elementele de meniu */
-}
-
-/* Stilul pentru link-urile din meniu */
-ul li a {
-    text-decoration: none; /* Elimină sublinierea implicită */
-    color: #333; /* Culorea textului */
-    font-weight: bold; /* Text îngroșat */
-    font-size: 16px; /* Dimensiunea textului */
-}
-
-/* Stilul pentru link-urile atunci când sunt hoverate */
-ul li a:hover {
-    color: #666; /* Schimbă culoarea textului când este hoverat */
-}
-
-ul li.disabled {
-    opacity: 0.5; /* Reducerea opacității pentru a indica dezactivarea */
-    pointer-events: none; /* Dezactivează evenimentele de cursor pentru a preveni clicurile */
-}
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Main styles */
+  header {
+    background-color: #333; /* Background color of the header */
+  }
+  
+  nav ul {
+    list-style: none; /* Remove default bullet points */
+    display: flex;
+    justify-content: space-between; /* Items are evenly distributed */
+    align-items: center; /* Items are vertically centered */
+    padding: 10px; /* Add some padding */
+  }
+  
+  nav ul li {
+    margin-right: 10px; /* Add some space between list items */
+  }
+  
+  nav ul li:last-child {
+    margin-right: 0; /* Remove margin from last list item */
+  }
+  
+  nav ul li a {
+    text-decoration: none;
+    color: #fff; /* Text color */
+    padding: 5px 10px; /* Add padding */
+    border-radius: 5px; /* Add some border radius */
+    transition: background-color 0.3s; /* Smooth transition for background color */
+  }
+  
+  nav ul li a:hover {
+    background-color: #555; /* Darken the background color on hover */
+  }
+  

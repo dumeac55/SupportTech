@@ -55,7 +55,8 @@
     <div class="orar-column" *ngIf="orar.length > 0">
       <h2>Mechanic Schedule</h2>
       <div *ngFor="let interval of orar">
-        <button (click)="setSelectedDateTimeFinal(interval)">
+        <button class = "selectedAppointment"
+        (click)="setSelectedDateTimeFinal(interval)">
           {{ interval }}
         </button>
       </div>

@@ -169,9 +169,14 @@ export class AppointmentComponent {
   }
 
   public myFilter = (d: Date | null): boolean => {
-    const day = (d || new Date()).getDay();
+    const currentDate = new Date();
+    const selectedDate = d || currentDate;
+    if (selectedDate < currentDate) {
+        return false;
+    }
+    const day = selectedDate.getDay();
     return day !== 0 && day !== 6;
-  };
+};
 
   redirectToProfile(): void{
     this.router.navigate(['/profile']);
