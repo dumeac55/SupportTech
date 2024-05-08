@@ -10,6 +10,15 @@ public class MechanicDto {
     private String phone;
     private String username;
     private String role;
+    private Float avgGrade;
+
+    public Float getAvgGrade() {
+        return avgGrade;
+    }
+
+    public void setAvgGrade(Float avgGrade) {
+        this.avgGrade = avgGrade;
+    }
 
     public String getRole() {
         return role;

@@ -15,5 +15,8 @@
             <input type="password" id="password" name="password" required [(ngModel)]="signinDto.password">
         </div>
         <button type="submit" (click)="signIn()">Autentificare</button>
+        <div>
+            <p> If you don t have account yet<button (click)="redirectToRegister()"> click here</button></p>
+        </div>
     </form>
 </div>

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import service.dto.AppointmentDto;
+import service.dto.MechanicAppointmentDto;
 import service.dto.UserAppointmentDto;
 import service.entity.*;
 import service.repository.*;
@@ -23,6 +24,7 @@ public class AppointmentService {
     private final MechanicProfileRepository mechanicProfileRepository;
 
     private final TypeRepository typeRepository;
+    private final UserProfileRepository userProfileRepository;
 
     public List<Appointment> getAppointments() {
         return appointmentRepository.findAll();
@@ -73,20 +75,21 @@ public class AppointmentService {
         if (appointmentList.isEmpty()) {
             return new ResponseEntity<>(" ", HttpStatus.NO_CONTENT);
         } else {
-            List<UserAppointmentDto> userAppointmentDtoList = new ArrayList<>();
+            List<MechanicAppointmentDto> mechanicAppointmentDtoList = new ArrayList<>();
             for (Appointment appointment : appointmentList) {
-                UserAppointmentDto userAppointmentDto = new UserAppointmentDto();
-                userAppointmentDto.setDate(appointment.getDate());
-                userAppointmentDto.setNameType(appointment.getType().getNameType());
-                userAppointmentDto.setMechanicEmail(appointment.getMechanic().getEmail());
-                userAppointmentDto.setMechanicPhone(appointment.getMechanic().getPhone());
-                userAppointmentDto.setMechanicLastName(appointment.getMechanic().getLastName());
-                userAppointmentDto.setMechanicFirstName(appointment.getMechanic().getFirstName());
-                userAppointmentDto.setStatus(appointment.getStatus());
-                userAppointmentDto.setIdAppointment(appointment.getId());
-                userAppointmentDtoList.add(userAppointmentDto);
+                UserProfile userProfile = userProfileRepository.findByUsername(appointment.getUser().getUsername());
+                MechanicAppointmentDto mechanicAppointmentDto = new MechanicAppointmentDto();
+                mechanicAppointmentDto.setDate(appointment.getDate());
+                mechanicAppointmentDto.setNameType(appointment.getType().getNameType());
+                mechanicAppointmentDto.setUserEmail(userProfile.getEmail());
+                mechanicAppointmentDto.setUserPhone(userProfile.getPhone());
+                mechanicAppointmentDto.setUserLastName(userProfile.getLastName());
+                mechanicAppointmentDto.setUserFirstName(userProfile.getFirstName());
+                mechanicAppointmentDto.setStatus(appointment.getStatus());
+                mechanicAppointmentDto.setIdAppointment(appointment.getId());
+                mechanicAppointmentDtoList.add(mechanicAppointmentDto);
             }
-            return new ResponseEntity<>(userAppointmentDtoList, HttpStatus.OK);
+            return new ResponseEntity<>(mechanicAppointmentDtoList, HttpStatus.OK);
         }
     }
 

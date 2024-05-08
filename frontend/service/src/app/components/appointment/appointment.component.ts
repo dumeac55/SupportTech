@@ -6,7 +6,7 @@ import { MechanicService } from '../../service/mechanic.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 import { JwtStorageService } from '../../service/jwt-storage.service';
-
+import { ReviewService } from '../../service/review.service';
 @Component({
   selector: 'app-appointment',
   templateUrl: './appointment.component.html',
@@ -125,10 +125,8 @@ export class AppointmentComponent {
         try {
           const mechanicUsername = this.selectedMechanic.username;
           if (mechanicUsername) {
-            const idMechanic =
-              await this.mechanicService.getMechanicProfileByUsername(
-                mechanicUsername
-              );
+            const idMechanic = await this.mechanicService.getMechanicProfileByUsername(mechanicUsername);
+
             if (idMechanic !== undefined) {
               if( event.value){
                 this.selectedDateTime = event.value;

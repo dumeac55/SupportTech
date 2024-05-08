@@ -1,17 +1,17 @@
 package service.dto;
 
 public class AnswearForumDto {
-    private int idAnswer;
+    private int idAnswear;
     private String description;
     private String username;
     private int idQuestion;
 
-    public int getIdAnswer() {
-        return idAnswer;
+    public int getIdAnswear() {
+        return idAnswear;
     }
 
-    public void setIdAnswer(int idAnswer) {
-        this.idAnswer = idAnswer;
+    public void setIdAnswear(int idAnswear) {
+        this.idAnswear = idAnswear;
     }
 
     public String getDescription() {

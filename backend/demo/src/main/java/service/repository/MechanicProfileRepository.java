@@ -11,4 +11,5 @@ import service.entity.Type;
 public interface MechanicProfileRepository extends JpaRepository<MechanicProfile, Integer> {
     MechanicProfile findByUsername(String username);
     MechanicProfile findByUser_IdUser(int id);
+    MechanicProfile findById(int id);
 }

@@ -3,11 +3,11 @@
         <ul>
             <li>Home</li>
             <li>Compari</li>
-            <li>Forum</li>
-            <li *ngIf!="isLogged"><a routerLink="login">Login</a></li>
-            <li *ngIf!="isLogged"><a routerLink="register">register</a></li>
+            <li *ngIf="isLogged"> <a routerLink="forum">Forum</a></li>
             <li *ngIf="isLogged"><a routerLink="profile">Profile</a></li>
             <li *ngIf="isLogged"><a routerLink="appointment">Appointment</a></li>
+            <li *ngIf="!isLogged"><a routerLink="login">Sign In</a></li>
+            <li *ngIf="isLogged"><a (click)="logout()">Sign out</a></li>
         </ul>
     </nav>
 </header>

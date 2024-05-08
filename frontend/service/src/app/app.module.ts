@@ -19,6 +19,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { AsyncPipe } from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
+import { ForumComponent } from './components/forum/forum.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +27,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     SignInComponent,
     ProfileComponent,
     AppointmentComponent,
+    ForumComponent,
   ],
   imports: [
     BrowserModule,

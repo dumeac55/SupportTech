@@ -9,6 +9,7 @@ import service.services.ForumService;
 
 @RestController
 @RequestMapping("api/forum")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class ForumController {
     @Autowired
     private ForumService forumService;

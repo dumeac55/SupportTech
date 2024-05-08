@@ -5,4 +5,5 @@ export class MechanicDto {
     lastName?: string;
     phone?: string;
     role?: string;
+    avgGrade? : number;
 }

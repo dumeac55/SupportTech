@@ -9,8 +9,10 @@ import service.dto.MechanicDto;
 import service.entity.MechanicProfile;
 import service.entity.User;
 import service.repository.MechanicProfileRepository;
+import service.repository.ReviewRepository;
 import service.repository.UserRepository;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,8 @@ public class MechanicProfileService {
     private MechanicProfileRepository mechanicProfileRepository;
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private ReviewRepository reviewRepository;
     public ResponseEntity<?> getMechanics(){
         List<MechanicProfile> mechanicProfile = mechanicProfileRepository.findAll();
         List<MechanicDto> mechanicDto = new ArrayList<MechanicDto>();
@@ -31,6 +34,7 @@ public class MechanicProfileService {
         else{
             for(MechanicProfile mechanicProfile1: mechanicProfile){
                 MechanicDto mechanicDto1 = new MechanicDto();
+                mechanicDto1.setAvgGrade(reviewRepository.findAvgGradeByMechanicId(mechanicProfile1.getIdProfile()));
                 mechanicDto1.setEmail(mechanicProfile1.getEmail());
                 mechanicDto1.setFirstName(mechanicProfile1.getFirstName());
                 mechanicDto1.setLastName(mechanicProfile1.getLastName());

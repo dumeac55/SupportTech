@@ -6,6 +6,7 @@ import { AppointmentDto } from '../../model/appointment-dto';
 import { AppointmentService } from '../../service/appointment.service';
 import { MechanicService } from '../../service/mechanic.service';
 import { Router } from '@angular/router';
+import { MechanicAppointmentDto } from '../../model/mechanic-appointment-dto';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,8 @@ export class ProfileComponent {
   userProfile: UserProfileDto = {};
   haveAppointment: boolean = true;
   appointments: AppointmentDto[] = [];
-
+  appointmentsMchanic: MechanicAppointmentDto[] = [];
+  role?: String;
   constructor(private jwtStorage: JwtStorageService,
               private userProfileService: UserProfileService,
               private appointmentService:AppointmentService,
@@ -38,8 +40,8 @@ export class ProfileComponent {
     const token = localStorage.getItem('token');
     if (token && !this.jwtStorage.isTokenExpired(token)) {
       try {
-        const role = await this.userProfileService.getRoleByUsername(localStorage.getItem('username'));
-        if(role === 'custom'){
+        this.role = await this.userProfileService.getRoleByUsername(localStorage.getItem('username'));
+        if(this.role === 'custom'){
           const userProfile = await this.userProfileService.getUserProfile();
           const appointment = await this.userProfileService.getUserAppointment();
           console.log(userProfile?.role);
@@ -54,18 +56,19 @@ export class ProfileComponent {
                 console.log('Appointments not found or not in correct format.');
             }
             console.log('Profile loaded successfully:', userProfile);
-        } else {
+          } else {
             console.log('Failed to load profile.');
           }
         }
-        else{
+        else if (this.role ==='mechanic')
+          {
           const userProfile = await this.mechanicService.getUserProfile();
           console.log(userProfile?.role);
           if (userProfile) {
             this.userProfile = userProfile;
             const appointment = await this.mechanicService.getMechanicAppointment();
             if (Array.isArray(appointment)) {
-              this.appointments = appointment;
+              this.appointmentsMchanic = appointment;
               console.log('Appointments loaded successfully:', appointment);
             } else {
               console.log('Appointments not found or not in correct format.');

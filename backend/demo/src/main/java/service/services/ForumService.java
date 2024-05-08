@@ -97,7 +97,7 @@ public class ForumService {
             answearForumDto.setDescription(answearForum.getDescription());
             answearForumDto.setIdQuestion(answearForum.getQuestionForum().getIdQuestion());
             answearForumDto.setUsername(answearForum.getUser().getUsername());
-            answearForumDto.setIdAnswer(answearForum.getIdAnswear());
+            answearForumDto.setIdAnswear(answearForum.getIdAnswear());
             answearForumDtos.add(answearForumDto);
         }
         return new ResponseEntity<>(answearForumDtos, HttpStatus.OK);

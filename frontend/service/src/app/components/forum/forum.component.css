@@ -1,0 +1,38 @@
+.forum-container {
+    padding: 20px;
+  }
+  
+  .question-container, .answers-container, .other-questions-container, .add-answer-container {
+    margin-bottom: 20px;
+  }
+  
+  .answer-item {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .add-answer-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .answer-input {
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 5px;
+  }
+  
+  .add-answer-button {
+    padding: 8px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .no-content {
+    font-style: italic;
+    color: #888;
+  }
+  
