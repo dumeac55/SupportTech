@@ -42,4 +42,9 @@ public class ForumController {
     private ResponseEntity addAnswearAtQuestion(@RequestBody AnswearForumDto answearForumDto){
         return forumService.addAnswearByQuestionId(answearForumDto);
     }
+
+    @DeleteMapping("/delete/{id}/answear")
+    private ResponseEntity<?> deleteAnswear(@PathVariable("id") int id){
+        return forumService.deleteAnswear(id);
+    }
 }

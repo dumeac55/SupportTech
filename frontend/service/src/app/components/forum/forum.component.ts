@@ -14,20 +14,25 @@ export class ForumComponent {
   answers: AnswearForumDto[] = [];
   question: QuestionForumDto | undefined;
   newAnswerDescription: string = '';
-
+  username?: String | null;
+  newQuestionTitle: string = '';
+  newQuestionDescription: string = '';
   constructor(
     private route: ActivatedRoute,
     private forumService: ForumService
   ) {}
 
   ngOnInit(): void{
+    this.username = localStorage.getItem('username');
     this.route.params.subscribe(async params => {
       const id = params['id'];
       if (id) {
         await this.getQuestionById(id);
         await this.getAnswersByQuestionId(id);
       }
-      await this.getQuestions();
+      else{
+        await this.getQuestions();
+      }
     });
   }
 
@@ -42,6 +47,35 @@ export class ForumComponent {
     this.question = await this.forumService.getQuestionById(id);
   }
 
+  async deleteQuestion(id: number | undefined) : Promise<void >{
+    if(id){
+      const resposne = await this.forumService.deleteQuestionById(id);
+      this.questions = this.questions.filter(question => question.idQuestion !== id);
+    }
+  }
+
+  async addQuestion(): Promise<void> {
+    const username = localStorage.getItem('username');
+    if (!username) {
+      return;
+    }
+
+    if (!this.newQuestionDescription.trim() && !this.newQuestionTitle.trim()) {
+      return;
+    }
+
+    const newQuestion: QuestionForumDto = {
+      description: this.newQuestionDescription,
+      username: username,
+      title: this.newQuestionTitle
+    };
+
+    await this.forumService.addQuestion(newQuestion);
+    await this.getQuestions();
+    this.newQuestionDescription = '';
+    this.newQuestionTitle = '';
+  }
+
   async getAnswersByQuestionId(id: number): Promise<void> {
     const answers = await this.forumService.getAnswearByIdQuestion(id);
     if (Array.isArray(answers)) {
@@ -49,21 +83,18 @@ export class ForumComponent {
     }
   }
 
-  async addAnswer(): Promise<void> {
+  async addAnswear(): Promise<void> {
     const username = localStorage.getItem('username');
     if (!username) {
-      console.error('Username is not available in localStorage.');
       return;
     }
 
     const idQuestion = this.question?.idQuestion;
     if (!idQuestion) {
-      console.error('Question id is not available.');
       return;
     }
 
     if (!this.newAnswerDescription.trim()) {
-      console.error('Answer description is empty.');
       return;
     }
 
@@ -73,16 +104,16 @@ export class ForumComponent {
       idQuestion: idQuestion
     };
 
-    try {
-      console.log(newAnswer);
-      await this.forumService.addAnswearByIdQuestion(newAnswer);
-      // Reîncarcăm întrebarea și răspunsurile după adăugarea noului răspuns
-      await this.getQuestionById(idQuestion);
-      await this.getAnswersByQuestionId(idQuestion);
-      // Resetăm câmpul de introducere pentru noul răspuns
-      this.newAnswerDescription = '';
-    } catch (error) {
-      console.error('Error adding answer:', error);
+    await this.forumService.addAnswearByIdQuestion(newAnswer);
+    await this.getQuestionById(idQuestion);
+    await this.getAnswersByQuestionId(idQuestion);
+    this.newAnswerDescription = '';
+  }
+
+  async deleteAnswear(id: number | undefined) : Promise<void >{
+    if(id){
+      const resposne = await this.forumService.deleteAnswearById(id);
+      this.answers = this.answers.filter(answer => answer.idAnswear !== id);
     }
   }
 }

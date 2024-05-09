@@ -12,4 +12,6 @@ import java.util.List;
 public interface AnswearForumRepository extends JpaRepository<AnswearForum, Integer> {
     List<AnswearForum> findByQuestionForum_idQuestion(int id);
     void deleteByQuestionForum_idQuestion(int id);
+    AnswearForum findByIdAnswear(int id);
+    void deleteByIdAnswear(int id);
 }

@@ -47,4 +47,17 @@ public class ReviewService {
     public ResponseEntity<?> getAvgGradeByIdMechanic(int id){
         return new ResponseEntity<>(reviewRepository.findAvgGradeByMechanicId(id).toString(), HttpStatus.OK);
     }
+
+    public ResponseEntity<?> addReview(ReviewDto reviewDto){
+        UserProfile userProfile = userProfileRepository.findByIdProfile(reviewDto.getUserId());
+        MechanicProfile mechanicProfile = mechanicProfileRepository.findById(reviewDto.getMechanicId());
+        Review review = new Review();
+        review.setDescription(reviewDto.getDescription());
+        review.setGrade(reviewDto.getGrade());
+        review.setMechanicProfile(mechanicProfile);
+        review.setUserProfile(userProfile);
+        reviewRepository.save(review);
+        return new ResponseEntity<>("Review successfull added", HttpStatus.OK);
+
+    }
 }

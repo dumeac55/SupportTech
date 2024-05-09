@@ -1,8 +1,6 @@
 package service.services;
 
-import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -117,6 +115,14 @@ public class ForumService {
         answearForum.setDescription(answearForumDto.getDescription());
         answearForumRepository.save(answearForum);
         return new ResponseEntity<>("Answear successfull added", HttpStatus.CREATED);
+    }
 
+    public ResponseEntity<?> deleteAnswear(int id){
+        AnswearForum answearForum = answearForumRepository.findByIdAnswear(id);
+        if(answearForum == null){
+            return new ResponseEntity<>("Answear not found", HttpStatus.NOT_FOUND);
+        }
+        answearForumRepository.deleteById(id);
+        return new ResponseEntity<>("Answear successfull delete", HttpStatus.OK);
     }
 }

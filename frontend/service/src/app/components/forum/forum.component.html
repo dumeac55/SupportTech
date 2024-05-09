@@ -1,34 +1,71 @@
 <div class="forum-container">
-    <div *ngIf="question" class="question-container">
-      <h2>{{ question.title }}</h2>
-      <p>{{ question.description }}</p>
-    </div>
-    
-    <div *ngIf="answers.length > 0" class="answers-container">
-      <h3>Răspunsuri</h3>
-      <ul>
-        <li *ngFor="let answer of answers" class="answer-item">
-          <p>{{ answer.description }}</p>
-          <p>{{ answer.username }}</p>
-        </li>
-      </ul>
-    </div>
-
-    <div *ngIf="questions.length > 0" class="other-questions-container">
-      <h3>Alte întrebări</h3>
-      <ul>
-        <li *ngFor="let q of questions" class="other-question-item">
-          <a [routerLink]="['/forum', q.idQuestion]">{{ q.title }}</a>
-        </li>
-      </ul>
-    </div>
-
-    <div *ngIf="!question && answers.length === 0 && questions.length === 0" class="no-content">
-      <p>Nu există întrebare sau răspunsuri disponibile.</p>
-    </div>
-
-    <div class="add-answer-container" *ngIf="question">
-        <textarea class="answer-input" placeholder="Adaugă un răspuns..." [(ngModel)]="newAnswerDescription"></textarea>
-        <button class="add-answer-button" (click)="addAnswer()">Adaugă răspuns</button>
-      </div>
+  <div *ngIf="question" class="question-container">
+    <h2>{{ question.title }}</h2>
+    <p>{{ question.description }}</p>
   </div>
+  <div *ngIf="answers.length > 0" class="answers-container">
+    <h3>Răspunsuri</h3>
+    <ul>
+      <li *ngFor="let answer of answers" class="answer-item">
+        <p>{{ answer.description }}</p>
+        <p>{{ answer.username }}</p>
+        <button
+          *ngIf="answer.username === this.username"
+          (click)="deleteAnswear(answer.idAnswear)"
+        >
+          sterge raspuns
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="questions.length > 0" class="other-questions-container">
+    <h3>Alte întrebări</h3>
+    <ul>
+      <li *ngFor="let q of questions" class="other-question-item">
+        <a [routerLink]="['/forum', q.idQuestion]">{{ q.title }}</a>
+        <button
+          *ngIf="q.username === this.username"
+          (click)="deleteQuestion(q.idQuestion)"
+        >
+          sterge raspuns
+        </button>
+      </li>
+    </ul>
+    <h3>Adaugă o întrebare nouă</h3>
+    <form (ngSubmit)="addQuestion()">
+      <input
+        type="text"
+        placeholder="Titlu"
+        [(ngModel)]="newQuestionTitle"
+        name="title"
+        required
+      />
+      <textarea
+        placeholder="Descriere"
+        [(ngModel)]="newQuestionDescription"
+        name="description"
+        required
+      ></textarea>
+      <button type="submit">Adaugă întrebare</button>
+    </form>
+  </div>
+
+  <div
+    *ngIf="!question && answers.length === 0 && questions.length === 0"
+    class="no-content"
+  >
+    <p>Nu există întrebare sau răspunsuri disponibile.</p>
+  </div>
+
+  <div class="add-answer-container" *ngIf="question">
+    <textarea
+      class="answer-input"
+      placeholder="Adaugă un răspuns..."
+      [(ngModel)]="newAnswerDescription"
+    ></textarea>
+    <button class="add-answer-button" (click)="addAnswear()">
+      Adaugă răspuns
+    </button>
+  </div>
+</div>
