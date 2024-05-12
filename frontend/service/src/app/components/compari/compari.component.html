@@ -1,0 +1,74 @@
+<!-- <div class="compari-container">
+  <input type="text" placeholder="Search products..." />
+
+  <div>
+    <output id="minPriceValue">0</output>
+    <input
+      type="range"
+      id="minPrice"
+      min="0"
+      max="1000"
+      oninput="minPriceValue.value = minPrice.value"
+    />
+  </div>
+  <div>
+    <output id="maxPriceValue">1000</output>
+    <input
+      type="range"
+      id="maxPrice"
+      min="0"
+      max="1000"
+      oninput="maxPriceValue.value = maxPrice.value"
+    />
+  </div>
+</div> -->
+<div class="compari-container">
+  <div class="compari-grid">
+    <div class="compari-item">
+      <h3>eMAG Products</h3>
+      <ul>
+        <li *ngFor="let product of emagProducts">
+          <div class="compari-test">
+            <img [src]="product.linkImage" alt="Product Image" />
+            <div class="name-test">
+              <p>{{ product.nameProduct }}</p>
+            </div>
+            <p>{{ product.price }}</p>
+            <p>{{ product.company }}</p>
+            <a [href]="product.linkProduct" target="_blank">View Product</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="compari-item">
+      <h3>Evomag Products</h3>
+      <ul>
+        <li *ngFor="let product of evomagProducts">
+          <img [src]="product.linkImage" alt="Product Image" />
+          <div class="name-test">
+            <p>{{ product.nameProduct }}</p>
+          </div>
+          <p>{{ product.price }}</p>
+          <p>{{ product.company }}</p>
+          <a [href]="product.linkProduct" target="_blank">View Product</a>
+        </li>
+      </ul>
+    </div>
+    <div class="compari-item">
+      <h3>Cel Products</h3>
+      <ul>
+        <li *ngFor="let product of celProducts">
+          <div class="compari-test">
+            <img [src]="product.linkImage" alt="Product Image" />
+            <div class="name-test">
+              <p>{{ product.nameProduct }}</p>
+            </div>
+            <p>{{ product.price }} Lei</p>
+            <p>{{ product.company }}</p>
+            <a [href]="product.linkProduct" target="_blank">View Product</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

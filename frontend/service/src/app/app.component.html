@@ -2,7 +2,7 @@
     <nav>
         <ul>
             <li>Home</li>
-            <li>Compari</li>
+            <li *ngIf="isLogged"> <a routerLink="compari">Compari</a></li>
             <li *ngIf="isLogged"> <a routerLink="forum">Forum</a></li>
             <li *ngIf="isLogged"><a routerLink="profile">Profile</a></li>
             <li *ngIf="isLogged"><a routerLink="appointment">Appointment</a></li>

@@ -5,14 +5,16 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AppointmentComponent } from './components/appointment/appointment.component';
 import { ForumComponent } from './components/forum/forum.component';
+import { CompariComponent } from './components/compari/compari.component';
 
 const routes: Routes = [
   {path: 'login', component:SignInComponent},
   {path: 'register', component:SignUpComponent},
   {path: 'profile', component:ProfileComponent},
   {path: 'appointment', component:AppointmentComponent},
-  { path: 'forum', component: ForumComponent },
-  { path: 'forum/:id', component: ForumComponent },
+  {path: 'forum', component: ForumComponent },
+  {path: 'forum/:id', component: ForumComponent },
+  {path: 'compari', component: CompariComponent},
   { path: '**', redirectTo: '/login' }
 
 ];

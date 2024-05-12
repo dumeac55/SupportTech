@@ -11,7 +11,7 @@ import lombok.Setter;
 public class Compari {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product")
+    @Column(name = "idproduct")
     private int id;
 
     @Column(name = "nameproduct")
@@ -28,6 +28,17 @@ public class Compari {
 
     @Column(name = "imagelink")
     private String imageLink;
+
+    @Column(name  = "domain")
+    private String domain;
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
 
     public int getId() {
         return id;

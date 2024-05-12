@@ -103,7 +103,6 @@ public class AppointmentService {
         appointmentRepository.save(existingAppointment);
 
         return new ResponseEntity<>(existingAppointment, HttpStatus.OK);
-
     }
 
 

@@ -1,0 +1,31 @@
+.compari-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .compari-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 50px;
+    background-color: rgb(255, 255, 255);
+  }
+
+  .compari-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .compari-item img {
+    width: 100%;
+    height: 150px;
+  }
+
+  .name-test {
+    width: 100%;
+    height: 100px ;
+  }
+
+  .compari-test {
+    place-self: center;
+  }

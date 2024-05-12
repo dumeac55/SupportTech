@@ -1,8 +1,15 @@
 package service.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import service.WebScraper.Service.CelService;
+import service.WebScraper.Service.EmagService;
+import service.WebScraper.Service.EvomagService;
+import service.dto.CompariDto;
 import service.entity.Compari;
 
 import org.jsoup.Jsoup;
@@ -17,111 +24,74 @@ import java.util.List;
 
 @Service
 public class CompariService {
+    @Autowired
+    private CompariRepository compariRepository;
 
-    private final CompariRepository compariRepository;
+    @Autowired
+    private EvomagService evomagService;
 
-    public CompariService(CompariRepository compariRepository) {
-        this.compariRepository = compariRepository;
+    @Autowired
+    private CelService celService;
+
+    @Autowired
+    private EmagService emagService;
+
+    @Scheduled(cron = " 0 56 12 * * ?")
+    public void getEvomag(){
+        evomagService.fetchData();
     }
+    public void getCel(){ celService.fetchData();}
+    public void getEmag(){ emagService.fetchData();}
 
-    @Scheduled(cron = " 0 12 19 * * ?")
-    public List<Compari> scrapeCEL() {
-        List<Compari> procesorList = new ArrayList<>();
-        String searchKeyword = "memorii/ram+ddr4"; // Parametrul de căutare
-
-        String celURL = "https://www.cel.ro/cauta/memorie+ddr4/";
-        String html = new RestTemplate().getForObject(celURL, String.class);
-
-        Document document = Jsoup.parse(html);
-        Elements productElements = document.select(".product_data");
-
-        if (!productElements.isEmpty()) {
-            for (Element productElement : productElements) {
-                String productName = productElement.select(".productTitle").text().trim();
-                String productPrice = productElement.select(".price").text().trim();
-                String productImageLink = productElement.select(".productListing-poza img").attr("src");
-                String productPageLink = productElement.select(".productListing-poza a").attr("href");
-                Compari result = new Compari();
-                result.setCompany("CEL.RO");
-                result.setPrice(productPrice);
-                result.setNameProduct(productName);
-                result.setLink(productPageLink);
-                result.setImageLink(productImageLink);
-                procesorList.add(result);
-                // Dacă dorești să salvezi fiecare produs într-o bază de date, utilizează metoda save aici
-                compariRepository.save(result);
-            }
-            return procesorList;
-        } else {
-            System.out.println("No products found");
-            return Collections.emptyList(); // Return
+    public void getasd(){
+        List<Compari> lista= compariRepository.findByNameProductContaining("procesor", "intel", "i7" , "0", "33300");
+        for(Compari s :lista){
+            System.out.println("Nume produs   "+ s.getNameProduct());
+            System.out.println("Pret produs    " +s.getPrice());
         }
     }
-
-    @Scheduled(cron = " 0 25 19 * * ?")
-    public List<Compari> scrapeEMAG() {
-        List<Compari> procesorList = new ArrayList<>();
-        String searchKeyword = "memorii/ram+ddr4"; // Parametrul de căutare
-
-        String emagURL = "https://www.emag.ro/search/memorie%20ram%20ddr4?ref=effective_search";
-        String html = new RestTemplate().getForObject(emagURL, String.class);
-
-        Document document = Jsoup.parse(html);
-        Elements productElements = document.select(".card-item.card-standard.js-product-data");
-
-        if (!productElements.isEmpty()) {
-            for (Element productElement : productElements) {
-                String productName = productElement.select(".card-v2-title-wrapper").text().trim();
-                String productPrice = productElement.select(".product-new-price").text().trim();
-                String productImageLink = productElement.select(".card-v2-thumb-inner img").attr("src");
-                String productPageLink = productElement.select(".card-v2-info a").attr("href");
-                Compari result = new Compari();
-                result.setCompany("EMAG");
-                result.setPrice(productPrice);
-                result.setNameProduct(productName);
-                result.setLink(productPageLink);
-                result.setImageLink(productImageLink);
-                procesorList.add(result);
-                // Dacă dorești să salvezi fiecare produs într-o bază de date, utilizează metoda save aici
-                compariRepository.save(result);
-            }
-            return procesorList;
-        } else {
-            System.out.println("No products found");
-            return Collections.emptyList(); // Return
+    public ResponseEntity<?> testCompariEmag(){
+        List<CompariDto> compariDtoLista = new ArrayList<>();
+        List<Compari> lista = compariRepository.findByNameProducttEmag("0", "6000");
+        for(Compari list:lista){
+            CompariDto compariDto = new CompariDto();
+            compariDto.setCompany(list.getCompany());
+            compariDto.setPrice(list.getPrice());
+            compariDto.setNameProduct(list.getNameProduct());
+            compariDto.setLinkImage(list.getImageLink());
+            compariDto.setLinkProduct(list.getLink());
+            compariDtoLista.add(compariDto);
         }
+        return new ResponseEntity<>(compariDtoLista, HttpStatus.OK);
     }
 
-//    @Scheduled(cron = " 0 31 19 * * ?")
-    public List<Compari> scrapeEVOMAG() {
-        List<Compari> procesorList = new ArrayList<>();
-        String searchKeyword = "memorii/ram+ddr4"; // Parametrul de căutare
-
-        String EvoMagURL = "https://www.evomag.ro/componente-pc-gaming-memorii/";
-        String html = new RestTemplate().getForObject(EvoMagURL, String.class);
-
-        Document document = Jsoup.parse(html);
-        Elements productElements = document.select(".nice_product_item");
-        if (!productElements.isEmpty()) {
-            for (Element productElement : productElements) {
-                String productName = productElement.select(".npi_name").text().trim();
-                String productPrice = productElement.select(".real_price").text().trim();
-                String productImageLink = productElement.select(".npi_image img").attr("src");
-                String productPageLink = productElement.select(".npi_image a").attr("href");
-                Compari result = new Compari();
-                result.setCompany("EVOMAG");
-                result.setPrice(productPrice);
-                result.setNameProduct(productName);
-                result.setLink("https://www.evomag.ro"+productPageLink);
-                result.setImageLink(productImageLink);
-                procesorList.add(result);
-
-                compariRepository.save(result);
-            }
-            return procesorList;
-        } else {
-            System.out.println("No products found");
-            return Collections.emptyList(); // Return
+    public ResponseEntity<?> testCompariCel(){
+        List<CompariDto> compariDtoLista = new ArrayList<>();
+        List<Compari> lista = compariRepository.findByNameProducttCel("0", "6000");
+        for(Compari list:lista){
+            CompariDto compariDto = new CompariDto();
+            compariDto.setCompany(list.getCompany());
+            compariDto.setPrice(list.getPrice());
+            compariDto.setNameProduct(list.getNameProduct());
+            compariDto.setLinkImage(list.getImageLink());
+            compariDto.setLinkProduct(list.getLink());
+            compariDtoLista.add(compariDto);
         }
+        return new ResponseEntity<>(compariDtoLista, HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> testCompariEvomag(){
+        List<CompariDto> compariDtoLista = new ArrayList<>();
+        List<Compari> lista = compariRepository.findByNameProducttEvomag("0", "6000");
+        for(Compari list:lista){
+            CompariDto compariDto = new CompariDto();
+            compariDto.setCompany(list.getCompany());
+            compariDto.setPrice(list.getPrice());
+            compariDto.setNameProduct(list.getNameProduct());
+            compariDto.setLinkImage(list.getImageLink());
+            compariDto.setLinkProduct(list.getLink());
+            compariDtoLista.add(compariDto);
+        }
+        return new ResponseEntity<>(compariDtoLista, HttpStatus.OK);
     }
 }

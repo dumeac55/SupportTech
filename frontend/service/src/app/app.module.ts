@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AsyncPipe } from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ForumComponent } from './components/forum/forum.component';
+import { CompariComponent } from './components/compari/compari.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,7 @@ import { ForumComponent } from './components/forum/forum.component';
     ProfileComponent,
     AppointmentComponent,
     ForumComponent,
+    CompariComponent,
   ],
   imports: [
     BrowserModule,
