@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class AppointmentDto {
     private String usernameUser;
-    private String usernameMechanic;
+    private String usernameTechnician;
     private String type;
     private Date data;
     private String status;
@@ -37,12 +37,12 @@ public class AppointmentDto {
         this.usernameUser = usernameUser;
     }
 
-    public String getUsernameMechanic() {
-        return usernameMechanic;
+    public String getUsernameTechnician() {
+        return usernameTechnician;
     }
 
-    public void setUsernameMechanic(String usernameMechanic) {
-        this.usernameMechanic = usernameMechanic;
+    public void setUsernameTechnician(String usernameTechnician) {
+        this.usernameTechnician = usernameTechnician;
     }
 
     public String getType() {

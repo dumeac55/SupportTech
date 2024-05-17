@@ -15,12 +15,12 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @GetMapping
-    private ResponseEntity<?> getReviewsByMechaicId(@RequestParam(name = "idMechanicProfile") int idMechanic){
-        return reviewService.getReviewByIdMechanic(idMechanic);
+    private ResponseEntity<?> getReviewsByTechnicianId(@RequestParam(name = "idTechnicianProfile") int idTechnician){
+        return reviewService.getReviewByIdTechnician(idTechnician);
     }
     @GetMapping ("/{id}/grade")
-    private ResponseEntity<?> getAvgGradeByIdMechanic(@PathVariable("id") int id){
-        return reviewService.getAvgGradeByIdMechanic(id);
+    private ResponseEntity<?> getAvgGradeByIdTechnician(@PathVariable("id") int id){
+        return reviewService.getAvgGradeByIdTechnician(id);
     }
     @PostMapping("/create")
     private ResponseEntity<?> addReview(@RequestBody ReviewDto reviewDto){

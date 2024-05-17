@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
-import { MechanicDto } from '../../model/mechanic-dto';
 import { AppointmentService } from '../../service/appointment.service';
 import { TypeDto } from '../../model/type-dto';
-import { MechanicService } from '../../service/mechanic.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 import { JwtStorageService } from '../../service/jwt-storage.service';
 import { ReviewService } from '../../service/review.service';
+import { TechnicianDto } from '../../model/technician-dto';
+import { TechnicianService } from '../../service/technician.service';
 @Component({
   selector: 'app-appointment',
   templateUrl: './appointment.component.html',
   styleUrls: ['./appointment.component.css'],
 })
 export class AppointmentComponent {
-  mechanics: MechanicDto[] = [];
+  technicians: TechnicianDto[] = [];
   types: TypeDto[] = [];
   orar: String[] = [];
-  selectedMechanic: MechanicDto | null = null;
+  selectedTechnician: TechnicianDto | null = null;
   selectedType: TypeDto | null = null;
   selectedDateTime: Date | null = null;
   selectedDateTimeFinal: Date | null = null;
 
   constructor(
     private appointmentService: AppointmentService,
-    private mechanicService: MechanicService,
+    private technicianService: TechnicianService,
     private router : Router,
     private jwt : JwtStorageService
   ) {}
@@ -31,7 +31,7 @@ export class AppointmentComponent {
   ngOnInit(): void {
     const token = localStorage.getItem('token');
     if (token && !this.jwt.isTokenExpired(token)) {
-      this.getMechanics();
+      this.getTechnicians();
     }
     else{
       alert("Session Expired");
@@ -39,18 +39,18 @@ export class AppointmentComponent {
     }
   }
 
-  async getMechanics(): Promise<void> {
+  async getTechnicians(): Promise<void> {
     const token = localStorage.getItem('token');
     if (token && !this.jwt.isTokenExpired(token)) {
       try {
-        const result = await this.appointmentService.getMechanics();
+        const result = await this.appointmentService.getTechnicians();
         const type = await this.appointmentService.getTypes();
         if (Array.isArray(result) && Array.isArray(type)) {
-          this.mechanics = result;
+          this.technicians = result;
           this.types = type;
         }
       } catch (error) {
-        console.error('Error getting mechanics:', error);
+        console.error('Error getting technicians:', error);
       }
     }
     else{
@@ -59,8 +59,8 @@ export class AppointmentComponent {
     }
   }
 
-  selectMechanic(mechanic: MechanicDto): void {
-    this.selectedMechanic = mechanic;
+  selectTechnician(technician: TechnicianDto): void {
+    this.selectedTechnician = technician;
   }
 
   selectType(type: TypeDto): void {
@@ -76,21 +76,21 @@ export class AppointmentComponent {
         return;
       }
       if (
-        this.selectedMechanic &&
+        this.selectedTechnician &&
         this.selectedType &&
         this.selectedDateTimeFinal
       ) {
         this.appointmentService
           .createAppointment(
             usernameUser,
-            this.selectedMechanic.username as string,
+            this.selectedTechnician.username as string,
             this.selectedType.nameType as string,
             this.selectedDateTimeFinal
           )
           .subscribe(
             (response) => {
               console.log('Appointment created successfully:', response);
-              this.selectedMechanic = null;
+              this.selectedTechnician = null;
               this.selectedType = null;
               this.selectedDateTime = null;
               this.redirectToProfile();
@@ -98,7 +98,7 @@ export class AppointmentComponent {
             (error) => {
               if(error.status === 200){
                 console.log('Appointment created successfully:');
-                this.selectedMechanic = null;
+                this.selectedTechnician = null;
                 this.selectedType = null;
                 this.selectedDateTime = null;
                 this.redirectToProfile();
@@ -109,7 +109,7 @@ export class AppointmentComponent {
             }
           );
       } else {
-        console.error('Please select mechanic, type, and date/time.');
+        console.error('Please select technician, type, and date/time.');
       }
     }
     else{
@@ -121,30 +121,29 @@ export class AppointmentComponent {
   async onDateTimeChange(event: MatDatepickerInputEvent<Date>): Promise<void> {
     const token = localStorage.getItem('token');
     if (token && !this.jwt.isTokenExpired(token)) {
-    if (this.selectedDateTime && this.selectedMechanic) {
+    if (this.selectedDateTime && this.selectedTechnician) {
         try {
-          const mechanicUsername = this.selectedMechanic.username;
-          if (mechanicUsername) {
-            const idMechanic = await this.mechanicService.getMechanicProfileByUsername(mechanicUsername);
-
-            if (idMechanic !== undefined) {
+          const technicianUsername = this.selectedTechnician.username;
+          if (technicianUsername) {
+            const idTechnician = await this.technicianService.getTechnicianProfileByUsername(technicianUsername);
+            if (idTechnician !== undefined) {
               if( event.value){
                 this.selectedDateTime = event.value;
                 const dataString =  this.selectedDateTime.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
                 console.log("data corecta" +this.selectedDateTime);
                 console.log("data cu o zi in urma" + dataString);
-                const orar = await this.appointmentService.getMechanicOrar(idMechanic, dataString as unknown as Date).toPromise();
+                const orar = await this.appointmentService.getTechnicianOrar(idTechnician, dataString as unknown as Date).toPromise();
                 console.log('Orarul mecanicului:', orar);
                 this.orar = orar;
               }
             } else {
-              console.error('Mechanic id is undefined');
+              console.error('Technician id is undefined');
             }
           } else {
-            console.error('Mechanic username is null');
+            console.error('Technician username is null');
           }
         } catch (error) {
-          console.error('Error getting mechanic schedule:', error);
+          console.error('Error getting technician schedule:', error);
         }
       }
     }

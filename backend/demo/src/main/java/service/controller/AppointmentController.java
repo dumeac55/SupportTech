@@ -37,7 +37,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/orar2")
-    private List<String> getMechanicFreeTime(@RequestParam(name = "idMechanic") int id, @RequestParam(name = "date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+    private List<String> getTechnicianFreeTime(@RequestParam(name = "idTechnician") int id, @RequestParam(name = "date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
         return appointmentService.getFreeTimeSlots(id, date);
     }
 

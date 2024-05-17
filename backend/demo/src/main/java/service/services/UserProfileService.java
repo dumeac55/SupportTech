@@ -5,10 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import service.dto.UserProfileDto;
-import service.entity.MechanicProfile;
+import service.entity.TechnicianProfile;
 import service.entity.User;
 import service.entity.UserProfile;
-import service.repository.MechanicProfileRepository;
+import service.repository.TechnicianProfileRepository;
 import service.repository.UserProfileRepository;
 import service.repository.UserRepository;
 
@@ -22,7 +22,7 @@ public class UserProfileService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private MechanicProfileRepository mechanicProfileRepository;
+    private TechnicianProfileRepository technicianProfileRepository;
 
     public List<UserProfile> getAllUser(){
         return userProfileRepository.findAll();
@@ -39,13 +39,13 @@ public class UserProfileService {
         userProfileRepository.save(userProfile);
     }
     public int getUserProfileByUsername(String username){
-        if(getRoleByUsername(username).equals("custom") || getRoleByUsername(username).equals("da") ) {
+        if(getRoleByUsername(username).equals("custom")) {
             UserProfile user = userProfileRepository.findByUsername(username);
             return user.getUser().getIdUser();
         }
         else{
-            MechanicProfile mechanic = mechanicProfileRepository.findByUsername(username);
-            return mechanic.getUser().getIdUser();
+            TechnicianProfile technician = technicianProfileRepository.findByUsername(username);
+            return technician.getUser().getIdUser();
         }
 
     }

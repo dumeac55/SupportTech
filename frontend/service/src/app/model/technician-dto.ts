@@ -1,9 +1,9 @@
-export interface SignUpDto {
+export class TechnicianDto {
     username?: string;
-    password?: string;
     email?: string;
     firstName?: string;
     lastName?: string;
     phone?: string;
-
+    role?: string;
+    avgGrade? : number;
 }

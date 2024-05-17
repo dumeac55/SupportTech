@@ -1,12 +1,12 @@
 
-  .mechanics-column, .types-column {
+  .technicians-column, .types-column {
     float: left;
     width: 45%;
     padding: 0 2%;
     box-sizing: border-box;
   }
 
-  .mechanic-info, .type-info {
+  .technician-info, .type-info {
     background-color: #f2f2f2;
     padding: 10px;
     margin-bottom: 10px;
@@ -71,3 +71,12 @@
     background-color: #0056b3;
     font-weight: bold;
   }
+
+  .example-button-row button,
+  .example-button-row a {
+  margin-right: 8px;
+}
+
+.example-disabled {
+  display: inline-block;
+}

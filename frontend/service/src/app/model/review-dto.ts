@@ -1,6 +1,6 @@
 export class ReviewDto {
     userId? : number;
-    mechanidId? : number;
+    technicianId? : number;
     grade? : number;
     avgGrade? : number;
     title?: String;

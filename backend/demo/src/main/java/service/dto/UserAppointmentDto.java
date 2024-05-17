@@ -7,10 +7,10 @@ import java.util.Date;
 @Data
 public class UserAppointmentDto {
     private String nameType;
-    private String mechanicFirstName;
-    private String mechanicLastName;
-    private String mechanicPhone;
-    private String mechanicEmail;
+    private String technicianFirstName;
+    private String technicianLastName;
+    private String technicianPhone;
+    private String technicianEmail;
     private Date date;
     private String status;
     private int idAppointment;

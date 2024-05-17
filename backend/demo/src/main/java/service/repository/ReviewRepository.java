@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
-    List<Review> findByMechanicProfile_IdMechanic(int idMechanic);
+    List<Review> findByTechnicianProfile_IdTechnician(int idTechnician);
 
-    @Query("SELECT AVG(r.grade) FROM Review r WHERE r.mechanicProfile.idMechanic = :mechanicId")
-    Float findAvgGradeByMechanicId(int mechanicId);
+    @Query("SELECT AVG(r.grade) FROM Review r WHERE r.technicianProfile.idTechnician = :TechnicianId")
+    Float findAvgGradeByTechnicianId(int TechnicianId);
 }

@@ -24,8 +24,8 @@ public class Review {
     private UserProfile userProfile;
 
     @ManyToOne
-    @JoinColumn(name = "mechanicid", referencedColumnName = "idmechanic")
-    private MechanicProfile mechanicProfile;
+    @JoinColumn(name = "technicianid", referencedColumnName = "idtechnician")
+    private TechnicianProfile technicianProfile;
 
     public float getGrade() {
         return grade;
@@ -59,11 +59,11 @@ public class Review {
         this.userProfile = userProfile;
     }
 
-    public MechanicProfile getMechanicProfile() {
-        return mechanicProfile;
+    public TechnicianProfile getTechnicianProfile() {
+        return technicianProfile;
     }
 
-    public void setMechanicProfile(MechanicProfile mechanicProfile) {
-        this.mechanicProfile = mechanicProfile;
+    public void setTechnicianProfile(TechnicianProfile technicianProfile) {
+        this.technicianProfile = technicianProfile;
     }
 }

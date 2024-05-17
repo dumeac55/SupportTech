@@ -1,40 +1,19 @@
-/* Reset CSS */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.home-image {
+  margin-top: 25px;
+  width: 100px;
+  height: auto;
+  cursor: pointer;
+}
+  .navbar{
+    justify-content: space-between;
   }
-  
-  /* Main styles */
-  header {
-    background-color: #333; /* Background color of the header */
+  span{
+    padding-right: 3rem;
   }
-  
-  nav ul {
-    list-style: none; /* Remove default bullet points */
-    display: flex;
-    justify-content: space-between; /* Items are evenly distributed */
-    align-items: center; /* Items are vertically centered */
-    padding: 10px; /* Add some padding */
-  }
-  
-  nav ul li {
-    margin-right: 10px; /* Add some space between list items */
-  }
-  
-  nav ul li:last-child {
-    margin-right: 0; /* Remove margin from last list item */
-  }
-  
-  nav ul li a {
+  .menu-functions a {
+    color: inherit;
     text-decoration: none;
-    color: #fff; /* Text color */
-    padding: 5px 10px; /* Add padding */
-    border-radius: 5px; /* Add some border radius */
-    transition: background-color 0.3s; /* Smooth transition for background color */
-  }
-  
-  nav ul li a:hover {
-    background-color: #555; /* Darken the background color on hover */
-  }
-  
+}
+.menu-functions a:hover{
+  background-color: #1e668f;
+}

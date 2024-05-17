@@ -1,12 +1,11 @@
 package service.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import service.dto.AppointmentDto;
-import service.dto.MechanicAppointmentDto;
+import service.dto.TechnicianAppointmentDto;
 import service.dto.UserAppointmentDto;
 import service.entity.*;
 import service.repository.*;
@@ -21,7 +20,7 @@ public class AppointmentService {
 
     private final UserRepository userRepository;
 
-    private final MechanicProfileRepository mechanicProfileRepository;
+    private final TechnicianProfileRepository technicianProfileRepository;
 
     private final TypeRepository typeRepository;
     private final UserProfileRepository userProfileRepository;
@@ -32,14 +31,14 @@ public class AppointmentService {
 
     public ResponseEntity<?> addAppointment(AppointmentDto appointmentDto) {
         User user = userRepository.findByUsername(appointmentDto.getUsernameUser());
-        MechanicProfile mechanicProfile = mechanicProfileRepository.findByUsername(appointmentDto.getUsernameMechanic());
+        TechnicianProfile technicianProfile = technicianProfileRepository.findByUsername(appointmentDto.getUsernameTechnician());
         Type type = typeRepository.findByNameType(appointmentDto.getType());
-        if (user == null || mechanicProfile == null || type == null) {
-            return new ResponseEntity<>("Mechanic or user or type doesn t exist", HttpStatus.BAD_REQUEST);
+        if (user == null || technicianProfile == null || type == null) {
+            return new ResponseEntity<>("Technician or user or type doesn t exist", HttpStatus.BAD_REQUEST);
         } else {
             Appointment appointment = new Appointment();
             appointment.setDate(appointmentDto.getData());
-            appointment.setMechanic(mechanicProfile);
+            appointment.setTechnician(technicianProfile);
             appointment.setUser(user);
             appointment.setType(type);
             appointment.setStatus("Pending");
@@ -58,10 +57,10 @@ public class AppointmentService {
                 UserAppointmentDto userAppointmentDto = new UserAppointmentDto();
                 userAppointmentDto.setDate(appointment.getDate());
                 userAppointmentDto.setNameType(appointment.getType().getNameType());
-                userAppointmentDto.setMechanicEmail(appointment.getMechanic().getEmail());
-                userAppointmentDto.setMechanicPhone(appointment.getMechanic().getPhone());
-                userAppointmentDto.setMechanicLastName(appointment.getMechanic().getLastName());
-                userAppointmentDto.setMechanicFirstName(appointment.getMechanic().getFirstName());
+                userAppointmentDto.setTechnicianEmail(appointment.getTechnician().getEmail());
+                userAppointmentDto.setTechnicianPhone(appointment.getTechnician().getPhone());
+                userAppointmentDto.setTechnicianLastName(appointment.getTechnician().getLastName());
+                userAppointmentDto.setTechnicianFirstName(appointment.getTechnician().getFirstName());
                 userAppointmentDto.setStatus(appointment.getStatus());
                 userAppointmentDto.setIdAppointment(appointment.getId());
                 userAppointmentDtoList.add(userAppointmentDto);
@@ -70,26 +69,26 @@ public class AppointmentService {
         }
     }
 
-    public ResponseEntity<?> getMechanicAppointments(int id) {
-        List<Appointment> appointmentList = appointmentRepository.findByMechanic(id);
+    public ResponseEntity<?> getTechnicianAppointments(int id) {
+        List<Appointment> appointmentList = appointmentRepository.findByTechnician(id);
         if (appointmentList.isEmpty()) {
             return new ResponseEntity<>(" ", HttpStatus.NO_CONTENT);
         } else {
-            List<MechanicAppointmentDto> mechanicAppointmentDtoList = new ArrayList<>();
+            List<TechnicianAppointmentDto> TechnicianAppointmentDtoList = new ArrayList<>();
             for (Appointment appointment : appointmentList) {
                 UserProfile userProfile = userProfileRepository.findByUsername(appointment.getUser().getUsername());
-                MechanicAppointmentDto mechanicAppointmentDto = new MechanicAppointmentDto();
-                mechanicAppointmentDto.setDate(appointment.getDate());
-                mechanicAppointmentDto.setNameType(appointment.getType().getNameType());
-                mechanicAppointmentDto.setUserEmail(userProfile.getEmail());
-                mechanicAppointmentDto.setUserPhone(userProfile.getPhone());
-                mechanicAppointmentDto.setUserLastName(userProfile.getLastName());
-                mechanicAppointmentDto.setUserFirstName(userProfile.getFirstName());
-                mechanicAppointmentDto.setStatus(appointment.getStatus());
-                mechanicAppointmentDto.setIdAppointment(appointment.getId());
-                mechanicAppointmentDtoList.add(mechanicAppointmentDto);
+                TechnicianAppointmentDto TechnicianAppointmentDto = new TechnicianAppointmentDto();
+                TechnicianAppointmentDto.setDate(appointment.getDate());
+                TechnicianAppointmentDto.setNameType(appointment.getType().getNameType());
+                TechnicianAppointmentDto.setUserEmail(userProfile.getEmail());
+                TechnicianAppointmentDto.setUserPhone(userProfile.getPhone());
+                TechnicianAppointmentDto.setUserLastName(userProfile.getLastName());
+                TechnicianAppointmentDto.setUserFirstName(userProfile.getFirstName());
+                TechnicianAppointmentDto.setStatus(appointment.getStatus());
+                TechnicianAppointmentDto.setIdAppointment(appointment.getId());
+                TechnicianAppointmentDtoList.add(TechnicianAppointmentDto);
             }
-            return new ResponseEntity<>(mechanicAppointmentDtoList, HttpStatus.OK);
+            return new ResponseEntity<>(TechnicianAppointmentDtoList, HttpStatus.OK);
         }
     }
 
@@ -106,8 +105,8 @@ public class AppointmentService {
     }
 
 
-    public List<String> getFreeTimeSlots(int mechanicId, Date data) {
-        List<Appointment> mechanicAppointments = appointmentRepository.getAppointmentsByDateAndStatus(data, mechanicId);
+    public List<String> getFreeTimeSlots(int TechnicianId, Date data) {
+        List<Appointment> TechnicianAppointments = appointmentRepository.getAppointmentsByDateAndStatus(data, TechnicianId);
         List<String> busyHours = new ArrayList<>();
         List<String> freeHours = new ArrayList<>();
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -120,8 +119,8 @@ public class AppointmentService {
             System.out.println(timeSlot);
         }
 
-        for (Appointment appointment : mechanicAppointments) {
-            if (appointment.getStatus().equals("Pending") || appointment.getStatus().equals("Done")) {
+        for (Appointment appointment : TechnicianAppointments) {
+            if (appointment.getStatus().equals("Pending") || appointment.getStatus().equals("Done") || appointment.getStatus().equals("Can`t fix")) {
                 Date appointmentStart = appointment.getDate();
                 String formattedTime = timeFormat.format(appointmentStart);
                 busyHours.add(formattedTime);
@@ -131,4 +130,3 @@ public class AppointmentService {
         return freeHours;
     }
 }
-

@@ -5,14 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import service.dto.ReviewDto;
-import service.entity.MechanicProfile;
+import service.entity.TechnicianProfile;
 import service.entity.Review;
 import service.entity.UserProfile;
-import service.repository.MechanicProfileRepository;
+import service.repository.TechnicianProfileRepository;
 import service.repository.ReviewRepository;
 import service.repository.UserProfileRepository;
 
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,38 +22,38 @@ public class ReviewService {
     @Autowired
     private UserProfileRepository userProfileRepository;
     @Autowired
-    private MechanicProfileRepository mechanicProfileRepository;
-    public ResponseEntity<?> getReviewByIdMechanic(int idMechanic){
+    private TechnicianProfileRepository technicianProfileRepository;
+    public ResponseEntity<?> getReviewByIdTechnician(int idTechnician){
 
-        MechanicProfile mechanicProfile1 = mechanicProfileRepository.findById(idMechanic);
-        if( mechanicProfile1 == null){
-            return new ResponseEntity<>("Mechanic not found", HttpStatus.NOT_FOUND);
+        TechnicianProfile technicianProfile1 = technicianProfileRepository.findById(idTechnician);
+        if( technicianProfile1 == null){
+            return new ResponseEntity<>("Technician not found", HttpStatus.NOT_FOUND);
         }
-        List<Review> reviews = reviewRepository.findByMechanicProfile_IdMechanic(mechanicProfile1.getIdProfile());
+        List<Review> reviews = reviewRepository.findByTechnicianProfile_IdTechnician(technicianProfile1.getIdTechnician());
         List<ReviewDto> reviewDtos = new ArrayList<>();
         for (Review review :reviews){
             ReviewDto reviewDto = new ReviewDto();
-            reviewDto.setMechanicId(review.getMechanicProfile().getIdProfile());
+            reviewDto.setTechnicianId(review.getTechnicianProfile().getIdTechnician());
             reviewDto.setDescription(review.getDescription());
             reviewDto.setGrade(review.getGrade());
             reviewDto.setUserId(review.getUserProfile().getIdProfile());
-            reviewDto.setAvgGrade(reviewRepository.findAvgGradeByMechanicId(idMechanic));
+            reviewDto.setAvgGrade(reviewRepository.findAvgGradeByTechnicianId(idTechnician));
             reviewDtos.add(reviewDto);
         }
         return new ResponseEntity<>(reviewDtos, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> getAvgGradeByIdMechanic(int id){
-        return new ResponseEntity<>(reviewRepository.findAvgGradeByMechanicId(id).toString(), HttpStatus.OK);
+    public ResponseEntity<?> getAvgGradeByIdTechnician(int id){
+        return new ResponseEntity<>(reviewRepository.findAvgGradeByTechnicianId(id).toString(), HttpStatus.OK);
     }
 
     public ResponseEntity<?> addReview(ReviewDto reviewDto){
         UserProfile userProfile = userProfileRepository.findByIdProfile(reviewDto.getUserId());
-        MechanicProfile mechanicProfile = mechanicProfileRepository.findById(reviewDto.getMechanicId());
+        TechnicianProfile technicianProfile = technicianProfileRepository.findById(reviewDto.getTechnicianId());
         Review review = new Review();
         review.setDescription(reviewDto.getDescription());
         review.setGrade(reviewDto.getGrade());
-        review.setMechanicProfile(mechanicProfile);
+        review.setTechnicianProfile(technicianProfile);
         review.setUserProfile(userProfile);
         reviewRepository.save(review);
         return new ResponseEntity<>("Review successfull added", HttpStatus.OK);

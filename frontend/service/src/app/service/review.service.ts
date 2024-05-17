@@ -10,11 +10,11 @@ export class ReviewService {
 
   constructor(private http: HttpClient) { }
 
-  async getReviewByIdMechanic(id: number) : Promise <ReviewDto | undefined > {
-    return await this.http.get<ReviewDto>(this.URL + 'review?idMechanicProfile='+id).toPromise();
+  async getReviewByIdTechnician(id: number) : Promise <ReviewDto | undefined > {
+    return await this.http.get<ReviewDto>(this.URL + 'review?idTechnicianProfile='+id).toPromise();
   }
 
-  async getAvgReviewByIdMechaic(id:number) : Promise< String | undefined> {
+  async getAvgReviewByIdTehnician(id:number) : Promise< String | undefined> {
     return await this.http.get<String>(this.URL+'review/'+id+'/grade').toPromise();
   }
 }

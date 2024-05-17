@@ -43,13 +43,6 @@ public class CompariService {
     public void getCel(){ celService.fetchData();}
     public void getEmag(){ emagService.fetchData();}
 
-    public void getasd(){
-        List<Compari> lista= compariRepository.findByNameProductContaining("procesor", "intel", "i7" , "0", "33300");
-        for(Compari s :lista){
-            System.out.println("Nume produs   "+ s.getNameProduct());
-            System.out.println("Pret produs    " +s.getPrice());
-        }
-    }
     public ResponseEntity<?> testCompariEmag(){
         List<CompariDto> compariDtoLista = new ArrayList<>();
         List<Compari> lista = compariRepository.findByNameProducttEmag("0", "6000");

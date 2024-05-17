@@ -16,10 +16,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     @Query("SELECT a FROM Appointment a JOIN a.user u WHERE a.user.idUser = :userId")
     List<Appointment> findByUser(@Param("userId") int userId);
 
-    @Query("SELECT a FROM Appointment a JOIN a.user u WHERE a.mechanic.idMechanic = :userId")
-    List<Appointment> findByMechanic(@Param("userId") int userId);
+    @Query("SELECT a FROM Appointment a JOIN a.user u WHERE a.technician.idTechnician = :userId")
+    List<Appointment> findByTechnician(@Param("userId") int userId);
 
-    @Query("SELECT a FROM Appointment a JOIN a.user u WHERE a.mechanic.idMechanic = :userId and date(a.date) = :date")
-    List<Appointment> getAppointmentsByDateAndStatus(@Param("date") Date date, @Param("userId") int idMechanic);
+    @Query("SELECT a FROM Appointment a JOIN a.user u WHERE a.technician.idTechnician = :userId and date(a.date) = :date")
+    List<Appointment> getAppointmentsByDateAndStatus(@Param("date") Date date, @Param("userId") int idTechnician);
 
 }

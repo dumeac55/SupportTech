@@ -24,6 +24,7 @@ export class AppComponent {
       this.isLogged = false;
     }
   }
+
   logout(): void {
     this.isLogged = false;
     localStorage.removeItem('token');

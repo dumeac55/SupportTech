@@ -4,10 +4,9 @@ import { UserProfileService } from '../../service/user-profile.service';
 import { UserProfileDto } from '../../model/user-profile-dto';
 import { AppointmentDto } from '../../model/appointment-dto';
 import { AppointmentService } from '../../service/appointment.service';
-import { MechanicService } from '../../service/mechanic.service';
 import { Router } from '@angular/router';
-import { MechanicAppointmentDto } from '../../model/mechanic-appointment-dto';
-
+import { TechnicianService } from '../../service/technician.service';
+import { TechnicianAppointmentDto } from '../../model/technician-appointment-dto';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -15,14 +14,14 @@ import { MechanicAppointmentDto } from '../../model/mechanic-appointment-dto';
 })
 export class ProfileComponent {
   userProfile: UserProfileDto = {};
-  haveAppointment: boolean = true;
+  haveAppointment: boolean = false;
   appointments: AppointmentDto[] = [];
-  appointmentsMchanic: MechanicAppointmentDto[] = [];
+  appointmentsTechnician: TechnicianAppointmentDto[] = [];
   role?: String;
   constructor(private jwtStorage: JwtStorageService,
               private userProfileService: UserProfileService,
               private appointmentService:AppointmentService,
-              private mechanicService: MechanicService,
+              private technicianService: TechnicianService,
               private router: Router){}
 
   ngOnInit(){
@@ -49,10 +48,10 @@ export class ProfileComponent {
             this.userProfile = userProfile;
             if (Array.isArray(appointment)) {
                 this.appointments = appointment;
-                this.haveAppointment = false;
+                this.haveAppointment = true;
                 console.log('Appointments loaded successfully:', appointment);
             } else {
-                this.haveAppointment = true;
+                this.haveAppointment = false;
                 console.log('Appointments not found or not in correct format.');
             }
             console.log('Profile loaded successfully:', userProfile);
@@ -60,18 +59,20 @@ export class ProfileComponent {
             console.log('Failed to load profile.');
           }
         }
-        else if (this.role ==='mechanic')
+        else if (this.role ==='technician')
           {
-          const userProfile = await this.mechanicService.getUserProfile();
+          const userProfile = await this.technicianService.getUserProfile();
           console.log(userProfile?.role);
           if (userProfile) {
             this.userProfile = userProfile;
-            const appointment = await this.mechanicService.getMechanicAppointment();
+            const appointment = await this.technicianService.getTechnicianAppointment();
             if (Array.isArray(appointment)) {
-              this.appointmentsMchanic = appointment;
+              this.appointmentsTechnician = appointment;
               console.log('Appointments loaded successfully:', appointment);
+              this.haveAppointment = true;
             } else {
               console.log('Appointments not found or not in correct format.');
+              this.haveAppointment = false;
             }
             console.log('Profile loaded successfully:', userProfile);
             console.log('Appointments loaded:', appointment);

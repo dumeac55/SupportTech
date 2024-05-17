@@ -15,17 +15,6 @@ public class CompariController {
     @Autowired
     private CompariService compariService;
 
-//    @GetMapping
-//    private void get(){
-//        compariService.getEmag();
-//        compariService.getCel();
-//        compariService.getEvomag();
-//    }
-    @GetMapping("/a")
-    private void gett(){
-        compariService.getasd();
-    }
-
     @GetMapping("/evomag")
     private ResponseEntity<?> testComparievomag(){
         return compariService.testCompariEvomag();

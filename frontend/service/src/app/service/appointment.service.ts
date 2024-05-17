@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { MechanicDto } from '../model/mechanic-dto';
 import { HttpClient } from '@angular/common/http';
 import { TypeDto } from '../model/type-dto';
 import { CreateAppointmentDto } from '../model/create-appointment-dto';
 import { Observable } from 'rxjs';
+import { TechnicianDto } from '../model/technician-dto';
 @Injectable({
   providedIn: 'root',
 })
 export class AppointmentService {
   private URL = 'http://localhost:8080/api/';
-  mechanicDto?: MechanicDto;
+  technicianDto?: TechnicianDto;
   constructor(private http: HttpClient) {}
 
-  async getMechanics(): Promise<MechanicDto | undefined> {
-    return await this.http.get<MechanicDto>(this.URL + 'mechanic').toPromise();
+  async getTechnicians(): Promise<TechnicianDto | undefined> {
+    return await this.http.get<TechnicianDto>(this.URL + 'technician').toPromise();
   }
 
   async getTypes(): Promise<TypeDto | undefined> {
@@ -22,13 +22,13 @@ export class AppointmentService {
 
   createAppointment(
     usernameUser: string,
-    usernameMechanic: string,
+    usernameTechnician: string,
     type: string,
     data: Date
   ): Observable<any> {
     const appointmentDto: CreateAppointmentDto = {
       usernameUser: usernameUser,
-      usernameMechanic: usernameMechanic,
+      usernameTechnician: usernameTechnician,
       type: type,
       data: data,
     };
@@ -47,10 +47,10 @@ export class AppointmentService {
     );
   }
 
-  getMechanicOrar(id: number, date: Date): Observable<any> {
+  getTechnicianOrar(id: number, date: Date): Observable<any> {
 
     return this.http.get<any>(
-      this.URL + 'appointment/orar2?idMechanic=' + id + '&date=' + date
+      this.URL + 'appointment/orar2?idTechnician=' + id + '&date=' + date
     );
   }
 }

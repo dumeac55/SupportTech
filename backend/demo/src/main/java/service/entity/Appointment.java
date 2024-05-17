@@ -21,8 +21,8 @@ public class Appointment {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "mechanicid", referencedColumnName = "idmechanic")
-    private MechanicProfile mechanic;
+    @JoinColumn(name = "technicianid", referencedColumnName = "idtechnician")
+    private TechnicianProfile technician;
 
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -51,12 +51,12 @@ public class Appointment {
         this.user = user;
     }
 
-    public MechanicProfile getMechanic() {
-        return mechanic;
+    public TechnicianProfile getTechnician() {
+        return technician;
     }
 
-    public void setMechanic(MechanicProfile mechanic) {
-        this.mechanic = mechanic;
+    public void setTechnician(TechnicianProfile technician) {
+        this.technician = technician;
     }
 
     public Date getDate() {

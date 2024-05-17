@@ -1,6 +1,6 @@
 export class CreateAppointmentDto {
     usernameUser?: string;
-    usernameMechanic?: string;
+    usernameTechnician?: string;
     type?: string;
     data?: Date;
 }
