@@ -44,10 +44,8 @@ export class AppointmentComponent {
     if (token && !this.jwt.isTokenExpired(token)) {
       try {
         const result = await this.appointmentService.getTechnicians();
-        const type = await this.appointmentService.getTypes();
-        if (Array.isArray(result) && Array.isArray(type)) {
+        if (Array.isArray(result)) {
           this.technicians = result;
-          this.types = type;
         }
       } catch (error) {
         console.error('Error getting technicians:', error);
@@ -61,6 +59,31 @@ export class AppointmentComponent {
 
   selectTechnician(technician: TechnicianDto): void {
     this.selectedTechnician = technician;
+    if (technician.username) {
+      this.technicianService.getTechnicianProfileByUsername(technician.username).then(
+        (idTechnician) => {
+          if (idTechnician !== undefined) {
+            this.appointmentService.getTypesByIdTechnician(idTechnician).then(
+              (types) => {
+                if(Array.isArray(types))
+                this.types = types;
+              },
+              (error: string) => {
+                console.error('Error getting types for technician:', error);
+              }
+            );
+          } else {
+            console.error('Technician id is undefined');
+          }
+        }
+      ).catch(
+        (error) => {
+          console.error('Error getting technician ID:', error);
+        }
+      );
+    } else {
+      console.error('Selected technician does not have a valid username');
+    }
   }
 
   selectType(type: TypeDto): void {

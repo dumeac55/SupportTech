@@ -8,19 +8,18 @@ import { ForumComponent } from './components/forum/forum.component';
 import { CompariComponent } from './components/compari/compari.component';
 
 const routes: Routes = [
-  {path: 'login', component:SignInComponent},
-  {path: 'register', component:SignUpComponent},
-  {path: 'profile', component:ProfileComponent},
-  {path: 'appointment', component:AppointmentComponent},
-  {path: 'forum', component: ForumComponent },
-  {path: 'forum/:id', component: ForumComponent },
-  {path: 'compari', component: CompariComponent},
-  { path: '**', redirectTo: '/login' }
-
+  { path: 'login', component: SignInComponent },
+  { path: 'register', component: SignUpComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'appointment', component: AppointmentComponent },
+  { path: 'forum', component: ForumComponent },
+  { path: 'forum/:id', component: ForumComponent },
+  { path: 'compari', component: CompariComponent },
+  { path: '**', redirectTo: '/login' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

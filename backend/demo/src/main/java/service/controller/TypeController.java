@@ -27,4 +27,9 @@ public class TypeController {
     private ResponseEntity<?> addType(@RequestBody TypeDto typeDto){
        return typeService.addType(typeDto);
     }
+
+    @GetMapping("/type/{id}")
+    private ResponseEntity<?> getTypesByIdTechnician(@PathVariable("id") int id){
+        return typeService.getTypesByIdTechnician(id);
+    }
 }

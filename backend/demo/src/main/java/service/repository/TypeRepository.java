@@ -5,8 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import service.entity.Type;
 
+import java.util.List;
+
 @Transactional
 @Repository
 public interface TypeRepository extends JpaRepository<Type, Integer> {
-    Type findByNameType(String name);
+    Type findByNameTypeAndTechnicianProfile_Username(String name, String technicianUsername);
+    List<Type> findByTechnicianProfile_IdTechnician(int idTechnician);
 }

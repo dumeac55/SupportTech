@@ -19,6 +19,9 @@ export class AppointmentService {
   async getTypes(): Promise<TypeDto | undefined> {
     return await this.http.get<TypeDto>(this.URL + 'utils/types').toPromise();
   }
+  async getTypesByIdTechnician(id: number): Promise<TypeDto | undefined> {
+    return await this.http.get<TypeDto>(this.URL + 'utils/type/'+ id).toPromise();
+  }
 
   createAppointment(
     usernameUser: string,

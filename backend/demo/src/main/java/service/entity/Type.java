@@ -19,6 +19,18 @@ public class Type {
     @Column(name = "price")
     private int price;
 
+    @ManyToOne
+    @JoinColumn(name = "technicianid", referencedColumnName = "idtechnician")
+    private TechnicianProfile technicianProfile;
+
+    public TechnicianProfile getTechnicianProfile() {
+        return technicianProfile;
+    }
+
+    public void setTechnicianProfile(TechnicianProfile technicianProfile) {
+        this.technicianProfile = technicianProfile;
+    }
+
     public Type(String nameType, int price) {
         this.nameType = nameType;
         this.price = price;

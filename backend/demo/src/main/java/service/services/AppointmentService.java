@@ -32,7 +32,7 @@ public class AppointmentService {
     public ResponseEntity<?> addAppointment(AppointmentDto appointmentDto) {
         User user = userRepository.findByUsername(appointmentDto.getUsernameUser());
         TechnicianProfile technicianProfile = technicianProfileRepository.findByUsername(appointmentDto.getUsernameTechnician());
-        Type type = typeRepository.findByNameType(appointmentDto.getType());
+        Type type = typeRepository.findByNameTypeAndTechnicianProfile_Username(appointmentDto.getType(), appointmentDto.getUsernameTechnician());
         if (user == null || technicianProfile == null || type == null) {
             return new ResponseEntity<>("Technician or user or type doesn t exist", HttpStatus.BAD_REQUEST);
         } else {
