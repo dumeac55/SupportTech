@@ -9,15 +9,15 @@ export class CompariService {
   private URL = 'http://localhost:8080/api/';
   constructor(private http: HttpClient) { }
 
-  async testCompariEmag(): Promise<CompariDto | undefined>{
-    return await this.http.get<CompariDto>(this.URL + "compari/emag").toPromise();
+  async CompariEmag(wordSearch:string, infRange:string, supRange:string, domain:string): Promise<CompariDto[] | undefined>{
+    return await this.http.get<CompariDto[]>(this.URL + "compari/emag?wordSearch=" + wordSearch + "&infRange=" + infRange + "&supRange=" + supRange + "&domain="+ domain).toPromise();
   }
 
-  async testCompariCel(): Promise<CompariDto | undefined>{
-    return await this.http.get<CompariDto>(this.URL + "compari/cel").toPromise();
+  async CompariCel(wordSearch:string, infRange:string, supRange:string, domain:string): Promise<CompariDto[] | undefined>{
+    return await this.http.get<CompariDto[]>(this.URL + "compari/cel?wordSearch=" + wordSearch + "&infRange=" + infRange +"&supRange=" + supRange+ "&domain="+ domain).toPromise();
   }
 
-  async testCompariEvomag(): Promise<CompariDto | undefined>{
-    return await this.http.get<CompariDto>(this.URL + "compari/evomag").toPromise();
+  async CompariEvomag(wordSearch:string, infRange:string, supRange:string, domain:string): Promise<CompariDto[] | undefined>{
+    return await this.http.get<CompariDto[]>(this.URL + "compari/evomag?wordSearch=" + wordSearch + "&infRange=" + infRange +"&supRange=" + supRange+"&domain="+ domain).toPromise();
   }
 }

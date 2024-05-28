@@ -1,8 +1,10 @@
-export class CompariDto {
+export class WishListDto {
+    idProduct?: number;
+    idUser?: number;
     nameProduct?: string;
     price?: string;
     company?: string;
     linkImage?: string;
     linkProduct?: string;
-    idProduct?: number;
+    idWishList?: number;
 }

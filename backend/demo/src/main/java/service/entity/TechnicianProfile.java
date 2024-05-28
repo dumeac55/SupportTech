@@ -27,7 +27,6 @@ public class TechnicianProfile {
     @Column(name = "phone", unique = true, nullable = false)
     private String phone;
 
-
     @Column(name = "username")
     private String username;
 

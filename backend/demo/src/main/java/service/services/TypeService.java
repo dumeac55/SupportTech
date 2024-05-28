@@ -34,11 +34,24 @@ public class TypeService {
             return new ResponseEntity<>("Error Type", HttpStatus.BAD_REQUEST);
         }
         else{
-            Type type = new Type();
-            type.setNameType(typeDto.getNameType());
-            type.setPrice(typeDto.getPrice());
-            typeRepository.save(type);
-            return new ResponseEntity<>(type, HttpStatus.CREATED);
+            Type type = typeRepository.findById(typeDto.getIdType());
+            if(type!=null){
+                TechnicianProfile technicianProfile = technicianProfileRepository.findById(typeDto.getTechnicianId());
+                type.setNameType(typeDto.getNameType());
+                type.setPrice(typeDto.getPrice());
+                type.setTechnicianProfile(technicianProfile);
+                typeRepository.save(type);
+                return new ResponseEntity<>(type, HttpStatus.OK);
+            }
+            else {
+                Type newType = new Type();
+                TechnicianProfile technicianProfile = technicianProfileRepository.findById(typeDto.getTechnicianId());
+                newType.setNameType(typeDto.getNameType());
+                newType.setPrice(typeDto.getPrice());
+                newType.setTechnicianProfile(technicianProfile);
+                typeRepository.save(newType);
+                return new ResponseEntity<>(newType, HttpStatus.CREATED);
+            }
         }
     }
 

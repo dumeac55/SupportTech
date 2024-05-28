@@ -22,10 +22,12 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ForumComponent } from './components/forum/forum.component';
 import { CompariComponent } from './components/compari/compari.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatCardModule} from '@angular/material/card';
-import {MatTableModule} from '@angular/material/table';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { TypeComponent } from './type/type.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +37,7 @@ import {MatTableModule} from '@angular/material/table';
     AppointmentComponent,
     ForumComponent,
     CompariComponent,
+    TypeComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,9 @@ import {MatTableModule} from '@angular/material/table';
     MatTooltipModule,
     MatToolbarModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   providers: [provideAnimationsAsync(), provideNativeDateAdapter()],
   bootstrap: [AppComponent],

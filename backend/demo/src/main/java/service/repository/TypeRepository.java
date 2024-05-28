@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface TypeRepository extends JpaRepository<Type, Integer> {
     Type findByNameTypeAndTechnicianProfile_Username(String name, String technicianUsername);
+    Type findById(int id);
     List<Type> findByTechnicianProfile_IdTechnician(int idTechnician);
 }

@@ -51,7 +51,6 @@ export class AppointmentService {
   }
 
   getTechnicianOrar(id: number, date: Date): Observable<any> {
-
     return this.http.get<any>(
       this.URL + 'appointment/orar2?idTechnician=' + id + '&date=' + date
     );

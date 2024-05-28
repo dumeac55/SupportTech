@@ -10,129 +10,157 @@
     <p><strong>Telefon:</strong> {{ userProfile.phone }}</p>
   </div>
 </div>
-
-<div *ngIf="appointments.length > 0 || appointmentsTechnician.length > 0">
-  <div *ngIf="role==='custom'">
-    <table class="appointments">
-      <thead>
-        <tr>
-          <th>Nume</th>
-          <th>Date</th>
-          <th>Technician</th>
-          <th>Telefon Technician</th>
-          <th>Email Technician</th>
-          <th>Status</th>
-          <th>Acțiuni</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let appointment of appointments">
-            <td>{{ appointment.nameType }}</td>
-            <td>{{ appointment.date | date : "dd/MM/yyyy HH:mm:ss" }}</td>
-            <td>
-              {{ appointment.technicianFirstName }} {{ appointment.technicianLastName }}
-            </td>
-            <td>{{ appointment.technicianPhone }}</td>
-            <td>{{ appointment.technicianEmail }}</td>
-            <td>{{ appointment.status }}</td>
-            <td>
-              <button
-                *ngIf="
-                  appointment.idAppointment !== undefined &&
-                  appointment.status === 'Pending' &&
-                  (userProfile.role === 'custom' || userProfile.role === 'technician')
-                "
-                (click)="
-                  updateAppointmentStatus(appointment.idAppointment, 'Canceled')
-                "
-              >
-                Cancel
-              </button>
-              <button
-                *ngIf="
-                  appointment.idAppointment !== undefined &&
-                  (userProfile.role !== 'custom' &&
-                    appointment.status === 'Pending')
-                "
-                (click)="updateAppointmentStatus(appointment.idAppointment, 'Done')"
-              >
-                Done
-              </button>
-              <button
-                *ngIf="
-                  appointment.idAppointment !== undefined &&
-                  (userProfile.role !== 'custom' &&
-                    appointment.status === 'Pending')
-                "
-                (click)="updateAppointmentStatus(appointment.idAppointment, 'Can`t fix')"
-              >
-                Can't fix
-              </button>
-            </td>
+<div class="buttons">
+  <button mat-raised-button color="primary" (click)="toggleView('appointments')">Programări</button>
+  <button mat-raised-button color="primary" (click)="toggleView('wishlist')">Wishlist</button>
+</div>
+<div *ngIf="showAppointments">
+  <div *ngIf="appointments.length > 0 || appointmentsTechnician.length > 0">
+    <div *ngIf="role==='custom'">
+      <table class="appointments">
+        <thead>
+          <tr>
+            <th>Nume</th>
+            <th>Date</th>
+            <th>Technician</th>
+            <th>Telefon Technician</th>
+            <th>Email Technician</th>
+            <th>Status</th>
+            <th>Acțiuni</th>
           </tr>
-      </tbody>
-    </table>
-  </div>
-    <div *ngIf="role==='technician'">
-    <table class="appointments">
-      <thead>
-        <tr>
-          <th>Nume</th>
-          <th>Date</th>
-          <th>Utilizator</th>
-          <th>Telefon Utilizator</th>
-          <th>Email Utilizator</th>
-          <th>Status</th>
-          <th>Acțiuni</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let appointment of appointmentsTechnician">
-            <td>{{ appointment.nameType }}</td>
-            <td>{{ appointment.date | date : "dd/MM/yyyy HH:mm:ss" }}</td>
-            <td>
-              {{ appointment.userFirstName }} {{ appointment.userLastName }}
-            </td>
-            <td>{{ appointment.userPhone }}</td>
-            <td>{{ appointment.userEmail }}</td>
-            <td>{{ appointment.status }}</td>
-            <td>
-              <button
-                *ngIf="
-                  appointment.idAppointment !== undefined &&
-                  appointment.status === 'Pending' &&
-                  (userProfile.role === 'custom' || userProfile.role === 'technician')
-                "
-                (click)="
-                  updateAppointmentStatus(appointment.idAppointment, 'Canceled')
-                "
-              >
-                Cancel
-              </button>
-              <button
-                *ngIf="
-                  appointment.idAppointment !== undefined &&
-                  (userProfile.role !== 'custom' &&
-                    appointment.status === 'Pending')
-                "
-                (click)="updateAppointmentStatus(appointment.idAppointment, 'Done')"
-              >
-                Done
-              </button>
-              <button
-                *ngIf="
-                  appointment.idAppointment !== undefined &&
-                  (userProfile.role !== 'custom' &&
-                    appointment.status === 'Pending')
-                "
-                (click)="updateAppointmentStatus(appointment.idAppointment, 'Can`t fix')"
-              >
-                Can't fix
-              </button>
-            </td>
+        </thead>
+        <tbody>
+            <tr *ngFor="let appointment of appointments">
+              <td>{{ appointment.nameType }}</td>
+              <td>{{ appointment.date | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+              <td>
+                {{ appointment.technicianFirstName }} {{ appointment.technicianLastName }}
+              </td>
+              <td>{{ appointment.technicianPhone }}</td>
+              <td>{{ appointment.technicianEmail }}</td>
+              <td>{{ appointment.status }}</td>
+              <td>
+                <button
+                  *ngIf="
+                    appointment.idAppointment !== undefined &&
+                    appointment.status === 'Pending' &&
+                    (userProfile.role === 'custom' || userProfile.role === 'technician')
+                  "
+                  (click)="
+                    updateAppointmentStatus(appointment.idAppointment, 'Canceled')
+                  "
+                >
+                  Cancel
+                </button>
+                <button
+                  *ngIf="
+                    appointment.idAppointment !== undefined &&
+                    (userProfile.role !== 'custom' &&
+                      appointment.status === 'Pending')
+                  "
+                  (click)="updateAppointmentStatus(appointment.idAppointment, 'Done')"
+                >
+                  Done
+                </button>
+                <button
+                  *ngIf="
+                    appointment.idAppointment !== undefined &&
+                    (userProfile.role !== 'custom' &&
+                      appointment.status === 'Pending')
+                  "
+                  (click)="updateAppointmentStatus(appointment.idAppointment, 'Can`t fix')"
+                >
+                  Can't fix
+                </button>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+      <div *ngIf="role==='technician'">
+      <table class="appointments">
+        <thead>
+          <tr>
+            <th>Nume</th>
+            <th>Date</th>
+            <th>Utilizator</th>
+            <th>Telefon Utilizator</th>
+            <th>Email Utilizator</th>
+            <th>Status</th>
+            <th>Acțiuni</th>
           </tr>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+            <tr *ngFor="let appointment of appointmentsTechnician">
+              <td>{{ appointment.nameType }}</td>
+              <td>{{ appointment.date | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+              <td>
+                {{ appointment.userFirstName }} {{ appointment.userLastName }}
+              </td>
+              <td>{{ appointment.userPhone }}</td>
+              <td>{{ appointment.userEmail }}</td>
+              <td>{{ appointment.status }}</td>
+              <td>
+                <button
+                  *ngIf="
+                    appointment.idAppointment !== undefined &&
+                    appointment.status === 'Pending' &&
+                    (userProfile.role === 'custom' || userProfile.role === 'technician')
+                  "
+                  (click)="
+                    updateAppointmentStatus(appointment.idAppointment, 'Canceled')
+                  "
+                >
+                  Cancel
+                </button>
+                <button
+                  *ngIf="
+                    appointment.idAppointment !== undefined &&
+                    (userProfile.role !== 'custom' &&
+                      appointment.status === 'Pending')
+                  "
+                  (click)="updateAppointmentStatus(appointment.idAppointment, 'Done')"
+                >
+                  Done
+                </button>
+                <button
+                  *ngIf="
+                    appointment.idAppointment !== undefined &&
+                    (userProfile.role !== 'custom' &&
+                      appointment.status === 'Pending')
+                  "
+                  (click)="updateAppointmentStatus(appointment.idAppointment, 'Can`t fix')"
+                >
+                  Can't fix
+                </button>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+</div>
+<div *ngIf="showWishlist">
+  <table class="wishlist">
+    <thead>
+      <tr>
+        <th>Nume Produs</th>
+        <th>Preț</th>
+        <th>Companie</th>
+        <th>Imagine</th>
+        <th>Acțiuni</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let wish of this.wishList">
+        <td>{{ wish.nameProduct }}</td>
+        <td>{{ wish.price }}</td>
+        <td>{{ wish.company }}</td>
+        <td><img [src]="wish.linkImage" alt="Product Image"></td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <div *ngIf="!haveAppointment">Nu aveti programari</div>

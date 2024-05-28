@@ -36,18 +36,21 @@ public class CompariService {
     @Autowired
     private EmagService emagService;
 
-    @Scheduled(cron = " 0 56 12 * * ?")
+    @Scheduled(cron = " 0 56 17 * * ?")
     public void getEvomag(){
         evomagService.fetchData();
     }
+    @Scheduled(cron = " 0 59 18 * * ?")
     public void getCel(){ celService.fetchData();}
+    @Scheduled(cron = " 0 58 17 * * ?")
     public void getEmag(){ emagService.fetchData();}
 
-    public ResponseEntity<?> testCompariEmag(){
+    public ResponseEntity<?> getEvomagProducts(String wordSearch, String infRange, String supRange, String domain){
         List<CompariDto> compariDtoLista = new ArrayList<>();
-        List<Compari> lista = compariRepository.findByNameProducttEmag("0", "6000");
+        List<Compari> lista = compariRepository.findByNameProducttEvomag(wordSearch, infRange, supRange, domain);
         for(Compari list:lista){
             CompariDto compariDto = new CompariDto();
+            compariDto.setIdProduct(list.getId());
             compariDto.setCompany(list.getCompany());
             compariDto.setPrice(list.getPrice());
             compariDto.setNameProduct(list.getNameProduct());
@@ -58,11 +61,12 @@ public class CompariService {
         return new ResponseEntity<>(compariDtoLista, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> testCompariCel(){
+    public ResponseEntity<?> getEmagProducts(String wordSearch, String infRange, String supRange, String domain){
         List<CompariDto> compariDtoLista = new ArrayList<>();
-        List<Compari> lista = compariRepository.findByNameProducttCel("0", "6000");
+        List<Compari> lista = compariRepository.findByNameProducttEmag(wordSearch, infRange, supRange, domain);
         for(Compari list:lista){
             CompariDto compariDto = new CompariDto();
+            compariDto.setIdProduct(list.getId());
             compariDto.setCompany(list.getCompany());
             compariDto.setPrice(list.getPrice());
             compariDto.setNameProduct(list.getNameProduct());
@@ -73,11 +77,12 @@ public class CompariService {
         return new ResponseEntity<>(compariDtoLista, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> testCompariEvomag(){
+    public ResponseEntity<?> getCelProducts(String wordSearch, String infRange, String supRange, String domain){
         List<CompariDto> compariDtoLista = new ArrayList<>();
-        List<Compari> lista = compariRepository.findByNameProducttEvomag("0", "6000");
+        List<Compari> lista = compariRepository.findByNameProducttCel(wordSearch, infRange, supRange, domain);
         for(Compari list:lista){
             CompariDto compariDto = new CompariDto();
+            compariDto.setIdProduct(list.getId());
             compariDto.setCompany(list.getCompany());
             compariDto.setPrice(list.getPrice());
             compariDto.setNameProduct(list.getNameProduct());

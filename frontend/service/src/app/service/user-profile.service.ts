@@ -25,7 +25,6 @@ export class UserProfileService {
 
   async getUserAppointment(): Promise <AppointmentDto | undefined>{
     this.id = await this.getUserIdByUserName(localStorage.getItem('username'));
-    
     return await this.http.get<AppointmentDto>(this.URL + "user/" + this.id + "/appointment").toPromise();
   }
 

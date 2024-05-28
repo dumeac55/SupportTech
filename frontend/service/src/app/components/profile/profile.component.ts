@@ -7,6 +7,8 @@ import { AppointmentService } from '../../service/appointment.service';
 import { Router } from '@angular/router';
 import { TechnicianService } from '../../service/technician.service';
 import { TechnicianAppointmentDto } from '../../model/technician-appointment-dto';
+import { WishListDto } from '../../model/wish-list-dto';
+import { WishListService } from '../../service/wish-list.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -16,12 +18,17 @@ export class ProfileComponent {
   userProfile: UserProfileDto = {};
   haveAppointment: boolean = false;
   appointments: AppointmentDto[] = [];
+  wishList: WishListDto [] = [];
   appointmentsTechnician: TechnicianAppointmentDto[] = [];
   role?: String;
+  showAppointments: boolean = false;
+  showWishlist: boolean = false;
+
   constructor(private jwtStorage: JwtStorageService,
               private userProfileService: UserProfileService,
-              private appointmentService:AppointmentService,
+              private appointmentService: AppointmentService,
               private technicianService: TechnicianService,
+              private wishListService: WishListService,
               private router: Router){}
 
   ngOnInit(){
@@ -43,6 +50,7 @@ export class ProfileComponent {
         if(this.role === 'custom'){
           const userProfile = await this.userProfileService.getUserProfile();
           const appointment = await this.userProfileService.getUserAppointment();
+          const wishList = await this.wishListService.getWishlistForUser();
           console.log(userProfile?.role);
           if (userProfile) {
             this.userProfile = userProfile;
@@ -53,6 +61,9 @@ export class ProfileComponent {
             } else {
                 this.haveAppointment = false;
                 console.log('Appointments not found or not in correct format.');
+            }
+            if (Array.isArray(wishList)) {
+              this.wishList = wishList;
             }
             console.log('Profile loaded successfully:', userProfile);
           } else {
@@ -108,6 +119,16 @@ export class ProfileComponent {
     else {
       alert("Session exirated");
       this.redirectToLogin();
+    }
+  }
+
+  toggleView(view: string) {
+    if (view === 'appointments') {
+      this.showAppointments = true;
+      this.showWishlist = false;
+    } else if (view === 'wishlist') {
+      this.showAppointments = false;
+      this.showWishlist = true;
     }
   }
 

@@ -2,10 +2,7 @@ package service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import service.services.CompariService;
 
 @RestController
@@ -16,15 +13,30 @@ public class CompariController {
     private CompariService compariService;
 
     @GetMapping("/evomag")
-    private ResponseEntity<?> testComparievomag(){
-        return compariService.testCompariEvomag();
+    private ResponseEntity<?> getEvomagProducts(@RequestParam(name = "wordSearch") String wordSearch,
+                                                @RequestParam(name = "infRange") String infRange,
+                                                @RequestParam(name = "supRange") String supRange,
+                                                @RequestParam(name = "domain") String domain){
+
+        return compariService.getEvomagProducts(wordSearch, infRange, supRange, domain);
     }
-    @GetMapping("/cel")
-    private ResponseEntity<?> testComparicel(){
-        return compariService.testCompariCel();
-    }
+
     @GetMapping("/emag")
-    private ResponseEntity<?> testCompariemag(){
-        return compariService.testCompariEmag();
+    private ResponseEntity<?> getEmagProducts(@RequestParam(name = "wordSearch") String wordSearch,
+                                                @RequestParam(name = "infRange") String infRange,
+                                                @RequestParam(name = "supRange") String supRange,
+                                                @RequestParam(name = "domain") String domain) {
+
+        return compariService.getEmagProducts(wordSearch, infRange, supRange, domain);
+
+    }
+
+    @GetMapping("/cel")
+    private ResponseEntity<?> getCelProducts(@RequestParam(name = "wordSearch") String wordSearch,
+                                                @RequestParam(name = "infRange") String infRange,
+                                                @RequestParam(name = "supRange") String supRange,
+                                                @RequestParam(name = "domain") String domain) {
+
+        return compariService.getCelProducts(wordSearch, infRange, supRange, domain);
     }
 }
