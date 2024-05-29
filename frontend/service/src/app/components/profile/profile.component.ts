@@ -9,6 +9,7 @@ import { TechnicianService } from '../../service/technician.service';
 import { TechnicianAppointmentDto } from '../../model/technician-appointment-dto';
 import { WishListDto } from '../../model/wish-list-dto';
 import { WishListService } from '../../service/wish-list.service';
+import { SignInServiceService } from '../../service/sign-in-service.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -23,13 +24,14 @@ export class ProfileComponent {
   role?: String;
   showAppointments: boolean = false;
   showWishlist: boolean = false;
-
+  displayedColumns: string[] = ['Nume', 'Data', 'Technician', 'Phone', 'Email', 'Status', 'Actions'];
   constructor(private jwtStorage: JwtStorageService,
               private userProfileService: UserProfileService,
               private appointmentService: AppointmentService,
               private technicianService: TechnicianService,
               private wishListService: WishListService,
-              private router: Router){}
+              private router: Router,
+              private signInServie: SignInServiceService){}
 
   ngOnInit(){
     const token = localStorage.getItem('token');

@@ -164,3 +164,87 @@
   </table>
 </div>
 <div *ngIf="!haveAppointment">Nu aveti programari</div>
+
+
+
+<table mat-table [dataSource]="appointments" class="mat-elevation-z8" style="background-color: #ffffff">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="Nume" >
+    <th mat-header-cell *matHeaderCellDef style="color:black"> Nume </th>
+    <td mat-cell *matCellDef="let element" style="color:black"> {{element.nameType}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="Data">
+    <th mat-header-cell *matHeaderCellDef style="color:black"> Data </th>
+    <td mat-cell *matCellDef="let element" style="color:black"> {{element.date}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="Technician">
+    <th mat-header-cell *matHeaderCellDef style="color:black"> Technician </th>
+    <td mat-cell *matCellDef="let element" style="color:black"> {{element.technicianFirstName}} {{element.technicianLastName}}</td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="Phone">
+    <th mat-header-cell *matHeaderCellDef style="color:black"> Phone </th>
+    <td mat-cell *matCellDef="let element" style="color:black"> {{element.technicianPhone}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="Email">
+    <th mat-header-cell *matHeaderCellDef style="color:black"> Email </th>
+    <td mat-cell *matCellDef="let element" style="color:black"> {{element.technicianEmail}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="Status">
+    <th mat-header-cell *matHeaderCellDef style="color:black"> Status </th>
+    <td mat-cell *matCellDef="let element" style="color:black"> {{element.status}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Actions">
+    <th mat-header-cell *matHeaderCellDef style="color:black"> Actions </th>
+    <td mat-cell *matCellDef="let element" style="color:black"> <button
+      *ngIf="
+        element.idAppointment !== undefined &&
+        element.status === 'Pending' &&
+        (userProfile.role === 'custom' || userProfile.role === 'technician')
+      "
+      (click)="
+        updateAppointmentStatus(element.idAppointment, 'Canceled')
+      "
+    >
+      Cancel
+    </button>
+    <button
+      *ngIf="
+        element.idAppointment !== undefined &&
+        (userProfile.role !== 'custom' &&
+        element.status === 'Pending')
+      "
+      (click)="updateAppointmentStatus(element.idAppointment, 'Done')"
+    >
+      Done
+    </button>
+    <button
+      *ngIf="
+        element.idAppointment !== undefined &&
+        (userProfile.role !== 'custom' &&
+        element.status === 'Pending')
+      "
+      (click)="updateAppointmentStatus(element.idAppointment, 'Can`t fix')"
+    >
+      Can't fix
+    </button> </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

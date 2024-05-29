@@ -7,13 +7,15 @@
     <h3>Răspunsuri</h3>
     <ul>
       <li *ngFor="let answer of answers" class="answer-item">
-        <p>{{ answer.description }}</p>
-        <p>{{ answer.username }}</p>
+        <div class="answer-content">
+          <p class="answer-username">{{ answer.username }}</p>
+          <p class="answer-description">{{ answer.description }}</p>
+        </div>
         <button
           *ngIf="answer.username === this.username"
           (click)="deleteAnswear(answer.idAnswear)"
         >
-          sterge raspuns
+          Șterge răspuns
         </button>
       </li>
     </ul>

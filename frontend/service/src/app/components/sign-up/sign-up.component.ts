@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SignUpDto } from '../../model/SignUpDto';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../service/notification.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -9,7 +10,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
-  constructor(private http: HttpClient, private router:Router) {}
+  constructor(private http: HttpClient,
+              private router:Router,
+              private notification: NotificationService
+            ) {}
   succes: Number = 0;
   signUnDto: SignUpDto = {};
   errorMessage: string = '';
@@ -20,12 +24,14 @@ export class SignUpComponent {
       .subscribe(
         response => {
           console.log(response);
+          this.notification.showNotification('Register successfull!');
           this.redirectToLogin();
         },
         error => {
           console.error('There was an error!', error);
           this.succes= error.httpStatus;
           if(this.succes === 200){
+            this.notification.showNotification('Register successfull!');
             this.redirectToLogin();
           }
           else{
@@ -35,6 +41,8 @@ export class SignUpComponent {
       );
   }
   public redirectToLogin():void{
-    this.router.navigate(['login']);
+    setTimeout(() => {
+      this.router.navigate(['login']);
+    }, 500);
   }
 }

@@ -4,6 +4,7 @@ import {Router} from '@angular/router'
 import { UserProfileService } from '../../service/user-profile.service';
 import { SignInDto } from '../../model/sign-in-dto';
 import { SignInServiceService } from '../../service/sign-in-service.service';
+import { NotificationService } from '../../service/notification.service';
 
 
 @Component({
@@ -19,6 +20,8 @@ export class SignInComponent implements OnInit {
     private jwt: JwtStorageService,
     private router:Router,
     private userProfile: UserProfileService,
+    private notification: NotificationService,
+    private signInService:SignInServiceService
   ) { }
 
   ngOnInit() {
@@ -31,12 +34,16 @@ export class SignInComponent implements OnInit {
         console.log("Token:", data);
         this.jwt.setTokenStorage(data, this.signinDto.username);
         localStorage.setItem('isLogged', "true");
+        this.signInService.setIsLogged(true);
+        this.notification.showNotification('Log in successfull!');
         this.redirectToProfile();
       },
       error => {
         console.error("Error:", error);
         if (error.status === 200) {
           localStorage.setItem('isLogged', "true");
+          this.signInService.setIsLogged(true);
+          this.notification.showNotification('Login successfull!');
           this.redirectToProfile();
 
         } else {
@@ -47,7 +54,9 @@ export class SignInComponent implements OnInit {
   }
 
   private redirectToProfile(): void{
-    this.router.navigate(['/profile']);
+    setTimeout(() => {
+      this.router.navigate(['/profile']);
+    }, 300);
   }
   public redirectToRegister(): void{
     this.router.navigate(['/register']);

@@ -7,6 +7,7 @@ import { JwtStorageService } from '../../service/jwt-storage.service';
 import { ReviewService } from '../../service/review.service';
 import { TechnicianDto } from '../../model/technician-dto';
 import { TechnicianService } from '../../service/technician.service';
+import { NotificationService } from '../../service/notification.service';
 @Component({
   selector: 'app-appointment',
   templateUrl: './appointment.component.html',
@@ -25,7 +26,8 @@ export class AppointmentComponent {
     private appointmentService: AppointmentService,
     private technicianService: TechnicianService,
     private router : Router,
-    private jwt : JwtStorageService
+    private jwt : JwtStorageService,
+    private notification: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -116,6 +118,7 @@ export class AppointmentComponent {
               this.selectedTechnician = null;
               this.selectedType = null;
               this.selectedDateTime = null;
+              this.notification.showNotification('Appointment create successfull!');
               this.redirectToProfile();
             },
             (error) => {
@@ -124,6 +127,7 @@ export class AppointmentComponent {
                 this.selectedTechnician = null;
                 this.selectedType = null;
                 this.selectedDateTime = null;
+                this.notification.showNotification('Appointment create successfull!');
                 this.redirectToProfile();
               }
               else{

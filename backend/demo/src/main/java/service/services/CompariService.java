@@ -36,13 +36,13 @@ public class CompariService {
     @Autowired
     private EmagService emagService;
 
-    @Scheduled(cron = " 0 56 17 * * ?")
+//    @Scheduled(cron = " 0 56 17 * * ?")
     public void getEvomag(){
         evomagService.fetchData();
     }
-    @Scheduled(cron = " 0 59 18 * * ?")
+//    @Scheduled(cron = " 0 59 18 * * ?")
     public void getCel(){ celService.fetchData();}
-    @Scheduled(cron = " 0 58 17 * * ?")
+//    @Scheduled(cron = " 0 58 17 * * ?")
     public void getEmag(){ emagService.fetchData();}
 
     public ResponseEntity<?> getEvomagProducts(String wordSearch, String infRange, String supRange, String domain){

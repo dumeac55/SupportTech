@@ -17,8 +17,8 @@ public class Appointment {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "userprofileid", referencedColumnName = "iduser")
-    private User user;
+    @JoinColumn(name = "userprofileid", referencedColumnName = "idprofile")
+    private UserProfile userProfile;
 
     @ManyToOne
     @JoinColumn(name = "technicianid", referencedColumnName = "idtechnician")
@@ -43,12 +43,12 @@ public class Appointment {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public UserProfile getUserProfile() {
+        return userProfile;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
     }
 
     public TechnicianProfile getTechnician() {

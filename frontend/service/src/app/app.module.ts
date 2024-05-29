@@ -28,6 +28,7 @@ import { MatTableModule } from '@angular/material/table';
 import { TypeComponent } from './type/type.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import { NotificationComponent } from './components/notification/notification.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +39,7 @@ import { MatSelectModule } from '@angular/material/select';
     ForumComponent,
     CompariComponent,
     TypeComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,

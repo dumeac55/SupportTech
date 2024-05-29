@@ -1,6 +1,7 @@
 package service.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,23 +15,24 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-@RequiredArgsConstructor
 public class AppointmentService {
-    private final AppointmentRepository appointmentRepository;
-
-    private final UserRepository userRepository;
-
-    private final TechnicianProfileRepository technicianProfileRepository;
-
-    private final TypeRepository typeRepository;
-    private final UserProfileRepository userProfileRepository;
+    @Autowired
+    private  AppointmentRepository appointmentRepository;
+    @Autowired
+    private  UserRepository userRepository;
+    @Autowired
+    private  TechnicianProfileRepository technicianProfileRepository;
+    @Autowired
+    private  TypeRepository typeRepository;
+    @Autowired
+    private  UserProfileRepository userProfileRepository;
 
     public List<Appointment> getAppointments() {
         return appointmentRepository.findAll();
     }
 
     public ResponseEntity<?> addAppointment(AppointmentDto appointmentDto) {
-        User user = userRepository.findByUsername(appointmentDto.getUsernameUser());
+        UserProfile user = userProfileRepository.findByUsername(appointmentDto.getUsernameUser());
         TechnicianProfile technicianProfile = technicianProfileRepository.findByUsername(appointmentDto.getUsernameTechnician());
         Type type = typeRepository.findByNameTypeAndTechnicianProfile_Username(appointmentDto.getType(), appointmentDto.getUsernameTechnician());
         if (user == null || technicianProfile == null || type == null) {
@@ -39,7 +41,7 @@ public class AppointmentService {
             Appointment appointment = new Appointment();
             appointment.setDate(appointmentDto.getData());
             appointment.setTechnician(technicianProfile);
-            appointment.setUser(user);
+            appointment.setUserProfile(user);
             appointment.setType(type);
             appointment.setStatus("Pending");
             appointmentRepository.save(appointment);
@@ -48,7 +50,8 @@ public class AppointmentService {
     }
 
     public ResponseEntity<?> getUserAppointments(int id) {
-        List<Appointment> appointmentList = appointmentRepository.findByUser(id);
+        User user = userRepository.findById(id);
+        List<Appointment> appointmentList = appointmentRepository.findByUserProfile_IdProfile(user.getIdUser());
         if (appointmentList.isEmpty()) {
             return new ResponseEntity<>("", HttpStatus.NO_CONTENT);
         } else {
@@ -76,7 +79,7 @@ public class AppointmentService {
         } else {
             List<TechnicianAppointmentDto> TechnicianAppointmentDtoList = new ArrayList<>();
             for (Appointment appointment : appointmentList) {
-                UserProfile userProfile = userProfileRepository.findByUsername(appointment.getUser().getUsername());
+                UserProfile userProfile = userProfileRepository.findByUsername(appointment.getUserProfile().getUsername());
                 TechnicianAppointmentDto TechnicianAppointmentDto = new TechnicianAppointmentDto();
                 TechnicianAppointmentDto.setDate(appointment.getDate());
                 TechnicianAppointmentDto.setNameType(appointment.getType().getNameType());

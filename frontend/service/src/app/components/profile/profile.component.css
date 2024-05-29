@@ -46,10 +46,18 @@ margin-right: 16px;
 
 .no-appointments {
   font-style: italic;
-  color: #999;
+  color: #ffffff;
 }
 
 img {
   width: 100%;
   height: 150px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-table {
+  background-color: #fff; /* Setează culoarea de fundal la alb */
 }

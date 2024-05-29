@@ -7,15 +7,16 @@
                 </a>
             </div>
             <div class="menu-functions">
-                <span *ngIf="isLogged"><a routerLink="appointment">Appointment</a></span>
-                <span *ngIf="isLogged"><a routerLink="compari">Compari</a></span>
-                <span *ngIf="isLogged"><a routerLink="forum">Forum</a></span>
-                <span *ngIf="isLogged"><a routerLink="profile">Profile</a></span>
-                <span *ngIf="!isLogged"><a routerLink="login">Sign In</a></span>
-                <span *ngIf="isLogged"><a (click)="logout()">Sign out</a></span>
+                <span *ngIf="IsLogged"><a routerLink="appointment">Appointment</a></span>
+                <span *ngIf="IsLogged"><a routerLink="compari">Compari</a></span>
+                <span *ngIf="IsLogged"><a routerLink="forum">Forum</a></span>
+                <span *ngIf="IsLogged"><a routerLink="profile">Profile</a></span>
+                <span *ngIf="!IsLogged"><a routerLink="login">Sign In</a></span>
+                <span *ngIf="IsLogged"><a (click)="logout()">Sign out</a></span>
             </div>
         </mat-toolbar>
     </nav>
 </header>
 
 <router-outlet></router-outlet>
+<app-notification></app-notification>

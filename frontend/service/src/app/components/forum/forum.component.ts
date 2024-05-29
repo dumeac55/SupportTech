@@ -70,8 +70,7 @@ export class ForumComponent {
       title: this.newQuestionTitle
     };
 
-    await this.forumService.addQuestion(newQuestion);
-    await this.getQuestions();
+    await this.forumService.addQuestion(newQuestion).subscribe(()=>{this.getQuestions()});
     this.newQuestionDescription = '';
     this.newQuestionTitle = '';
   }
@@ -104,9 +103,8 @@ export class ForumComponent {
       idQuestion: idQuestion
     };
 
-    await this.forumService.addAnswearByIdQuestion(newAnswer);
-    await this.getQuestionById(idQuestion);
-    await this.getAnswersByQuestionId(idQuestion);
+    await this.forumService.addAnswearByIdQuestion(newAnswer).subscribe(() =>{this.getQuestionById(idQuestion),
+                                                                              this.getAnswersByQuestionId(idQuestion) });
     this.newAnswerDescription = '';
   }
 

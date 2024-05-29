@@ -101,3 +101,15 @@ form button[type="submit"]:hover {
   background-color: #218838;
 }
 
+.answer-item {
+  border: 2px solid #ccc;
+  padding: 10px;
+}
+
+.answer-username {
+  font-weight: bold;
+}
+
+.answer-description {
+  margin-top: 5px;
+}
