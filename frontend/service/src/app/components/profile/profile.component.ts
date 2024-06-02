@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { JwtStorageService } from '../../service/jwt-storage.service';
 import { UserProfileService } from '../../service/user-profile.service';
 import { UserProfileDto } from '../../model/user-profile-dto';
@@ -10,12 +10,15 @@ import { TechnicianAppointmentDto } from '../../model/technician-appointment-dto
 import { WishListDto } from '../../model/wish-list-dto';
 import { WishListService } from '../../service/wish-list.service';
 import { SignInServiceService } from '../../service/sign-in-service.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent {
+
+export class ProfileComponent{
   userProfile: UserProfileDto = {};
   haveAppointment: boolean = false;
   appointments: AppointmentDto[] = [];
@@ -24,14 +27,16 @@ export class ProfileComponent {
   role?: String;
   showAppointments: boolean = false;
   showWishlist: boolean = false;
-  displayedColumns: string[] = ['Nume', 'Data', 'Technician', 'Phone', 'Email', 'Status', 'Actions'];
+  displayedColumns: string[] = ['Name', 'Data', 'Technician', 'Phone', 'Email', 'Status', 'Actions'];
+  displayedColumnsTechnician: string[] = ['Name', 'Data', 'Utilizator', 'Phone', 'Email', 'Status', 'Actions'];
+  displayedColumnsWishList: string[] = ['Name Product', 'Price', 'linkProduct', 'linkImage', 'Company']
+
   constructor(private jwtStorage: JwtStorageService,
               private userProfileService: UserProfileService,
               private appointmentService: AppointmentService,
               private technicianService: TechnicianService,
               private wishListService: WishListService,
-              private router: Router,
-              private signInServie: SignInServiceService){}
+              private router: Router){}
 
   ngOnInit(){
     const token = localStorage.getItem('token');
@@ -43,6 +48,7 @@ export class ProfileComponent {
       this.redirectToLogin();
     }
   }
+
 
   private async getProfile(): Promise<void> {
     const token = localStorage.getItem('token');
@@ -111,7 +117,7 @@ export class ProfileComponent {
       .subscribe(
         response => {
           console.log('Appointment updated successfully:', response);
-          window.location.reload();
+          this.updateLocalAppointmentStatus(id, newStatus);
         },
         error => {
           console.error('Error updating appointment:', error);
@@ -121,6 +127,17 @@ export class ProfileComponent {
     else {
       alert("Session exirated");
       this.redirectToLogin();
+    }
+  }
+
+  private updateLocalAppointmentStatus(id: number, newStatus: string): void {
+    const appointment = this.appointments.find(appt => appt.idAppointment === id);
+    const appointmentTechnician = this.appointmentsTechnician.find(appt => appt.idAppointment === id);
+    if (appointment) {
+      appointment.status = newStatus;
+    }
+    if(appointmentTechnician){
+      appointmentTechnician.status = newStatus;
     }
   }
 

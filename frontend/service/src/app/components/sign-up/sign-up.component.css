@@ -1,45 +1,49 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+.login-container {
+    margin-top: 50px;
+    height: 100%;
+    width: 100%;
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    width: 300px;
-}
-label {
-    display: block;
-    margin-bottom: 6px;
-}
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="tel"],
-button {
+  }
+
+  form {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-button {
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-.error-message {
-    color: red;
-    margin-bottom: 10px;
-}
+  }
+
+  .login-content {
+    width: 400px;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .login-toolbar {
+    justify-content: center;
+  }
+
+  mat-form-field {
+    width: 100%;
+    display: block;
+  }
+
+  .form-group {
+    display: flex;
+  }
+
+  .mat-form-field,
+  button[type="submit"] {
+    flex: 1;
+    margin: 0 5px;
+    height: 50px;
+  }
+
+  mat-error {
+    color: #f44336;
+    font-size: 25px;
+  }
+
+  .errorMessage {
+    margin-top: 20px;
+    text-align: center;
+  }

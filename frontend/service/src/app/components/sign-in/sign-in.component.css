@@ -22,14 +22,11 @@
     justify-content: center;
   }
 
-  .mat-form-field {
+  mat-form-field {
     width: 100%;
     display: block;
   }
 
-  mat-form-field{
-    width: 100%;
-  }
   .form-group {
     display: flex;
   }
@@ -39,4 +36,19 @@
     flex: 1;
     margin: 0 5px;
     height: 50px;
+  }
+
+  mat-error {
+    color: #f44336;
+    font-size: 25px;
+  }
+
+  .errorMessage {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .signIn-content{
+    margin-top: 10px;
+    font-size: 20px;
   }

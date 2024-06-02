@@ -16,6 +16,7 @@ public class Review {
 
     @Column(name = "description")
     private String description;
+
     @Column(name= "grade")
     private float grade;
 

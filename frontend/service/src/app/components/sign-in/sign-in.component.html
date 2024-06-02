@@ -1,9 +1,10 @@
 <div>
-  <h2>Autentificare</h2>
   <form>
     <div>
-      <p>
-        {{ this.errorMessage }}
+      <p class="errorMessage">
+        <mat-error>
+        {{ errorMessage }}
+      </mat-error>
       </p>
     </div>
     <div class="login-container">
@@ -35,7 +36,8 @@
               class="form-control"
               name="Password"
               [(ngModel)]="signinDto.password"
-              required minlength="6"
+              required
+              minlength="6"
               #password="ngModel"
             />
           </mat-form-field>
@@ -50,6 +52,9 @@
           >
             Login
           </button>
+        </div>
+        <div class="signIn-content">
+          <p>If You don't have an account yet please <a routerLink="/register">SIGN UP</a></p>
         </div>
       </div>
     </div>

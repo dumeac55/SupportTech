@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
     <h2>Înregistrare</h2>
     <form (ngSubmit)="signUp()">
       <div>
@@ -28,4 +28,150 @@
       </div>
       <button type="submit">Înregistrează-te</button>
     </form>
+  </div> -->
+
+  <div>
+    <form
+      name="form"
+      (ngSubmit)="f.form.valid && signUp()"
+      #f="ngForm"
+      >
+      <div>
+        <p class="errorMessage">
+          <mat-error>
+          {{ errorMessage }}
+        </mat-error>
+        </p>
+      </div>
+      <div class="login-container">
+        <div class="login-content">
+          <mat-toolbar class="login-toolbar" color="primary"
+            >Register</mat-toolbar
+          >
+          <mat-card-content>
+            <mat-form-field>
+              <mat-icon matPrefix>person_outline</mat-icon>
+              <mat-label> Username </mat-label>
+              <input
+                matInput
+                type="text"
+                class="form-control"
+                name="username"
+                [(ngModel)]="signUnDto.username"
+                required
+                #username="ngModel"
+              />
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="username.errors && f.submitted"
+              >
+                Username is required!
+              </div>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-icon matPrefix>lock_outline</mat-icon>
+              <mat-label> Password </mat-label>
+              <input
+                matInput
+                type="password"
+                class="form-control"
+                name="Password"
+                [(ngModel)]="signUnDto.password"
+                required
+                minlength="6"
+                #password="ngModel"
+              />
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="password.errors && f.submitted"
+              >
+                <div *ngIf="password.errors['required']">Password is required</div>
+                <div *ngIf="password.errors['minlength']">
+                  Password must be at least 6 characters
+                </div>
+              </div>
+            </mat-form-field>
+          </mat-card-content>
+
+          <mat-form-field>
+            <mat-icon matPrefix>contacts</mat-icon>
+            <mat-label> First Name </mat-label>
+            <input
+              matInput
+              type="text"
+              class="form-control"
+              name="First Name"
+              [(ngModel)]="signUnDto.firstName"
+              required
+              #phone="ngModel"
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-icon matPrefix>contacts</mat-icon>
+            <mat-label> Last Name </mat-label>
+            <input
+              matInput
+              type="text"
+              class="form-control"
+              name="Last Name"
+              [(ngModel)]="signUnDto.lastName"
+              required
+              #phone="ngModel"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-icon matPrefix>contact_mail</mat-icon>
+            <mat-label> Email </mat-label>
+            <input
+              matInput
+              type="email"
+              class="form-control"
+              name="email"
+              [(ngModel)]="signUnDto.email"
+              required
+              email
+              #email="ngModel"
+            />
+            <div class="alert-danger" *ngIf="email.errors && f.submitted">
+              <div *ngIf="email.errors['required']">Email is required</div>
+              <div *ngIf="email.errors['email']">
+                Email must be a valid email address
+              </div>
+            </div>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-icon matPrefix>contact_phone</mat-icon>
+            <mat-label> Phone </mat-label>
+            <input
+              matInput
+              type="tel"
+              class="form-control"
+              name="phone"
+              [(ngModel)]="signUnDto.phone"
+              required
+              #phone="ngModel"
+            />
+            <div class="alert-danger" *ngIf="phone.errors && f.submitted">
+              <div *ngIf="phone.errors['required']">Phone is required</div>
+            </div>
+          </mat-form-field>
+
+          <div class="form-group">
+            <button
+              type="submit"
+              mat-raised-button
+              color="primary"
+            >
+              Register
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
+  

@@ -15,33 +15,8 @@
   margin-bottom: 10px;
 }
 
-.appointments {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.appointments th {
-  background-color: #f2f2f2;
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.appointments td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-td button:first-child{
-margin-right: 16px;
-}
-
-.appointments button {
-  padding: 5px 10px;
-  border: none;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
+button{
+  margin-right: 8px;
 }
 
 .no-appointments {
@@ -55,9 +30,20 @@ img {
 }
 
 table {
-  width: 100%;
+  background-color: #ffffff;
+  border-radius: 40px;
 }
 
-.mat-table {
-  background-color: #fff; /* Setează culoarea de fundal la alb */
+.table-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+button{
+  border: none;
+  background-color: none;
+  box-shadow: none;
+  color: inherit;
+  cursor: pointer;
 }

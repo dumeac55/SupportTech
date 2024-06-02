@@ -24,11 +24,13 @@ import { CompariComponent } from './components/compari/compari.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { TypeComponent } from './type/type.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { NotificationComponent } from './components/notification/notification.component';
+import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +61,8 @@ import { NotificationComponent } from './components/notification/notification.co
     MatCardModule,
     MatTableModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule,
   ],
   providers: [provideAnimationsAsync(), provideNativeDateAdapter()],
   bootstrap: [AppComponent],
