@@ -12,6 +12,7 @@ import { WishListService } from '../../service/wish-list.service';
 import { SignInServiceService } from '../../service/sign-in-service.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { NotificationService } from '../../service/notification.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -29,14 +30,16 @@ export class ProfileComponent{
   showWishlist: boolean = false;
   displayedColumns: string[] = ['Name', 'Data', 'Technician', 'Phone', 'Email', 'Status', 'Actions'];
   displayedColumnsTechnician: string[] = ['Name', 'Data', 'Utilizator', 'Phone', 'Email', 'Status', 'Actions'];
-  displayedColumnsWishList: string[] = ['Name Product', 'Price', 'linkProduct', 'linkImage', 'Company']
+  displayedColumnsWishList: string[] = ['Name Product', 'Price', 'linkProduct', 'linkImage', 'Company', 'Actions']
 
   constructor(private jwtStorage: JwtStorageService,
               private userProfileService: UserProfileService,
               private appointmentService: AppointmentService,
               private technicianService: TechnicianService,
               private wishListService: WishListService,
-              private router: Router){}
+              private router: Router,
+              private notification:NotificationService
+            ){}
 
   ngOnInit(){
     const token = localStorage.getItem('token');
@@ -149,6 +152,22 @@ export class ProfileComponent{
       this.showAppointments = false;
       this.showWishlist = true;
     }
+  }
+
+  deleteProductFromWishList(id: number){
+    this.wishListService.deleteProductFromWishList(id).subscribe(
+      ()=> {
+        this.wishListService.getWishlistForUser();
+        this.notification.showNotification("Item successfull removed");
+      },
+      error =>{
+          if(error.status === 200){
+            this.wishListService.getWishlistForUser();
+            this.notification.showNotification("Item successfull removed");
+            window.location.reload();
+          }
+      }
+    );
   }
 
   redirectToLogin():void{

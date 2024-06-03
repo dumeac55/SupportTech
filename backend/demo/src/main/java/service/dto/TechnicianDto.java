@@ -11,4 +11,5 @@ public class TechnicianDto {
     private String username;
     private String role;
     private Float avgGrade;
+    private Float countGrade;
 }

@@ -8,5 +8,7 @@ public class ReviewDto {
     private float grade;
     private float avgGrade;
     private int userId;
+    private String userFirstName;
+    private String userLastName;
     private int technicianId;
 }

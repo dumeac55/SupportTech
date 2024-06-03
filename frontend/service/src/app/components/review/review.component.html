@@ -1,0 +1,63 @@
+<div class="orient">
+  <h2>Technicians</h2>
+  <mat-accordion>
+    <mat-expansion-panel
+      style="background-color: white"
+      *ngFor="let technician of technicians"
+      (click)="selectTechnician(technician)"
+    >
+      <mat-expansion-panel-header style="background-color: white">
+        <mat-panel-title style="color: black">
+          {{ technician.firstName }}&nbsp;&nbsp;&nbsp;{{ technician.avgGrade }}
+          <mat-icon style="color: rgb(189, 223, 0)">star</mat-icon> ({{
+            technician.countGrade
+          }})
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div *ngIf="selectedTechnician && selectedTechnician === technician">
+        <h3 style="color: black">Reviews for {{ technician.firstName }}</h3>
+        <div class="reviews">
+          <ul>
+            <li
+              *ngFor="let review of selectedTechnicianReviews"
+              style="color: black"
+            >
+              <strong style="color: black">User :</strong>
+              {{ review.userFirstName }} {{ review.userLastName }} <br />
+              <strong style="color: black">Grade:</strong> {{ review.grade
+              }}<mat-icon style="color: rgb(189, 223, 0)">star</mat-icon> <br />
+              <strong style="color: black">Description:</strong>
+              {{ review.description }} <br />
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <form>
+          <mat-card-content>
+            <mat-form-field>
+              <mat-label>Description</mat-label>
+              <input
+                matInput
+                type="text"
+                class="form-control"
+                name="Description"
+                [(ngModel)]="addReview.description"
+                required
+                #review="ngModel"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Grade</mat-label>
+              <mat-select [(ngModel)]="addReview.grade" name="grade" required>
+                <mat-option *ngFor="let grade of grades" [value]="grade">{{ grade }} &#11088;</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="setReview(addReview.description, addReview.grade, technician.username)">Submit</button>
+          </mat-card-content>
+        </form>
+    </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

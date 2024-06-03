@@ -25,12 +25,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { TypeComponent } from './type/type.component';
+import { TypeComponent } from './components/type/type.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { NotificationComponent } from './components/notification/notification.component';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { HomeComponent } from './components/home/home.component';
+import { ReviewComponent } from './components/review/review.component';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +46,8 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
     CompariComponent,
     TypeComponent,
     NotificationComponent,
+    HomeComponent,
+    ReviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +69,8 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
     ReactiveFormsModule,
     MatSelectModule,
     MatPaginatorModule,
+    MatListModule,
+    MatExpansionModule,
   ],
   providers: [provideAnimationsAsync(), provideNativeDateAdapter()],
   bootstrap: [AppComponent],

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { TechnicianDto } from '../model/technician-dto';
 import { TechnicianAppointmentDto } from '../model/technician-appointment-dto';
 import { TypeDto } from '../model/type-dto';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,6 @@ import { TypeDto } from '../model/type-dto';
 export class TechnicianService {
 
   private URL = 'http://localhost:8080/api/';
-  private technicianProfile?: TechnicianDto;
   private id?: number;
 
   constructor(private http:HttpClient) { }
@@ -41,5 +41,9 @@ export class TechnicianService {
 
   async getTypesByIdTechnician(id: number): Promise<TypeDto | undefined> {
     return await this.http.get<TypeDto>(this.URL + 'utils/type'+ id).toPromise();
+  }
+
+  getTechnicians(): Observable<TechnicianDto[]> {
+    return this.http.get<TechnicianDto[]>(this.URL + 'technician');
   }
 }

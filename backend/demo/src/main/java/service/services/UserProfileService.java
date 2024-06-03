@@ -47,7 +47,6 @@ public class UserProfileService {
             TechnicianProfile technician = technicianProfileRepository.findByUsername(username);
             return technician.getUser().getIdUser();
         }
-
     }
 
     public ResponseEntity<?> getUserProfileById(int id){

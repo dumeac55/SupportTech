@@ -25,10 +25,14 @@ export class WishListService {
       company: "",
       linkImage: "",
       linkProduct: "",
-      idWishList: NaN,
+      idWishlist: NaN,
       idUser: this.id,
       idProduct: compariDto.idProduct
     };
     return this.http.post<any>(this.URL + "wishlist/create", wishListDto,{responseType: 'text' as 'json'});
+  }
+
+  deleteProductFromWishList(id: number): Observable<any>{
+    return this.http.delete<any>(this.URL+ "wishlist/delete/" + id);
   }
 }

@@ -6,5 +6,5 @@ export class WishListDto {
     company?: string;
     linkImage?: string;
     linkProduct?: string;
-    idWishList?: number;
+    idWishlist?: number;
 }

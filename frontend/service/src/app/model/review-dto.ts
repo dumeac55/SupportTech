@@ -3,6 +3,8 @@ export class ReviewDto {
     technicianId? : number;
     grade? : number;
     avgGrade? : number;
-    title?: String;
     description? : String;
+    userFirstName?: String;
+    userLastName?: String;
+    countGrade?:number;
 }

@@ -56,4 +56,15 @@ public class WishListService {
             return new ResponseEntity<>("WishList create successful", HttpStatus.CREATED);
         }
     }
+
+    public ResponseEntity<?> deleteItemsFromWishList(int id){
+        WishList wishList = wishListRepository.findById(id);
+        if(wishList==null){
+            return new ResponseEntity<>("Item not found", HttpStatus.NOT_FOUND);
+        }
+        else{
+            wishListRepository.deleteById(id);
+            return new ResponseEntity<>("Item deleted successfull", HttpStatus.OK);
+        }
+    }
 }

@@ -42,11 +42,9 @@ public class AuthenticateController {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    private final JwtUtil jwtUtil;
+    @Autowired
+    private JwtUtil jwtUtil;
 
-    public AuthenticateController(JwtUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
-    }
     @PostMapping("/signin")
     public ResponseEntity<?> authentificateUser(@RequestBody LogInDto logInDto) {
         Authentication authentication;

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CompariDto } from '../../model/compari-dto';
 import { WishListDto } from '../../model/wish-list-dto';
 import { WishListService } from '../../service/wish-list.service';
+import { NotificationService } from '../../service/notification.service';
 
 @Component({
   selector: 'app-compari',
@@ -23,7 +24,8 @@ export class CompariComponent {
   domains: string[] = ['RAM', 'ROM', 'Monitor', 'Headphone', 'Source', 'Cooler', 'Keyboard', 'Mouse', 'Motherboard', 'Video Card', 'Processor'];
   constructor(private router: Router,
               private compariService: CompariService,
-              private wishListService: WishListService) {}
+              private wishListService: WishListService,
+              private notification: NotificationService) {}
 
   async searchProducts() {
     if (!this.selectedDomain) {
@@ -48,15 +50,14 @@ export class CompariComponent {
   addProductToWishList(compariDto: CompariDto):void{
     this.wishListService.addProductToWishList(compariDto).subscribe(
       (response) => {
-        console.log('Product added successfully:', response);
+        this.notification.showNotification("Product added successfully");
       },
       (error) => {
         if(error.status === 200){
-          console.log('Product added successfully:');
+          this.notification.showNotification("Product added successfully");
         }else{
           console.error('Error creating appointment:', error);
         }
       });
   }
-
 }

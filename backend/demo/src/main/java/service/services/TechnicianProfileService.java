@@ -33,6 +33,7 @@ public class TechnicianProfileService {
             for(TechnicianProfile technicianProfile1 : technicianProfile){
                 TechnicianDto technicianDto1 = new TechnicianDto();
                 technicianDto1.setAvgGrade(reviewRepository.findAvgGradeByTechnicianId(technicianProfile1.getIdTechnician()));
+                technicianDto1.setCountGrade(reviewRepository.findCountGradeByTechnicianId(technicianProfile1.getIdTechnician()));
                 technicianDto1.setEmail(technicianProfile1.getEmail());
                 technicianDto1.setFirstName(technicianProfile1.getFirstName());
                 technicianDto1.setLastName(technicianProfile1.getLastName());

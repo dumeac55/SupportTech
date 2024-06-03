@@ -37,6 +37,8 @@ public class ReviewService {
             reviewDto.setDescription(review.getDescription());
             reviewDto.setGrade(review.getGrade());
             reviewDto.setUserId(review.getUserProfile().getIdProfile());
+            reviewDto.setUserFirstName(review.getUserProfile().getFirstName());
+            reviewDto.setUserLastName(review.getUserProfile().getLastName());
             reviewDto.setAvgGrade(reviewRepository.findAvgGradeByTechnicianId(idTechnician));
             reviewDtos.add(reviewDto);
         }
@@ -45,6 +47,10 @@ public class ReviewService {
 
     public ResponseEntity<?> getAvgGradeByIdTechnician(int id){
         return new ResponseEntity<>(reviewRepository.findAvgGradeByTechnicianId(id).toString(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getCountGradeByIdTechnician(int id){
+        return new ResponseEntity<>(reviewRepository.findCountGradeByTechnicianId(id).toString(), HttpStatus.OK);
     }
 
     public ResponseEntity<?> addReview(ReviewDto reviewDto){
@@ -57,6 +63,5 @@ public class ReviewService {
         review.setUserProfile(userProfile);
         reviewRepository.save(review);
         return new ResponseEntity<>("Review successfull added", HttpStatus.OK);
-
     }
 }

@@ -22,6 +22,11 @@ public class ReviewController {
     private ResponseEntity<?> getAvgGradeByIdTechnician(@PathVariable("id") int id){
         return reviewService.getAvgGradeByIdTechnician(id);
     }
+
+    @GetMapping ("/{id}/grade/count")
+    private ResponseEntity<?> getCountGradeByIdTechnician(@PathVariable("id") int id){
+        return reviewService.getCountGradeByIdTechnician(id);
+    }
     @PostMapping("/create")
     private ResponseEntity<?> addReview(@RequestBody ReviewDto reviewDto){
         return reviewService.addReview(reviewDto);

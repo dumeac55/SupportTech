@@ -5,4 +5,5 @@ export class UserProfileDto {
     lastName?: string;
     phone?: string;
     role?: string;
+    idProfile?: number;
 }

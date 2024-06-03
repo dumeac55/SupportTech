@@ -6,4 +6,6 @@ export class TechnicianDto {
     phone?: string;
     role?: string;
     avgGrade? : number;
+    countGrade?:number;
+    idTechnian?: number;
 }

@@ -1,0 +1,16 @@
+.reviews ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.reviews li {
+  margin-bottom: 10px;
+}
+
+.orient{
+  margin-top: 20px;
+  margin-left: 600px;
+  display: flex;
+  align-content: center;
+  width: 100%;
+}

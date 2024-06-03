@@ -13,4 +13,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     @Query("SELECT AVG(r.grade) FROM Review r WHERE r.technicianProfile.idTechnician = :TechnicianId")
     Float findAvgGradeByTechnicianId(int TechnicianId);
+
+    @Query("SELECT COUNT(r.grade) FROM Review r WHERE r.technicianProfile.idTechnician = :TechnicianId")
+    Float findCountGradeByTechnicianId(int TechnicianId);
 }

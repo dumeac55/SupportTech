@@ -24,4 +24,9 @@ public class WishListController {
     private ResponseEntity<?> addWishListToUser(@RequestBody WishListDto wishListDto){
         return wishListService.addWishListToUser(wishListDto);
     }
+
+    @DeleteMapping("/delete/{id}")
+    private ResponseEntity<?> deleteItemFromWishList(@PathVariable("id") int id){
+        return wishListService.deleteItemsFromWishList(id);
+    }
 }
