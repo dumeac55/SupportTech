@@ -23,6 +23,10 @@ export class UserProfileService {
     return await this.http.get<number>(this.URL + "user/username=" + username).toPromise();
   }
 
+  async getUserIdProfileByUserName(username: string | null): Promise<number | undefined> {
+    return await this.http.get<number>(this.URL + "user/username=" + username+"/profile").toPromise();
+  }
+
   async getUserAppointment(): Promise <AppointmentDto | undefined>{
     this.id = await this.getUserIdByUserName(localStorage.getItem('username'));
     return await this.http.get<AppointmentDto>(this.URL + "user/" + this.id + "/appointment").toPromise();

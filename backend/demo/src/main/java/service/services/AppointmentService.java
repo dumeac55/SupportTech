@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import service.dto.AppointmentDto;
+import service.dto.EmailDto;
 import service.dto.TechnicianAppointmentDto;
 import service.dto.UserAppointmentDto;
 import service.entity.*;
@@ -26,6 +27,8 @@ public class AppointmentService {
     private  TypeRepository typeRepository;
     @Autowired
     private  UserProfileRepository userProfileRepository;
+    @Autowired
+    private EmailService emailService;
 
     public List<Appointment> getAppointments() {
         return appointmentRepository.findAll();
@@ -45,6 +48,13 @@ public class AppointmentService {
             appointment.setType(type);
             appointment.setStatus("Pending");
             appointmentRepository.save(appointment);
+            User userAux = userRepository.findByUsername(appointmentDto.getUsernameUser());
+            TechnicianProfile technicianProfile1 = technicianProfileRepository.findByUsername(appointmentDto.getUsernameTechnician());
+            EmailDto emailDto = new EmailDto();
+            emailDto.setRecipient(userAux.getEmail());
+            emailDto.setMsgBody("Hi " + userAux.getUsername() + ",\n" + "\n"+ "We received your appointment in date: "+ appointmentDto.getData()+ " for service: " + appointmentDto.getType()+ " at technician "+ technicianProfile1.getFirstName() + " "+ technicianProfile1.getLastName() + "." );
+            emailDto.setSubject("Your appointment is aproved");
+            emailService.sendSimpleMail(emailDto);
             return new ResponseEntity<>("Appointment create successfull", HttpStatus.OK);
         }
     }
@@ -101,12 +111,18 @@ public class AppointmentService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Appointment not found");
         }
         Appointment existingAppointment = existingAppointmentOptional.get();
+        String oldStatus = existingAppointment.getStatus();
         existingAppointment.setStatus(newStatus);
+        User userAux = userRepository.findByUsername(existingAppointment.getUserProfile().getUsername());
+        EmailDto emailDto = new EmailDto();
+        emailDto.setRecipient(userAux.getEmail());
+        emailDto.setMsgBody("Hi " + userAux.getUsername() + ",\n" + "\n"+ "Your appointment from the date of "+ existingAppointment.getDate()+ " for the service " + existingAppointment.getType().getNameType() +" was changed successfull from "+ oldStatus + " to " + existingAppointment.getStatus() + ".");
+        emailDto.setSubject("Your appointment status was changed");
+        emailService.sendSimpleMail(emailDto);
         appointmentRepository.save(existingAppointment);
 
         return new ResponseEntity<>(existingAppointment, HttpStatus.OK);
     }
-
 
     public List<String> getFreeTimeSlots(int TechnicianId, Date data) {
         List<Appointment> TechnicianAppointments = appointmentRepository.getAppointmentsByDateAndStatus(data, TechnicianId);

@@ -17,13 +17,18 @@ public class UserProfileController {
     private AppointmentService appointmentService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getUserProfileById(@PathVariable("id") int id){
+    private ResponseEntity<?> getUserProfileById(@PathVariable("id") int id){
         return userProfileService.getUserProfileById(id);
     }
 
     @GetMapping(value = "/username={username}")
-    public int getUserProfileById(@PathVariable("username") String username){
+    private int getIdUser(@PathVariable("username") String username){
         return userProfileService.getUserProfileByUsername(username);
+    }
+
+    @GetMapping(value = "/username={username}/profile")
+    private int getIdUserProfile(@PathVariable("username") String username){
+        return userProfileService.getIdProfileByUsername(username);
     }
 
     @GetMapping("/{id}/appointment")
@@ -31,7 +36,7 @@ public class UserProfileController {
         return appointmentService.getUserAppointments(id);
     }
     @GetMapping(value = "/username={username}/role")
-    public String getUserRole(@PathVariable("username") String username){
+    private String getUserRole(@PathVariable("username") String username){
         return userProfileService.getRoleByUsername(username);
     }
 }

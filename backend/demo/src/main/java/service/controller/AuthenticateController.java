@@ -11,12 +11,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import service.dto.EmailDto;
 import service.dto.LogInDto;
 import service.dto.SignUpDto;
 import service.entity.User;
 import service.entity.UserProfile;
 import service.jwt.JwtUtil;
 import service.services.CustomUserDetailsService;
+import service.services.EmailService;
 import service.services.UserProfileService;
 import service.services.UserService;
 
@@ -44,6 +46,9 @@ public class AuthenticateController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authentificateUser(@RequestBody LogInDto logInDto) {
@@ -94,7 +99,11 @@ public class AuthenticateController {
             newProfile.setPhone(signUpDto.getPhone());
             newProfile.setEmail(signUpDto.getEmail());
             newProfile.setUsername(signUpDto.getUsername());
-
+            EmailDto emailDto = new EmailDto();
+            emailDto.setSubject("Welcome");
+            emailDto.setMsgBody("Hi," + signUpDto.getUsername() + ",\n" + "\n" + "Your account was created successfully.");
+            emailDto.setRecipient(signUpDto.getEmail());
+            emailService.sendSimpleMail(emailDto);
             userProfileService.addUserProfile(newProfile);
 
             return ResponseEntity.ok("User registered successfully");

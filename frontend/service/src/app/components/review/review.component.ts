@@ -4,6 +4,7 @@ import { ReviewDto } from '../../model/review-dto';
 import { TechnicianService } from '../../service/technician.service';
 import { ReviewService } from '../../service/review.service';
 import { UserProfileService } from '../../service/user-profile.service';
+import { NotificationService } from '../../service/notification.service';
 
 @Component({
   selector: 'app-review',
@@ -22,7 +23,8 @@ export class ReviewComponent {
   constructor(
     private technicianService: TechnicianService,
     private reviewServide: ReviewService,
-    private userProfile: UserProfileService
+    private userProfile: UserProfileService,
+    private notification: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -54,18 +56,18 @@ export class ReviewComponent {
     if (this.addReview && username) {
       this.addReview.description = description;
       this.addReview.grade = grade;
-      const id = await this.technicianService.getUserIdByUserName(username);
-      if(id!== undefined)
-        this.addReview.technicianId = id;
-      const idUser = await this.technicianService.getUserIdByUserName(localStorage.getItem('username'));
+      const idTechnicianProfile = await this.technicianService.getTechnicianProfileByUsername(username);
+      if(idTechnicianProfile!== undefined)
+        this.addReview.technicianId = idTechnicianProfile;
+      const idUser = await this.userProfile.getUserIdProfileByUserName(localStorage.getItem('username'));
       if(idUser)
         this.addReview.userId=idUser;
-      console.log(this.addReview.grade);
-      console.log(this.addReview.description);
-      console.log(this.addReview.userId);
-      console.log(this.addReview.technicianId);
       this.reviewServide.addReview(this.addReview).subscribe(
-      );
+        ()=> {this.loadTechnicians();
+        this.addReview.description= "";
+        this.addReview.grade = 0;
+        this.notification.showNotification("Review added with success");
+    });
     }
   }
 }

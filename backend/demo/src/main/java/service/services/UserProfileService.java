@@ -71,4 +71,9 @@ public class UserProfileService {
         return user.getRole();
     }
 
+    public int getIdProfileByUsername(String username){
+        UserProfile userProfile = userProfileRepository.findByUsername(username);
+        return userProfile.getIdProfile();
+    }
+
 }

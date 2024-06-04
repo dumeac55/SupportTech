@@ -1,6 +1,6 @@
 <div class="orient">
   <h2>Technicians</h2>
-  <mat-accordion>
+  <mat-accordion >
     <mat-expansion-panel
       style="background-color: white"
       *ngFor="let technician of technicians"
@@ -8,7 +8,7 @@
     >
       <mat-expansion-panel-header style="background-color: white">
         <mat-panel-title style="color: black">
-          {{ technician.firstName }}&nbsp;&nbsp;&nbsp;{{ technician.avgGrade }}
+          {{ technician.firstName }}  {{ technician.lastName }}&nbsp;&nbsp;&nbsp;{{ technician.avgGrade }}
           <mat-icon style="color: rgb(189, 223, 0)">star</mat-icon> ({{
             technician.countGrade
           }})
