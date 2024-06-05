@@ -13,6 +13,8 @@ import { SignInServiceService } from '../../service/sign-in-service.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { NotificationService } from '../../service/notification.service';
+import { TypeService } from '../../service/type.service';
+import { TypeDto } from '../../model/type-dto';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -28,6 +30,8 @@ export class ProfileComponent{
   role?: String;
   showAppointments: boolean = false;
   showWishlist: boolean = false;
+  showServices: boolean = false;
+  types: TypeDto[] = [];
   displayedColumns: string[] = ['Name', 'Data', 'Technician', 'Phone', 'Email', 'Status', 'Actions'];
   displayedColumnsTechnician: string[] = ['Name', 'Data', 'Utilizator', 'Phone', 'Email', 'Status', 'Actions'];
   displayedColumnsWishList: string[] = ['Name Product', 'Price', 'linkProduct', 'linkImage', 'Company', 'Actions']
@@ -38,7 +42,8 @@ export class ProfileComponent{
               private technicianService: TechnicianService,
               private wishListService: WishListService,
               private router: Router,
-              private notification:NotificationService
+              private notification:NotificationService,
+              private type: TypeService
             ){}
 
   ngOnInit(){
@@ -96,6 +101,27 @@ export class ProfileComponent{
               console.log('Appointments not found or not in correct format.');
               this.haveAppointment = false;
             }
+            this.technicianService.getTechnicianProfileByUsername(localStorage.getItem('username')).then(
+              (idTechnician) => {
+                if (idTechnician !== undefined) {
+                  this.appointmentService.getTypesByIdTechnician(idTechnician).then(
+                    (types) => {
+                      if(Array.isArray(types))
+                      this.types = types;
+                    },
+                    (error: string) => {
+                      console.error('Error getting types for technician:', error);
+                    }
+                  );
+                } else {
+                  console.error('Technician id is undefined');
+                }
+              }
+            ).catch(
+              (error) => {
+                console.error('Error getting technician ID:', error);
+              }
+            );
             console.log('Profile loaded successfully:', userProfile);
             console.log('Appointments loaded:', appointment);
           } else {
@@ -148,9 +174,15 @@ export class ProfileComponent{
     if (view === 'appointments') {
       this.showAppointments = true;
       this.showWishlist = false;
+      this.showServices = false;
     } else if (view === 'wishlist') {
       this.showAppointments = false;
       this.showWishlist = true;
+      this.showServices = false;
+    } else if(view === 'service'){
+      this.showServices = true;
+      this.showAppointments = false;
+      this.showWishlist = false;
     }
   }
 

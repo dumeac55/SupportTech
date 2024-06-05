@@ -106,7 +106,7 @@ public class AuthenticateController {
             emailService.sendSimpleMail(emailDto);
             userProfileService.addUserProfile(newProfile);
 
-            return ResponseEntity.ok("User registered successfully");
+            return ResponseEntity.ok("User regisltered successfully");
         }
     }
 

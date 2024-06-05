@@ -32,3 +32,15 @@
     place-self: center;
   }
 
+
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: var(--mdc-filled-text-field-container-color);
+}
+
+#my-input.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: red;
+}
+
+mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled{
+  background-color: blue;
+}

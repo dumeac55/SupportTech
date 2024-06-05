@@ -13,13 +13,18 @@
 <div class="buttons">
   <button
     mat-raised-button
+    class="button"
     color="primary"
     (click)="toggleView('appointments')"
   >
-    Programări
+    Appointments
   </button>
   <button mat-raised-button color="primary" (click)="toggleView('wishlist')">
     Wishlist
+  </button>
+
+  <button *ngIf="role=== 'technician'" mat-raised-button color="primary" (click)="toggleView('service')">
+    Services
   </button>
 </div>
 <p style="margin-top: 50px"></p>
@@ -215,6 +220,20 @@
         ></tr>
       </table>
     </div>
+  </div>
+</div>
+
+<div *ngIf="showServices" class="types-column">
+  <h2>Services</h2>
+  <div *ngFor="let type of types">
+    <div class="type-info">
+      <p>Service: {{ type.nameType }}</p>
+      <p>Price: {{ type.price }}</p>
+      <div class="example-button-row">
+        <!-- <button mat-raised-button color="primary" (click)="selectType(type)">Select</button> -->
+      </div>
+    </div>
+    <hr/>
   </div>
 </div>
 

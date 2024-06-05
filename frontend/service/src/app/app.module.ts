@@ -25,7 +25,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { TypeComponent } from './components/type/type.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { NotificationComponent } from './components/notification/notification.component';
@@ -44,7 +43,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
     AppointmentComponent,
     ForumComponent,
     CompariComponent,
-    TypeComponent,
     NotificationComponent,
     HomeComponent,
     ReviewComponent,
