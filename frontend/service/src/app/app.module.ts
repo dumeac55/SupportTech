@@ -29,11 +29,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { NotificationComponent } from './components/notification/notification.component';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { HomeComponent } from './components/home/home.component';
 import { ReviewComponent } from './components/review/review.component';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NgChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +47,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     NotificationComponent,
     HomeComponent,
     ReviewComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +71,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatPaginatorModule,
     MatListModule,
     MatExpansionModule,
+    NgChartsModule
   ],
   providers: [provideAnimationsAsync(), provideNativeDateAdapter()],
   bootstrap: [AppComponent],

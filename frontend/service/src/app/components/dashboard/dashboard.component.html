@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charts</title>
+  <style>
+    .charts-container {
+      display: flex;
+      justify-content: space-between;
+    }
+    .chart-container {
+      width: 45%; /* Setează lățimea fiecărui container de grafic */
+      margin-bottom: 20px; /* Spațiu între containere */
+    }
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .chart-wrapper {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow: hidden; /* Pentru a evita marginile de pe canvas să iasă din container */
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="charts-container">
+    <div class="chart-container">
+      <div class="title">Line chart</div>
+      <div class="nav"></div>
+      <div class="chart-wrapper">
+        <canvas
+          baseChart
+          width="600"
+          height="400"
+          type="line"
+          [data]="lineChartData"
+        ></canvas>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <div class="title">Bar chart</div>
+      <div class="nav"></div>
+      <div class="chart-wrapper">
+        <canvas
+          baseChart
+          width="600"
+          height="400"
+          type="bar"
+          [data]="barChartData"
+        ></canvas>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

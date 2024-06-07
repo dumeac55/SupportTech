@@ -8,6 +8,7 @@ import { ForumComponent } from './components/forum/forum.component';
 import { CompariComponent } from './components/compari/compari.component';
 import { HomeComponent } from './components/home/home.component';
 import { ReviewComponent } from './components/review/review.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: 'login', component: SignInComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'compari', component: CompariComponent },
   { path: 'home', component: HomeComponent },
   { path: 'review', component: ReviewComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: '**', redirectTo: '/home' },
 ];
 
