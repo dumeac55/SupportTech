@@ -31,7 +31,7 @@
 <body>
   <div class="charts-container">
     <div class="chart-container">
-      <div class="title">Line chart</div>
+      <div class="title">No Appointments</div>
       <div class="nav"></div>
       <div class="chart-wrapper">
         <canvas
@@ -39,13 +39,13 @@
           width="600"
           height="400"
           type="line"
-          [data]="lineChartData"
+          [data]="lineChartNoAppointmets"
         ></canvas>
       </div>
     </div>
 
     <div class="chart-container">
-      <div class="title">Bar chart</div>
+      <div class="title">Avg Review of Technicians</div>
       <div class="nav"></div>
       <div class="chart-wrapper">
         <canvas
@@ -53,7 +53,7 @@
           width="600"
           height="400"
           type="bar"
-          [data]="barChartData"
+          [data]="barChartAvgTechnicians"
         ></canvas>
       </div>
     </div>

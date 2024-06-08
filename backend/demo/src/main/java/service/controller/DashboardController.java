@@ -2,10 +2,7 @@ package service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import service.dto.TechnicianDto;
 import service.entity.Appointment;
 import service.services.DashboardService;
@@ -22,5 +19,10 @@ public class DashboardController {
     @GetMapping("/all")
     private ResponseEntity<?> getAvgTechnicians() {
         return dashboardService.getTechniciansAvg();
+    }
+
+    @GetMapping("/{year}/appointments")
+    private ResponseEntity<?> getNrAppointments(@PathVariable("year") int year) {
+        return dashboardService.getNrOfAppointments(year);
     }
 }

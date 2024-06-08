@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import service.dto.DashboardDto;
 import service.entity.Appointment;
 
 import java.util.Date;
@@ -21,5 +22,11 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 
     @Query("SELECT a FROM Appointment a WHERE a.technician.idTechnician = :userId and date(a.date) = :date")
     List<Appointment> getAppointmentsByDateAndStatus(@Param("date") Date date, @Param("userId") int idTechnician);
+
+    @Query("SELECT new service.dto.DashboardDto(MONTH(a.date) AS month, COUNT(a) AS count) " +
+            "FROM Appointment a " +
+            "WHERE YEAR(a.date) = :year " +
+            "GROUP BY MONTH(a.date)")
+    List<DashboardDto> countAppointmentsByMonth(@Param("year") int year);
 
 }

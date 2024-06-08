@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { AppointmentDto } from '../../model/appointment-dto';
 import { ReviewDto } from '../../model/review-dto';
-import { count } from 'rxjs';
+import { count, forkJoin } from 'rxjs';
 import { ReviewService } from '../../service/review.service';
+import { DashboardService } from '../../service/dashboard.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -10,49 +11,58 @@ import { ReviewService } from '../../service/review.service';
 })
 export class DashboardComponent{
   reviewDto: ReviewDto[] = [];
-  lineChartData: any;
-  constructor(private review: ReviewService) { }
+  barChartAvgTechnicians: any;
+  labelsAvgTechnicians: string[] = [];
+  datasetsAvgTechnicians: number[] = [];
+
+  lineChartNoAppointmets: any;
+  labelNoAppointments: string[] = [];
+  datasetsNoAppointmets: number[] = [];
+  constructor(private review: ReviewService,
+              private dashboard: DashboardService
+  ) { }
   ngOnInit(): void {
-    this.calculateAppointmentCounts();
-    this.asd();
+    this.avgTechnicians();
+    this.appointmentPerYear();
   }
-  async asd() {
-    const counts = await this.calculateAppointmentCounts();
-    this.lineChartData = {
-      labels: ["Jan", "Feb", "May", "Apr", "Jun", "July", "Aug"],
-      datasets: [
-        {
-          data: counts,
-          label: 'Sales Percent',
-          fill: true,
-          backgroundColor: 'rgba(255, 255, 0, 0.3)',
-          borderColor: 'black',
-          tension: 0.5
-        }
-      ]
-    };
-  }
-  barChartData = {
-    labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    datasets: [
-      {
-        data: [89, 34, 43, 54, 28, 74, 93],
-        label: 'Sales Percent',
-        backgroundColor: '#f88406'
-      }
-    ]
-  }
-  async calculateAppointmentCounts(): Promise<number[]> {
-    let counts = [0, 0, 0, 0, 0, 0, 0];
-    const data = await this.review.getReviewByIdTechnician(1).toPromise();
-    if(data)
-    this.reviewDto = data;
-    this.reviewDto.forEach((appointment) => {
-      if (appointment.avgGrade) {
-        counts[3] += appointment.avgGrade; // Dacă vrei să aduni valoarea la indicele 3 pentru fiecare programare, așa cum ai făcut în exemplul tău
-      }
+
+  avgTechnicians() {
+    forkJoin({
+      avgGrades: this.dashboard.getAvgGrades(),
+      fullNames: this.dashboard.getFullNames()
+    }).subscribe(({ avgGrades, fullNames }) => {
+      this.datasetsAvgTechnicians = avgGrades;
+      this.labelsAvgTechnicians = fullNames;
+      this.barChartAvgTechnicians = {
+        labels: this.labelsAvgTechnicians,
+        datasets: [
+          {
+            data: this.datasetsAvgTechnicians,
+            label: 'Review' ,
+            backgroundColor: '#f88406'
+          }
+        ]
+      };
     });
-    console.log(counts); // Log the counts after they've been calculated
-    return counts;
+  }
+
+  appointmentPerYear(){
+    forkJoin({
+      month: this.dashboard.getMonth(),
+      nrAppontments: this.dashboard.getNrAppontments()
+    }).subscribe(({ month, nrAppontments }) => {
+      this.datasetsNoAppointmets = nrAppontments;
+      this.labelNoAppointments = month;
+      this.lineChartNoAppointmets = {
+        labels: this.labelNoAppointments,
+        datasets: [
+          {
+            data: this.datasetsNoAppointmets,
+            label: 'Review' ,
+            backgroundColor: '#f88406'
+          }
+        ]
+      };
+    });
   }
 }
