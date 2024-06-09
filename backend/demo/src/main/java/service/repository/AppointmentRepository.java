@@ -29,4 +29,18 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
             "GROUP BY MONTH(a.date)")
     List<DashboardDto> countAppointmentsByMonth(@Param("year") int year);
 
+    @Query("SELECT new service.dto.DashboardDto(t.firstName AS firstName, t.lastName AS lastName, COUNT(a) AS count) " +
+            "FROM Appointment a " +
+            "JOIN a.technician t " +
+            "WHERE YEAR(a.date) = :year " +
+            "GROUP BY t.firstName, t.lastName")
+    List<DashboardDto> countAppointmentsByTechnicianAndYear(@Param("year") int year);
+
+    @Query("SELECT new service.dto.DashboardDto(MONTH(a.date) AS month, COUNT(a) AS count) " +
+            "FROM Appointment a " +
+            "WHERE YEAR(a.date) = :year AND a.userProfile.user.idUser = :idProfile " +
+            "AND (:status IS NULL OR a.status = :status) " +
+            "GROUP BY MONTH(a.date)")
+    List<DashboardDto> countAppointmentsByUserProfile(@Param("year") int year, @Param("idProfile") int idProfile, @Param("status") String status);
+
 }

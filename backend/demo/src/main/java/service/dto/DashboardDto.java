@@ -20,4 +20,11 @@ public class DashboardDto {
         this.month = month;
         this.nrAppointments = nrAppointments;
     }
+
+    public DashboardDto(String firstName, String lastName, Long NrAppointments){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nrAppointments = NrAppointments;
+    }
+
 }

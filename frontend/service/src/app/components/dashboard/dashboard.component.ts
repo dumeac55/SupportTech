@@ -14,10 +14,11 @@ export class DashboardComponent{
   barChartAvgTechnicians: any;
   labelsAvgTechnicians: string[] = [];
   datasetsAvgTechnicians: number[] = [];
-
+  yearNrAppointment: number = 2024;
   lineChartNoAppointmets: any;
   labelNoAppointments: string[] = [];
   datasetsNoAppointmets: number[] = [];
+  availableYears: number[] = [2023, 2024, 2025, 2026, 2027];
   constructor(private review: ReviewService,
               private dashboard: DashboardService
   ) { }
@@ -48,8 +49,8 @@ export class DashboardComponent{
 
   appointmentPerYear(){
     forkJoin({
-      month: this.dashboard.getMonth(),
-      nrAppontments: this.dashboard.getNrAppontments()
+      month: this.dashboard.getMonth(this.yearNrAppointment),
+      nrAppontments: this.dashboard.getNrAppontments(this.yearNrAppointment)
     }).subscribe(({ month, nrAppontments }) => {
       this.datasetsNoAppointmets = nrAppontments;
       this.labelNoAppointments = month;
@@ -58,11 +59,15 @@ export class DashboardComponent{
         datasets: [
           {
             data: this.datasetsNoAppointmets,
-            label: 'Review' ,
+            label: 'Nr Appointments' ,
             backgroundColor: '#f88406'
           }
         ]
       };
     });
+  }
+
+  onYearChange() {
+    this.appointmentPerYear();
   }
 }

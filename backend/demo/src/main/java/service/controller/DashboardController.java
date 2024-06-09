@@ -25,4 +25,14 @@ public class DashboardController {
     private ResponseEntity<?> getNrAppointments(@PathVariable("year") int year) {
         return dashboardService.getNrOfAppointments(year);
     }
+
+    @GetMapping("/{year}/technician")
+    private ResponseEntity<?> getNrAppointmentsPerTechnician(@PathVariable("year") int year) {
+        return dashboardService.getNrOfAppointmentsPerTechnician(year);
+    }
+
+    @GetMapping("/{year}/{id}")
+    private ResponseEntity<?> getNrOfAppointmentsPerUser(@PathVariable("year") int year, @PathVariable("id") int idProfile, @RequestParam(name = "status", required = false ) String status) {
+        return dashboardService.getNrOfAppointmentsPerUser(year, idProfile, status);
+    }
 }

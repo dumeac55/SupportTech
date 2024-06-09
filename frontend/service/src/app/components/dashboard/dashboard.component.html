@@ -10,8 +10,8 @@
       justify-content: space-between;
     }
     .chart-container {
-      width: 45%; /* Setează lățimea fiecărui container de grafic */
-      margin-bottom: 20px; /* Spațiu între containere */
+      width: 45%;
+      margin-bottom: 20px;
     }
     .title {
       font-size: 18px;
@@ -21,7 +21,7 @@
     .chart-wrapper {
       border: 1px solid #ccc;
       border-radius: 5px;
-      overflow: hidden; /* Pentru a evita marginile de pe canvas să iasă din container */
+      overflow: hidden;
     }
     canvas {
       display: block;
@@ -33,6 +33,9 @@
     <div class="chart-container">
       <div class="title">No Appointments</div>
       <div class="nav"></div>
+      <select [(ngModel)]="yearNrAppointment" (change)="onYearChange()">
+        <option *ngFor="let year of availableYears" [value]="year">{{ year }}</option>
+      </select>
       <div class="chart-wrapper">
         <canvas
           baseChart

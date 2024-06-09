@@ -27,4 +27,19 @@ public class DashboardService {
         List<DashboardDto> nrAppointemntsList = appointmentRepository.countAppointmentsByMonth(year);
         return new ResponseEntity<>(nrAppointemntsList, HttpStatus.OK);
     }
+
+    public ResponseEntity<?> getNrOfAppointmentsPerTechnician(int year){
+        List<DashboardDto> nrAppointemntsList = appointmentRepository.countAppointmentsByTechnicianAndYear(year);
+        return new ResponseEntity<>(nrAppointemntsList, HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getNrOfAppointmentsPerUser(int year, int idProfile, String status) {
+        List<DashboardDto> result;
+        if (status != null && (status.equals("Done") || status.equals("Pending"))) {
+            result = appointmentRepository.countAppointmentsByUserProfile(year, idProfile, status);
+        } else {
+            result = appointmentRepository.countAppointmentsByUserProfile(year, idProfile, null);
+        }
+        return ResponseEntity.ok(result);
+    }
 }
