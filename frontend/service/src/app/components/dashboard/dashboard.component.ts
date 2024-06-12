@@ -14,17 +14,24 @@ export class DashboardComponent{
   barChartAvgTechnicians: any;
   labelsAvgTechnicians: string[] = [];
   datasetsAvgTechnicians: number[] = [];
+
   yearNrAppointment: number = 2024;
   lineChartNoAppointmets: any;
   labelNoAppointments: string[] = [];
   datasetsNoAppointmets: number[] = [];
   availableYears: number[] = [2023, 2024, 2025, 2026, 2027];
+
+  barChartNoAppointmetnsPerTechnicians: any;
+  labelsNoAppointmetnsPerTechnicians: string[] = [];
+  datasetsANoAppointmetnsPerTechnicians: number[] = [];
+  availableYearsBarChart: number[] = [2023, 2024, 2025, 2026, 2027];
   constructor(private review: ReviewService,
               private dashboard: DashboardService
   ) { }
   ngOnInit(): void {
     this.avgTechnicians();
     this.appointmentPerYear();
+    this.appointmentPerYearPerTechnician();
   }
 
   avgTechnicians() {
@@ -67,7 +74,31 @@ export class DashboardComponent{
     });
   }
 
+  appointmentPerYearPerTechnician(){
+    forkJoin({
+      noAppointment: this.dashboard.getNrAppontmentsPerTechnician(this.yearNrAppointment),
+      fullNames: this.dashboard.getFullNamesTechnicians(this.yearNrAppointment)
+    }).subscribe(({ noAppointment, fullNames }) => {
+      this.datasetsANoAppointmetnsPerTechnicians = noAppointment;
+      this.labelsNoAppointmetnsPerTechnicians = fullNames;
+      this.barChartNoAppointmetnsPerTechnicians = {
+        labels: this.labelsNoAppointmetnsPerTechnicians,
+        datasets: [
+          {
+            data: this.datasetsANoAppointmetnsPerTechnicians,
+            label: 'Nr Appointments Per Technician' ,
+            backgroundColor: '#f88406'
+          }
+        ]
+      };
+    });
+  }
+
   onYearChange() {
     this.appointmentPerYear();
+  }
+
+  onYearChange2() {
+    this.appointmentPerYearPerTechnician();
   }
 }

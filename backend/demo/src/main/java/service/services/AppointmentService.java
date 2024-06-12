@@ -54,7 +54,9 @@ public class AppointmentService {
             emailDto.setRecipient(userAux.getEmail());
             emailDto.setMsgBody("Hi " + userAux.getUsername() + ",\n" + "\n"+ "We received your appointment in date: "+ appointmentDto.getData()+ " for service: " + appointmentDto.getType()+ " at technician "+ technicianProfile1.getFirstName() + " "+ technicianProfile1.getLastName() + "." );
             emailDto.setSubject("Your appointment is aproved");
-            emailService.sendSimpleMail(emailDto);
+            new Thread(() -> {
+                emailService.sendSimpleMail(emailDto);
+            }).start();
             return new ResponseEntity<>("Appointment create successfull", HttpStatus.OK);
         }
     }
@@ -76,6 +78,7 @@ public class AppointmentService {
                 userAppointmentDto.setTechnicianFirstName(appointment.getTechnician().getFirstName());
                 userAppointmentDto.setStatus(appointment.getStatus());
                 userAppointmentDto.setIdAppointment(appointment.getId());
+                userAppointmentDto.setPrice(appointment.getType().getPrice());
                 userAppointmentDtoList.add(userAppointmentDto);
             }
             return new ResponseEntity<>(userAppointmentDtoList, HttpStatus.OK);

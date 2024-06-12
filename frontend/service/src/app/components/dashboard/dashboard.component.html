@@ -1,35 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Charts</title>
-  <style>
-    .charts-container {
-      display: flex;
-      justify-content: space-between;
-    }
-    .chart-container {
-      width: 45%;
-      margin-bottom: 20px;
-    }
-    .title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .chart-wrapper {
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      overflow: hidden;
-    }
-    canvas {
-      display: block;
-    }
-  </style>
-</head>
-<body>
-  <div class="charts-container">
+<mat-grid-list cols="2" rowHeight="2:1">
+  <mat-grid-tile colspan="1" rowspan="1">
     <div class="chart-container">
       <div class="title">No Appointments</div>
       <div class="nav"></div>
@@ -46,7 +16,9 @@
         ></canvas>
       </div>
     </div>
+  </mat-grid-tile>
 
+  <mat-grid-tile colspan="1" rowspan="1">
     <div class="chart-container">
       <div class="title">Avg Review of Technicians</div>
       <div class="nav"></div>
@@ -60,6 +32,23 @@
         ></canvas>
       </div>
     </div>
-  </div>
-</body>
-</html>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1">
+    <div class="chart-container">
+      <div class="title">No Appointments Per Technicians</div>
+      <div class="nav"></div>
+      <select [(ngModel)]="yearNrAppointment" (change)="onYearChange2()">
+        <option *ngFor="let year of availableYearsBarChart" [value]="year">{{ year }}</option>
+      </select>
+      <div class="chart-wrapper">
+        <canvas
+          baseChart
+          width="600"
+          height="400"
+          type="bar"
+          [data]="barChartNoAppointmetnsPerTechnicians"
+        ></canvas>
+      </div>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

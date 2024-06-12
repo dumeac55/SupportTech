@@ -7,6 +7,7 @@ import java.util.Date;
 @Data
 public class UserAppointmentDto {
     private String nameType;
+    private int price;
     private String technicianFirstName;
     private String technicianLastName;
     private String technicianPhone;

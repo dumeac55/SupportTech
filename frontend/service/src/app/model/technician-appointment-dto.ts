@@ -7,4 +7,5 @@ export class TechnicianAppointmentDto {
     userEmail?: string;
     date?: Date;
     status?: string;
+    price?: number;
 }

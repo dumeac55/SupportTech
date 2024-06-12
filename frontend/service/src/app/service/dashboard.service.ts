@@ -17,6 +17,14 @@ export class DashboardService {
     return this.http.get<DashboardDTO[]>(this.URL + 'dashboard/' + year+ '/appointments');
   }
 
+  getNoAppointmentsPerTechnician(year: number) : Observable<DashboardDTO[]>  {
+    return this.http.get<DashboardDTO[]>(this.URL + 'dashboard/' + year+ '/technician');
+  }
+
+  getNoAppointmentsPerUser(year: number, idProfile:number, status: string) : Observable<DashboardDTO[]>  {
+    return this.http.get<DashboardDTO[]>(this.URL + 'dashboard/' + year + '/' + idProfile + "?status=" + status);
+  }
+
   getMonth(year: number): Observable<string[]> {
     return this.getNoAppointments(year).pipe(
       map(dashboards => dashboards.map(dashboard => this.convertMounthNumberToString(dashboard.month)))
@@ -29,6 +37,18 @@ export class DashboardService {
     );
   }
 
+  getNrAppontmentsPerTechnician(year: number): Observable<number[]> {
+    return this.getNoAppointmentsPerTechnician(year).pipe(
+      map((dashboards: DashboardDTO[]) => dashboards.map(dashboard => dashboard.nrAppointments).filter((avg): avg is number => avg !== undefined))
+    );
+  }
+
+  getFullNamesTechnicians(year: number): Observable<string[]> {
+    return this.getNoAppointmentsPerTechnician(year).pipe(
+      map(dashboards => dashboards.map(dashboard => `${dashboard.firstName} ${dashboard.lastName}`))
+    );
+  }
+
   getAvgGrades(): Observable<number[]> {
     return this.getReviewByIdTechnician().pipe(
       map((dashboards: DashboardDTO[]) => dashboards.map(dashboard => dashboard.avgGrade).filter((avg): avg is number => avg !== undefined))
@@ -38,6 +58,18 @@ export class DashboardService {
   getFullNames(): Observable<string[]> {
     return this.getReviewByIdTechnician().pipe(
       map(dashboards => dashboards.map(dashboard => `${dashboard.firstName} ${dashboard.lastName}`))
+    );
+  }
+
+  getMonthUser(year: number, idProfile:number, status: string): Observable<string[]> {
+    return this.getNoAppointmentsPerUser(year, idProfile, status).pipe(
+      map(dashboards => dashboards.map(dashboard => this.convertMounthNumberToString(dashboard.month)))
+    );
+  }
+
+  getNoAppointmentsUser(year: number, idProfile:number, status: string): Observable<number[]> {
+    return this.getNoAppointmentsPerUser(year, idProfile, status).pipe(
+      map((dashboards: DashboardDTO[]) => dashboards.map(dashboard => dashboard.nrAppointments).filter((avg): avg is number => avg !== undefined))
     );
   }
 

@@ -15,6 +15,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { NotificationService } from '../../service/notification.service';
 import { TypeService } from '../../service/type.service';
 import { TypeDto } from '../../model/type-dto';
+import { forkJoin } from 'rxjs';
+import { DashboardService } from '../../service/dashboard.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -22,20 +24,31 @@ import { TypeDto } from '../../model/type-dto';
 })
 
 export class ProfileComponent{
+  role?: String;
+
   userProfile: UserProfileDto = {};
-  haveAppointment: boolean = false;
   appointments: AppointmentDto[] = [];
   wishList: WishListDto [] = [];
   appointmentsTechnician: TechnicianAppointmentDto[] = [];
-  role?: String;
+  types: TypeDto[] = [];
+
+  haveAppointment: boolean = false;
   showAppointments: boolean = false;
   showWishlist: boolean = false;
   showServices: boolean = false;
-  types: TypeDto[] = [];
-  displayedColumns: string[] = ['Name', 'Data', 'Technician', 'Phone', 'Email', 'Status', 'Actions'];
-  displayedColumnsTechnician: string[] = ['Name', 'Data', 'Utilizator', 'Phone', 'Email', 'Status', 'Actions'];
+  showStatistics: boolean = false;
+
+  displayedColumns: string[] = ['Name', 'Price', 'Data', 'Technician', 'Phone', 'Email', 'Status', 'Actions'];
+  displayedColumnsTechnician: string[] = ['Name', 'Price', 'Data', 'Utilizator', 'Phone', 'Email', 'Status', 'Actions'];
   displayedColumnsWishList: string[] = ['Name Product', 'Price', 'linkProduct', 'linkImage', 'Company', 'Actions']
 
+  yearNrAppointment?: number;
+  barChartNoAppointmetnsPerUser: any;
+  labelsNoAppointmetnsPerUser: string[] = [];
+  datasetsANoAppointmetnsPerUser: number[] = [];
+  availableYearsBarChart: number[] = [2023, 2024, 2025, 2026, 2027];
+  availableStatusBarChart: string[] = ['All', 'Done', 'Canceled', 'Pending', 'Can\'t fix'];
+  status?:string;
   constructor(private jwtStorage: JwtStorageService,
               private userProfileService: UserProfileService,
               private appointmentService: AppointmentService,
@@ -43,8 +56,11 @@ export class ProfileComponent{
               private wishListService: WishListService,
               private router: Router,
               private notification:NotificationService,
-              private type: TypeService
-            ){}
+              private dashboard: DashboardService
+            ){
+              this.status = "all";
+              this.yearNrAppointment = 2024;
+            }
 
   ngOnInit(){
     const token = localStorage.getItem('token');
@@ -175,14 +191,23 @@ export class ProfileComponent{
       this.showAppointments = true;
       this.showWishlist = false;
       this.showServices = false;
+      this.showStatistics = false;
     } else if (view === 'wishlist') {
       this.showAppointments = false;
       this.showWishlist = true;
       this.showServices = false;
+      this.showStatistics = false;
     } else if(view === 'service'){
       this.showServices = true;
       this.showAppointments = false;
       this.showWishlist = false;
+      this.showStatistics = false;
+    }else if(view === 'statistics'){
+      this.showServices = false;
+      this.showAppointments = false;
+      this.showWishlist = false;
+      this.showStatistics = true;
+      this.appointmentPerYearPerUser();
     }
   }
 
@@ -200,6 +225,37 @@ export class ProfileComponent{
           }
       }
     );
+  }
+
+  async appointmentPerYearPerUser(){
+    const idProfile = await this.userProfileService.getUserIdByUserName(localStorage.getItem('username'));
+    if(idProfile && this.yearNrAppointment && this.status){
+      forkJoin({
+        noAppointment: this.dashboard.getNoAppointmentsUser(this.yearNrAppointment, idProfile, this.status),
+        month: this.dashboard.getMonth(this.yearNrAppointment)
+      }).subscribe(({ noAppointment, month }) => {
+        this.datasetsANoAppointmetnsPerUser = noAppointment;
+        this.labelsNoAppointmetnsPerUser = month;
+        this.barChartNoAppointmetnsPerUser = {
+          labels: this.labelsNoAppointmetnsPerUser,
+          datasets: [
+            {
+              data: this.datasetsANoAppointmetnsPerUser,
+              label: 'Nr Appointments Per User' ,
+              backgroundColor: '#f88406'
+            }
+          ]
+        };
+      });
+    }
+  }
+
+  onYearChange() {
+    this.appointmentPerYearPerUser();
+  }
+
+  onStatusChange() {
+    this.appointmentPerYearPerUser();
   }
 
   redirectToLogin():void{

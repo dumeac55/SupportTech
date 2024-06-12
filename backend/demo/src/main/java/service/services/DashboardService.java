@@ -35,7 +35,7 @@ public class DashboardService {
 
     public ResponseEntity<?> getNrOfAppointmentsPerUser(int year, int idProfile, String status) {
         List<DashboardDto> result;
-        if (status != null && (status.equals("Done") || status.equals("Pending"))) {
+        if (status != null && (status.equals("Done") || status.equals("Pending") || status.equals("Canceled") || status.equals("Can't fix") )) {
             result = appointmentRepository.countAppointmentsByUserProfile(year, idProfile, status);
         } else {
             result = appointmentRepository.countAppointmentsByUserProfile(year, idProfile, null);
