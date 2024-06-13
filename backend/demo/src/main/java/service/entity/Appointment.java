@@ -31,9 +31,12 @@ public class Appointment {
     @Column(name = "status")
     private String status;
 
-    @ManyToOne
-    @JoinColumn(name = "typeid", referencedColumnName = "idtype")
-    private Type type;
+    @Column(name = "typename")
+    private String nameType;
+
+    @Column(name = "price")
+    private int price;
+
 
     public int getId() {
         return id;
@@ -67,12 +70,20 @@ public class Appointment {
         this.date = date;
     }
 
-    public Type getType() {
-        return type;
+    public String getNameType() {
+        return nameType;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setNameType(String nameType) {
+        this.nameType = nameType;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public String getStatus() {

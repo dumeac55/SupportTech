@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AppointmentService } from '../../service/appointment.service';
 import { TypeDto } from '../../model/type-dto';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -8,6 +8,7 @@ import { ReviewService } from '../../service/review.service';
 import { TechnicianDto } from '../../model/technician-dto';
 import { TechnicianService } from '../../service/technician.service';
 import { NotificationService } from '../../service/notification.service';
+import { MatTabGroup } from '@angular/material/tabs';
 @Component({
   selector: 'app-appointment',
   templateUrl: './appointment.component.html',
@@ -21,7 +22,9 @@ export class AppointmentComponent {
   selectedType: TypeDto | null = null;
   selectedDateTime: Date | null = null;
   selectedDateTimeFinal: Date | null = null;
-
+  selectedInterval?: boolean = false;
+  showLabels: boolean = false;
+  @ViewChild('tabGroup') tabGroup: MatTabGroup | undefined;
   constructor(
     private appointmentService: AppointmentService,
     private technicianService: TechnicianService,
@@ -50,7 +53,6 @@ export class AppointmentComponent {
           this.technicians = result;
         }
       } catch (error) {
-        console.error('Error getting technicians:', error);
       }
     }
     else{
@@ -67,29 +69,20 @@ export class AppointmentComponent {
           if (idTechnician !== undefined) {
             this.appointmentService.getTypesByIdTechnician(idTechnician).then(
               (types) => {
+                if(this.tabGroup) this.tabGroup.selectedIndex = 1;
                 if(Array.isArray(types))
                 this.types = types;
-              },
-              (error: string) => {
-                console.error('Error getting types for technician:', error);
               }
             );
-          } else {
-            console.error('Technician id is undefined');
           }
         }
-      ).catch(
-        (error) => {
-          console.error('Error getting technician ID:', error);
-        }
-      );
-    } else {
-      console.error('Selected technician does not have a valid username');
+      ).catch();
     }
   }
 
   selectType(type: TypeDto): void {
     this.selectedType = type;
+    if(this.tabGroup) this.tabGroup.selectedIndex = 2;
   }
 
   AddAppointment(): void {
@@ -97,7 +90,6 @@ export class AppointmentComponent {
     if (token && !this.jwt.isTokenExpired(token)) {
       const usernameUser = localStorage.getItem('username');
       if (usernameUser === null) {
-        console.error('Username not found in localStorage.');
         return;
       }
       if (
@@ -110,11 +102,11 @@ export class AppointmentComponent {
             usernameUser,
             this.selectedTechnician.username as string,
             this.selectedType.nameType as string,
+            this.selectedType.price as number,
             this.selectedDateTimeFinal
           )
           .subscribe(
             (response) => {
-              console.log('Appointment created successfully:', response);
               this.selectedTechnician = null;
               this.selectedType = null;
               this.selectedDateTime = null;
@@ -123,20 +115,14 @@ export class AppointmentComponent {
             },
             (error) => {
               if(error.status === 200){
-                console.log('Appointment created successfully:');
                 this.selectedTechnician = null;
                 this.selectedType = null;
                 this.selectedDateTime = null;
                 this.notification.showNotification('Appointment create successfull!');
                 this.redirectToProfile();
               }
-              else{
-                console.error('Error creating appointment:', error);
-              }
             }
           );
-      } else {
-        console.error('Please select technician, type, and date/time.');
       }
     }
     else{
@@ -157,21 +143,12 @@ export class AppointmentComponent {
               if( event.value){
                 this.selectedDateTime = event.value;
                 const dataString =  this.selectedDateTime.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
-                console.log("data corecta" +this.selectedDateTime);
-                console.log("data cu o zi in urma" + dataString);
                 const orar = await this.appointmentService.getTechnicianOrar(idTechnician, dataString as unknown as Date).toPromise();
-                console.log('Orarul mecanicului:', orar);
                 this.orar = orar;
               }
-            } else {
-              console.error('Technician id is undefined');
             }
-          } else {
-            console.error('Technician username is null');
           }
-        } catch (error) {
-          console.error('Error getting technician schedule:', error);
-        }
+        } catch (error) {}
       }
     }
     else{
@@ -189,10 +166,11 @@ export class AppointmentComponent {
       const minutes = parseInt(interval.split(':')[1], 10);
       const formattedDateTime = `${year}/${month}/${day} ${hours}:${minutes}`;
       this.selectedDateTimeFinal = new Date(formattedDateTime);
+      this.selectedInterval = true;
     }
   }
 
-  public myFilter = (d: Date | null): boolean => {
+  public filterHours = (d: Date | null): boolean => {
     const currentDate = new Date();
     const selectedDate = d || currentDate;
     if (selectedDate < currentDate) {

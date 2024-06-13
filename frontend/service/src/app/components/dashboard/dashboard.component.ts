@@ -47,7 +47,7 @@ export class DashboardComponent{
           {
             data: this.datasetsAvgTechnicians,
             label: 'Review' ,
-            backgroundColor: '#f88406'
+            backgroundColor: '#17A2B8'
           }
         ]
       };
@@ -67,7 +67,7 @@ export class DashboardComponent{
           {
             data: this.datasetsNoAppointmets,
             label: 'Nr Appointments' ,
-            backgroundColor: '#f88406'
+            backgroundColor: '#17A2B8'
           }
         ]
       };
@@ -87,7 +87,7 @@ export class DashboardComponent{
           {
             data: this.datasetsANoAppointmetnsPerTechnicians,
             label: 'Nr Appointments Per Technician' ,
-            backgroundColor: '#f88406'
+            backgroundColor: '#17A2B8'
           }
         ]
       };

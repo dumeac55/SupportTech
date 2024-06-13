@@ -17,6 +17,8 @@ import { TypeService } from '../../service/type.service';
 import { TypeDto } from '../../model/type-dto';
 import { forkJoin } from 'rxjs';
 import { DashboardService } from '../../service/dashboard.service';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatSort, Sort } from '@angular/material/sort';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -42,6 +44,9 @@ export class ProfileComponent{
   displayedColumnsTechnician: string[] = ['Name', 'Price', 'Data', 'Utilizator', 'Phone', 'Email', 'Status', 'Actions'];
   displayedColumnsWishList: string[] = ['Name Product', 'Price', 'linkProduct', 'linkImage', 'Company', 'Actions']
 
+  dataSource = new MatTableDataSource<AppointmentDto>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+
   yearNrAppointment?: number;
   barChartNoAppointmetnsPerUser: any;
   labelsNoAppointmetnsPerUser: string[] = [];
@@ -56,12 +61,12 @@ export class ProfileComponent{
               private wishListService: WishListService,
               private router: Router,
               private notification:NotificationService,
-              private dashboard: DashboardService
+              private dashboard: DashboardService,
+              private _liveAnnouncer: LiveAnnouncer
             ){
               this.status = "all";
               this.yearNrAppointment = 2024;
             }
-
   ngOnInit(){
     const token = localStorage.getItem('token');
     if (token && !this.jwtStorage.isTokenExpired(token)) {
@@ -73,7 +78,6 @@ export class ProfileComponent{
     }
   }
 
-
   private async getProfile(): Promise<void> {
     const token = localStorage.getItem('token');
     if (token && !this.jwtStorage.isTokenExpired(token)) {
@@ -83,38 +87,31 @@ export class ProfileComponent{
           const userProfile = await this.userProfileService.getUserProfile();
           const appointment = await this.userProfileService.getUserAppointment();
           const wishList = await this.wishListService.getWishlistForUser();
-          console.log(userProfile?.role);
           if (userProfile) {
             this.userProfile = userProfile;
             if (Array.isArray(appointment)) {
                 this.appointments = appointment;
                 this.haveAppointment = true;
-                console.log('Appointments loaded successfully:', appointment);
+                this.dataSource.data = this.appointments;
+                if(this.paginator) this.dataSource.paginator = this.paginator;
             } else {
                 this.haveAppointment = false;
-                console.log('Appointments not found or not in correct format.');
             }
             if (Array.isArray(wishList)) {
               this.wishList = wishList;
             }
-            console.log('Profile loaded successfully:', userProfile);
-          } else {
-            console.log('Failed to load profile.');
           }
         }
         else if (this.role ==='technician')
           {
           const userProfile = await this.technicianService.getUserProfile();
-          console.log(userProfile?.role);
           if (userProfile) {
             this.userProfile = userProfile;
             const appointment = await this.technicianService.getTechnicianAppointment();
             if (Array.isArray(appointment)) {
               this.appointmentsTechnician = appointment;
-              console.log('Appointments loaded successfully:', appointment);
               this.haveAppointment = true;
             } else {
-              console.log('Appointments not found or not in correct format.');
               this.haveAppointment = false;
             }
             this.technicianService.getTechnicianProfileByUsername(localStorage.getItem('username')).then(
@@ -124,29 +121,14 @@ export class ProfileComponent{
                     (types) => {
                       if(Array.isArray(types))
                       this.types = types;
-                    },
-                    (error: string) => {
-                      console.error('Error getting types for technician:', error);
                     }
                   );
-                } else {
-                  console.error('Technician id is undefined');
                 }
               }
-            ).catch(
-              (error) => {
-                console.error('Error getting technician ID:', error);
-              }
-            );
-            console.log('Profile loaded successfully:', userProfile);
-            console.log('Appointments loaded:', appointment);
-          } else {
-            console.log('Failed to load profile.');
+            ).catch();
           }
         }
-      } catch (error) {
-        console.error('Error loading profile:', error);
-      }
+      } catch (error) {}
     }
     else {
       alert("Session exirated");
@@ -159,14 +141,8 @@ export class ProfileComponent{
     const token = localStorage.getItem('token');
     if (token && !this.jwtStorage.isTokenExpired(token)) {
     this.appointmentService.updateAppointment(id, newStatus)
-      .subscribe(
-        response => {
-          console.log('Appointment updated successfully:', response);
-          this.updateLocalAppointmentStatus(id, newStatus);
-        },
-        error => {
-          console.error('Error updating appointment:', error);
-        }
+      .subscribe(() =>
+          this.updateLocalAppointmentStatus(id, newStatus)
       );
     }
     else {

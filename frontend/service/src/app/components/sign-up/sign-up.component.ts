@@ -23,7 +23,6 @@ export class SignUpComponent {
     this.http.post<any>('http://localhost:8080/api/authenticate/signup', this.signUnDto, { responseType: 'text' as 'json' })
       .subscribe(
         response => {
-          console.log(response);
           this.notification.showNotification('Register successfull!');
           this.redirectToLogin();
         },

@@ -1,59 +1,99 @@
-<div class="technicians-column">
-  <h2>Technicians</h2>
-  <div *ngFor="let technician of technicians" [ngClass]="{ 'selected': technician === selectedTechnician }">
-    <div class="technician-info">
-      <p>{{ technician.firstName }} {{ technician.lastName }}</p>
-      <p>Email: {{ technician.email }}</p>
-      <p>Phone: {{ technician.phone }}</p>
-      <p>Grade: {{ technician.avgGrade }}</p>
-      <div class="example-button-row">
-        <button mat-raised-button color="primary" (click)="selectTechnician(technician)">Select</button>
+<mat-tab-group #tabGroup mat-tab-labels="false">
+  <mat-tab>
+    <div class="technicians-column">
+      <h2>Technicians</h2>
+      <div
+        *ngFor="let technician of technicians"
+        [ngClass]="{ selected: technician === selectedTechnician }"
+      >
+        <div class="technician-info">
+          <p>{{ technician.firstName }} {{ technician.lastName }}</p>
+          <p>Email: {{ technician.email }}</p>
+          <p>Phone: {{ technician.phone }}</p>
+          <p>Grade: {{ technician.avgGrade }}</p>
+          <div class="example-button-row">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="selectTechnician(technician)"
+            >
+              Select
+            </button>
+          </div>
+        </div>
+        <hr />
       </div>
     </div>
-    <hr />
-  </div>
-</div>
-
-<div class="types-column">
-  <h2>Services</h2>
-  <div *ngFor="let type of types" [ngClass]="{ 'selected': type === selectedType }">
-    <div class="type-info">
-      <p>Service: {{ type.nameType }}</p>
-      <p>Price: {{ type.price }}</p>
-      <div class="example-button-row">
-        <button mat-raised-button color="primary" (click)="selectType(type)">Select</button>
+  </mat-tab>
+  <mat-tab>
+    <div class="types-column">
+      <h2>Services</h2>
+      <div
+        *ngFor="let type of types"
+        [ngClass]="{ selected: type === selectedType }"
+      >
+        <div class="type-info">
+          <p>Service: {{ type.nameType }}</p>
+          <p>Price: {{ type.price }}</p>
+          <div class="example-button-row">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="selectType(type)"
+            >
+              Select
+            </button>
+          </div>
+        </div>
+        <hr />
       </div>
     </div>
-    <hr />
-  </div>
-</div>
-
-<div class="selected-options" *ngIf="selectedTechnician && selectedType">
-  <h2>Selected Options</h2>
-  <p>Selected Technician: {{ selectedTechnician.firstName }} {{ selectedTechnician.lastName }}</p>
-  <p>Selected Type: {{ selectedType.nameType }}</p>
-
-  <div *ngIf="selectedTechnician && selectedType">
-    <mat-form-field class="example-full-width">
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker" (dateChange)="onDateTimeChange($event)"
-        [(ngModel)]="selectedDateTime" />
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <div class="orar-column" *ngIf="orar.length > 0">
-      <h2>Technician Schedule</h2>
-      <div *ngFor="let interval of orar">
-        <button mat-raised-button color="accent" class="selectedAppointment" (click)="setSelectedDateTimeFinal(interval)">
-          {{ interval }}
-        </button>
+  </mat-tab>
+  <mat-tab>
+    <div class="selected-options" *ngIf="selectedTechnician && selectedType">
+      <h2>Selected Options</h2>
+      <p>
+        Selected Technician: {{ selectedTechnician.firstName }}
+        {{ selectedTechnician.lastName }}
+      </p>
+      <p>Selected Type: {{ selectedType.nameType }}</p>
+      <div *ngIf="selectedDateTimeFinal">
+        <p>Selected Date and Time: {{ selectedDateTimeFinal }}</p>
       </div>
+      <div *ngIf="selectedTechnician && selectedType">
+        <mat-form-field class="example-full-width">
+          <mat-label>Choose a date</mat-label>
+          <input
+            matInput
+            [matDatepickerFilter]="filterHours"
+            [matDatepicker]="picker"
+            (dateChange)="onDateTimeChange($event)"
+            [(ngModel)]="selectedDateTime"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <div class="orar-column" *ngIf="orar.length > 0">
+          <h2>Technician Schedule</h2>
+          <div *ngFor="let interval of orar">
+            <button
+              mat-raised-button
+              [class.selectedButton]="this.selectedInterval"
+              (click)="setSelectedDateTimeFinal(interval)"
+            >
+              {{ interval }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <button mat-raised-button color="primary" (click)="AddAppointment()">
+        Add Appointment
+      </button>
     </div>
-    <div *ngIf="selectedDateTimeFinal">
-      <p>Selected Date and Time: {{ selectedDateTimeFinal }}</p>
-    </div>
-  </div>
-  <button mat-raised-button color="primary" (click)="AddAppointment()">Add Appointment</button>
-</div>
+  </mat-tab>
+</mat-tab-group>

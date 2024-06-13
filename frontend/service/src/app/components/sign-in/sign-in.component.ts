@@ -31,7 +31,6 @@ export class SignInComponent implements OnInit {
     this.errorMessage = '';
     this.jwt.generateToken(this.signinDto).subscribe(
       (data: any) => {
-        console.log("Token:", data);
         this.jwt.setTokenStorage(data, this.signinDto.username);
         localStorage.setItem('isLogged', "true");
         this.signInService.setIsLogged(true);
@@ -39,7 +38,6 @@ export class SignInComponent implements OnInit {
         this.redirectToProfile();
       },
       error => {
-        console.error("Error:", error);
         if (error.status === 200) {
           localStorage.setItem('isLogged', "true");
           this.signInService.setIsLogged(true);

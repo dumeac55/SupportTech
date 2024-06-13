@@ -1,31 +1,54 @@
-<div class="search-container">
-  <div *ngIf="!domainSelected" class="error-message">
-    Please select a domain before searching.
-  </div>
-  <mat-form-field>
-    <mat-label>Domain</mat-label>
-    <mat-select [(value)]="selectedDomain" placeholder="Select a domain">
-      <mat-option *ngFor="let domain of domains" [value]="domain">{{ domain }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="search-container-parrent">
+  <div class="search-container">
+    <mat-form-field>
+      <mat-label>Domain</mat-label>
+      <mat-select [(value)]="selectedDomain" placeholder="Select a domain">
+        <mat-option *ngFor="let domain of domains" [value]="domain">{{
+          domain
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field class="example-full-width">
-    <mat-label>Word search</mat-label>
-    <input matInput placeholder="Search for products" [(ngModel)]="searchWord" type="text">
-  </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Word search</mat-label>
+      <input
+        matInput
+        placeholder="Search for products"
+        [(ngModel)]="searchWord"
+        type="text"
+      />
+    </mat-form-field>
 
-  <mat-form-field class="example-full-width">
-    <mat-label>Min Price</mat-label>
-    <input matInput placeholder="Min Price" [(ngModel)]="infRange" type="number">
-  </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Min Price</mat-label>
+      <input
+        matInput
+        placeholder="Min Price"
+        [(ngModel)]="infRange"
+        type="number"
+      />
+    </mat-form-field>
 
-  <mat-form-field class="example-full-width">
-    <mat-label>Max Price</mat-label>
-    <input matInput placeholder="Max Price" [(ngModel)]="supRange" type="number">
-  </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Max Price</mat-label>
+      <input
+        matInput
+        placeholder="Max Price"
+        [(ngModel)]="supRange"
+        type="number"
+      />
+    </mat-form-field>
 
-  <div class="form-group">
-    <button type="submit" mat-raised-button color="primary" (click)="searchProducts()">Search</button>
+    <div class="form-group">
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        (click)="searchProducts()"
+      >
+        Search
+      </button>
+    </div>
   </div>
 </div>
 
@@ -43,7 +66,13 @@
             <p>{{ product.price }}</p>
             <p>{{ product.company }}</p>
             <a [href]="product.linkProduct" target="_blank">View Product</a>
-            <button mat-raised-button color="primary" (click)="addProductToWishList(product)">Adauga la favorite</button>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="addProductToWishList(product)"
+            >
+              Adauga la favorite
+            </button>
           </div>
         </li>
       </ul>
@@ -61,7 +90,13 @@
             <p>{{ product.price }}</p>
             <p>{{ product.company }}</p>
             <a [href]="product.linkProduct" target="_blank">View Product</a>
-            <button mat-raised-button color="primary" (click)="addProductToWishList(product)">Adauga la favorite</button>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="addProductToWishList(product)"
+            >
+              Adauga la favorite
+            </button>
           </div>
         </li>
       </ul>
@@ -79,7 +114,13 @@
             <p>{{ product.price }} Lei</p>
             <p>{{ product.company }}</p>
             <a [href]="product.linkProduct" target="_blank">View Product</a>
-            <button mat-raised-button color="primary" (click)="addProductToWishList(product)">Adauga la favorite</button>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="addProductToWishList(product)"
+            >
+              Adauga la favorite
+            </button>
           </div>
         </li>
       </ul>

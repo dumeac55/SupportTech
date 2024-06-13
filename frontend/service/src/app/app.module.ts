@@ -37,6 +37,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NgChartsModule } from 'ng2-charts';
 import {MatGridList, MatGridListModule} from '@angular/material/grid-list';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,7 +76,7 @@ import {MatGridList, MatGridListModule} from '@angular/material/grid-list';
     MatExpansionModule,
     NgChartsModule,
     MatGridList,
-    MatGridListModule
+    MatGridListModule,
   ],
   providers: [provideAnimationsAsync(), provideNativeDateAdapter()],
   bootstrap: [AppComponent],

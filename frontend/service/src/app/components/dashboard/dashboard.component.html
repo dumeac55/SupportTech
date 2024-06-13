@@ -1,54 +1,63 @@
-<mat-grid-list cols="2" rowHeight="2:1">
-  <mat-grid-tile colspan="1" rowspan="1">
-    <div class="chart-container">
-      <div class="title">No Appointments</div>
-      <div class="nav"></div>
-      <select [(ngModel)]="yearNrAppointment" (change)="onYearChange()">
-        <option *ngFor="let year of availableYears" [value]="year">{{ year }}</option>
-      </select>
-      <div class="chart-wrapper">
-        <canvas
-          baseChart
-          width="600"
-          height="400"
-          type="line"
-          [data]="lineChartNoAppointmets"
-        ></canvas>
+<div class="dash-container">
+  <mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile colspan="1" rowspan="1">
+      <div class="chart-container">
+        <div class="title">No Appointments</div>
+        <div class="nav"></div>
+        <mat-form-field>
+          <mat-label>Year</mat-label>
+          <mat-select [(ngModel)]="yearNrAppointment" (selectionChange)="onYearChange()" name="year" >
+            @for (year of availableYears; track year) {
+              <mat-option [value]="year">{{year}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <div class="chart-wrapper">
+          <canvas
+            baseChart
+            width="600"
+            height="400"
+            type="line"
+            [data]="lineChartNoAppointmets"
+          ></canvas>
+        </div>
       </div>
-    </div>
-  </mat-grid-tile>
+    </mat-grid-tile>
 
-  <mat-grid-tile colspan="1" rowspan="1">
-    <div class="chart-container">
-      <div class="title">Avg Review of Technicians</div>
-      <div class="nav"></div>
-      <div class="chart-wrapper">
-        <canvas
-          baseChart
-          width="600"
-          height="400"
-          type="bar"
-          [data]="barChartAvgTechnicians"
-        ></canvas>
+    <mat-grid-tile colspan="1" rowspan="1">
+      <div class="chart-container">
+        <div class="title">Avg Review of Technicians</div>
+        <div class="nav"></div>
+        <div class="chart-wrapper">
+          <canvas
+            baseChart
+            width="600"
+            height="400"
+            type="bar"
+            [data]="barChartAvgTechnicians"
+          ></canvas>
+        </div>
       </div>
-    </div>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="1">
-    <div class="chart-container">
-      <div class="title">No Appointments Per Technicians</div>
-      <div class="nav"></div>
-      <select [(ngModel)]="yearNrAppointment" (change)="onYearChange2()">
-        <option *ngFor="let year of availableYearsBarChart" [value]="year">{{ year }}</option>
-      </select>
-      <div class="chart-wrapper">
-        <canvas
-          baseChart
-          width="600"
-          height="400"
-          type="bar"
-          [data]="barChartNoAppointmetnsPerTechnicians"
-        ></canvas>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="1">
+      <div class="chart-container">
+        <div class="title">No Appointments Per Technicians</div>
+        <div class="nav"></div>
+        <select [(ngModel)]="yearNrAppointment" (change)="onYearChange2()">
+          <option *ngFor="let year of availableYearsBarChart" [value]="year">
+            {{ year }}
+          </option>
+        </select>
+        <div class="chart-wrapper">
+          <canvas
+            baseChart
+            width="600"
+            height="400"
+            type="bar"
+            [data]="barChartNoAppointmetnsPerTechnicians"
+          ></canvas>
+        </div>
       </div>
-    </div>
-  </mat-grid-tile>
-</mat-grid-list>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

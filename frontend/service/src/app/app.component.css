@@ -1,4 +1,3 @@
-
 .home-image {
   margin-top: 25px;
   width: 100px;
@@ -21,4 +20,22 @@
 
 .menu-home-button:hover{
   transform: scale(1.2);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
+  padding: 20px;
+}
+
+
+footer {
+  background-color: #f1f1f1;
+  padding: 20px;
 }

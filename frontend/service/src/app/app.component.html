@@ -1,24 +1,37 @@
-
-<header>
-    <nav>
+<html>
+  <head></head>
+  <body>
+    <header>
+      <nav>
         <mat-toolbar color="primary" class="navbar">
-            <div class="menu-home-button">
-                <a routerLink="/home">
-                    <img src="../assets/dsa.png" alt="Home" class="home-image">
-                </a>
-            </div>
-            <div class="menu-functions">
-                <span *ngIf="IsLogged"><a routerLink="appointment">Appointment</a></span>
-                <span *ngIf="IsLogged"><a routerLink="dashboard">Dashboard</a></span>
-                <span *ngIf="IsLogged"><a routerLink="review">Review</a></span>
-                <span *ngIf="IsLogged"><a routerLink="compari">Compari</a></span>
-                <span *ngIf="IsLogged"><a routerLink="forum">Forum</a></span>
-                <span *ngIf="IsLogged"><a routerLink="profile">Profile</a></span>
-                <span *ngIf="!IsLogged"><a routerLink="login">Sign In</a></span>
-                <span *ngIf="IsLogged"><a (click)="logout()">Sign out</a></span>
-            </div>
+          <div class="menu-home-button">
+            <a routerLink="/home">
+              <img src="../assets/dsa.png" alt="Home" class="home-image" />
+            </a>
+          </div>
+          <div class="menu-functions">
+            <span *ngIf="IsLogged"
+              ><a routerLink="appointment">Appointment</a></span
+            >
+            <span *ngIf="IsLogged"
+              ><a routerLink="dashboard">Dashboard</a></span
+            >
+            <span *ngIf="IsLogged"><a routerLink="review">Review</a></span>
+            <span *ngIf="IsLogged"><a routerLink="compari">Compari</a></span>
+            <span *ngIf="IsLogged"><a routerLink="forum">Forum</a></span>
+            <span *ngIf="IsLogged"><a routerLink="profile">Profile</a></span>
+            <span *ngIf="!IsLogged"><a routerLink="login">Sign In</a></span>
+            <span *ngIf="IsLogged"><a (click)="logout()">Sign out</a></span>
+          </div>
         </mat-toolbar>
-    </nav>
-</header>
-
-<router-outlet></router-outlet>
+      </nav>
+    </header>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+    <footer>
+      <hr />
+      &#169; Dumea Cristian, 2024
+    </footer>
+  </body>
+</html>

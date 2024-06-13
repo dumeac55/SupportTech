@@ -27,6 +27,7 @@ export class AppointmentService {
     usernameUser: string,
     usernameTechnician: string,
     type: string,
+    price: number,
     data: Date
   ): Observable<any> {
     const appointmentDto: CreateAppointmentDto = {

@@ -8,7 +8,6 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-gap: 50px;
     background-color: rgb(255, 255, 255);
-    border: 2px solid red;
   }
 
   .compari-item {
@@ -32,15 +31,14 @@
     place-self: center;
   }
 
-
-  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-    background-color: var(--mdc-filled-text-field-container-color);
-}
-
-#my-input.mdc-text-field--filled:not(.mdc-text-field--disabled) {
-  background-color: red;
-}
-
-mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled{
-  background-color: blue;
-}
+  .search-container-parrent {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .search-container{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
