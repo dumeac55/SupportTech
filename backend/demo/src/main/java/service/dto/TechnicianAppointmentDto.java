@@ -14,4 +14,5 @@ public class TechnicianAppointmentDto {
     private Date date;
     private String status;
     private int idAppointment;
+    private int price;
 }

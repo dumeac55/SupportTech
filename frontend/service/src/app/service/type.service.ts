@@ -15,6 +15,10 @@ export class TypeService {
   }
 
   public addType(type : TypeDto) : Observable <TypeDto>{
-    return this.http.post<TypeDto>(this.URL + 'utils/create', type,{ responseType: 'text' as 'json' });
+    return this.http.post<TypeDto>(this.URL + 'utils/type', type,{ responseType: 'text' as 'json' });
+  }
+
+  deleteType(id: number): Observable<void>{
+    return this.http.delete<void>(this.URL + 'utils/type/'+ id + '/delete');
   }
 }

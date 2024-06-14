@@ -343,17 +343,23 @@
 
 <div *ngIf="showServices" class="types-column">
   <h2>Services</h2>
+  <button mat-raised-button color="primary" (click)="openDialog()">New</button>
   <div *ngFor="let type of types">
     <div class="type-info">
+      <div class="label-info-name">
       <p>Service: {{ type.nameType }}</p>
-      <p>Price: {{ type.price }}</p>
+      </div>
+      <div class="label-info-price">
+      <p>Price: {{ type.price}} Lei</p>
+    </div>
       <div class="example-button-row">
-        <!-- <button mat-raised-button color="primary" (click)="selectType(type)">Select</button> -->
+        <button mat-raised-button color="primary" (click)="openDialog(type)">Edit</button>
+        <button mat-raised-button color="warn" (click)="deleteType(type)">Delete</button>
       </div>
     </div>
-    <hr />
   </div>
 </div>
+
 
 <div class="table-container">
   <div *ngIf="showWishlist">

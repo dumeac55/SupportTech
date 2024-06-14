@@ -83,7 +83,6 @@
           <div *ngFor="let interval of orar">
             <button
               mat-raised-button
-              [class.selectedButton]="this.selectedInterval"
               (click)="setSelectedDateTimeFinal(interval)"
             >
               {{ interval }}

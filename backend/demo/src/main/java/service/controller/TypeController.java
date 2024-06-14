@@ -1,5 +1,6 @@
 package service.controller;
 
+import com.oracle.svm.core.annotate.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,10 @@ public class TypeController {
     @GetMapping("/type/{id}")
     private ResponseEntity<?> getTypesByIdTechnician(@PathVariable("id") int id){
         return typeService.getTypesByIdTechnician(id);
+    }
+
+    @DeleteMapping("/type/{id}/delete")
+    private ResponseEntity<?> deleteType(@PathVariable("id") int id){
+        return typeService.deleteType(id);
     }
 }

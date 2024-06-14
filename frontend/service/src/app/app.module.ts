@@ -35,9 +35,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NgChartsModule } from 'ng2-charts';
-import {MatGridList, MatGridListModule} from '@angular/material/grid-list';
-
-
+import { MatGridList, MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogTypeComponent } from './components/profile/dialog-type/dialog-type.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +52,7 @@ import {MatGridList, MatGridListModule} from '@angular/material/grid-list';
     HomeComponent,
     ReviewComponent,
     DashboardComponent,
+    DialogTypeComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +79,8 @@ import {MatGridList, MatGridListModule} from '@angular/material/grid-list';
     NgChartsModule,
     MatGridList,
     MatGridListModule,
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [provideAnimationsAsync(), provideNativeDateAdapter()],
   bootstrap: [AppComponent],

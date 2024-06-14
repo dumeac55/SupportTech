@@ -67,12 +67,22 @@ public class TypeService {
             for(Type type :typeList){
                 TypeDto typeDto = new TypeDto();
                 typeDto.setNameType(type.getNameType());
+                typeDto.setIdType(type.getId());
                 typeDto.setPrice(type.getPrice());
                 typeDtoList.add(typeDto);
             }
             return new ResponseEntity<>(typeDtoList, HttpStatus.OK);
 
         }
+    }
+
+    public ResponseEntity<?> deleteType(int id){
+        Type type = typeRepository.findById(id);
+        if(type!= null){
+            typeRepository.deleteById(id);
+            return new ResponseEntity<>("Type delete successfull", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Type not found", HttpStatus.NOT_FOUND);
     }
 
     public boolean idDigit(int num) {

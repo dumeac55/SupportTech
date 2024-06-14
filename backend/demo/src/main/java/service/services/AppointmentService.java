@@ -102,6 +102,7 @@ public class AppointmentService {
                 TechnicianAppointmentDto.setUserLastName(userProfile.getLastName());
                 TechnicianAppointmentDto.setUserFirstName(userProfile.getFirstName());
                 TechnicianAppointmentDto.setStatus(appointment.getStatus());
+                TechnicianAppointmentDto.setPrice(appointment.getPrice());
                 TechnicianAppointmentDto.setIdAppointment(appointment.getId());
                 TechnicianAppointmentDtoList.add(TechnicianAppointmentDto);
             }

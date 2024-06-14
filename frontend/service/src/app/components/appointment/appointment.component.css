@@ -1,3 +1,6 @@
+::ng-deep .mat-tab-labels {
+  display: none;
+}
 
   .technicians-column, .types-column {
     float: left;
@@ -52,11 +55,6 @@
   h2 {
     font-size: 18px;
     margin-bottom: 10px;
-  }
-
-  .selectedButton {
-    background-color: rgb(0, 241, 0);
-    color: white;
   }
 
   .selectedAppointment {
