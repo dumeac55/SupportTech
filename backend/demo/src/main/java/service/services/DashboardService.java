@@ -40,6 +40,15 @@ public class DashboardService {
         } else {
             result = appointmentRepository.countAppointmentsByUserProfile(year, idProfile, null);
         }
-        return ResponseEntity.ok(result);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    public ResponseEntity<?> countMoneyPerUser(int year, int idProfile){
+        List<DashboardDto> result = this.appointmentRepository.countMoneyPerUser(year, idProfile);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> countAppointmentsByStatus(int year){
+        List<DashboardDto> result = this.appointmentRepository.countAppointmentsByStatus(year);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

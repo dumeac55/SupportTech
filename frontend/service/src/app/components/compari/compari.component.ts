@@ -53,11 +53,8 @@ export class CompariComponent {
         this.notification.showNotification("Product added successfully");
       },
       (error) => {
-        if(error.status === 200){
+        if(error.status === 200)
           this.notification.showNotification("Product added successfully");
-        }else{
-          console.error('Error creating appointment:', error);
-        }
-      });
+        });
   }
 }

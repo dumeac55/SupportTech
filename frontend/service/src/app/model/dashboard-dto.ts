@@ -4,4 +4,7 @@ export class DashboardDTO {
     lastName?: string;
     month?: string;
     nrAppointments?: number;
+    totalMoney?: number;
+    totalAppointments?: number;
+    status?: string;
 }

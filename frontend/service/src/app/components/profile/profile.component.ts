@@ -81,6 +81,13 @@ export class ProfileComponent {
   barChartNoAppointmetnsPerUser: any;
   labelsNoAppointmetnsPerUser: string[] = [];
   datasetsANoAppointmetnsPerUser: number[] = [];
+
+  yearTotalMoney?: number = 2024;
+  barChartMoney: any;
+  labelsMoney: string[] = [];
+  datasetsMoney: number[] = [];
+
+  availableYearsBarChartMoney: number[] = [2023, 2024, 2025, 2026, 2027]
   availableYearsBarChart: number[] = [2023, 2024, 2025, 2026, 2027];
   availableStatusBarChart: string[] = [
     'All',
@@ -223,6 +230,7 @@ export class ProfileComponent {
       this.showWishlist = false;
       this.showStatistics = true;
       this.appointmentPerYearPerUser();
+      this.MoneyPerYear();
     }
   }
 
@@ -262,7 +270,35 @@ export class ProfileComponent {
           datasets: [
             {
               data: this.datasetsANoAppointmetnsPerUser,
-              label: 'Nr Appointments Per User',
+              label: 'No Appointments',
+              backgroundColor: '#f88406',
+            },
+          ],
+        };
+      });
+    }
+  }
+
+  async MoneyPerYear() {
+    const idProfile = await this.userProfileService.getUserIdByUserName(
+      localStorage.getItem('username')
+    );
+    if (idProfile && this.yearTotalMoney) {
+      forkJoin({
+        Money: this.dashboard.getMoneysUser(
+          this.yearTotalMoney,
+          idProfile,
+        ),
+        month: this.dashboard.getMonth(this.yearTotalMoney),
+      }).subscribe(({ Money, month }) => {
+        this.datasetsMoney = Money;
+        this.labelsMoney = month;
+        this.barChartMoney = {
+          labels: this.labelsNoAppointmetnsPerUser,
+          datasets: [
+            {
+              data: this.datasetsMoney,
+              label: 'Money',
               backgroundColor: '#f88406',
             },
           ],
@@ -273,6 +309,8 @@ export class ProfileComponent {
 
   onYearChange() {
     this.appointmentPerYearPerUser();
+    this.MoneyPerYear();
+
   }
 
   onStatusChange() {
@@ -297,14 +335,10 @@ export class ProfileComponent {
         this.types = this.types.filter(t => t.idType !== type.idType);
       },
       (error) => {
-        if (error.status === 200) {
+        if (error.status === 200)
           this.notification.showNotification("Type successfully deleted");
           this.types = this.types.filter(t => t.idType !== type.idType);
-        } else {
-          console.error('Error deleting type:', error);
-        }
-      }
-      );
+        });
   }
 
   redirectToLogin(): void {

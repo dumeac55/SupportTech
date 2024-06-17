@@ -15,8 +15,6 @@
         <div class="chart-wrapper">
           <canvas
             baseChart
-            width="600"
-            height="400"
             type="line"
             [data]="lineChartNoAppointmets"
           ></canvas>
@@ -31,30 +29,45 @@
         <div class="chart-wrapper">
           <canvas
             baseChart
-            width="600"
-            height="400"
             type="bar"
             [data]="barChartAvgTechnicians"
           ></canvas>
         </div>
       </div>
     </mat-grid-tile>
+
     <mat-grid-tile colspan="1" rowspan="1">
       <div class="chart-container">
-        <div class="title">No Appointments Per Technicians</div>
+        <div class="title">No Appointments</div>
         <div class="nav"></div>
-        <select [(ngModel)]="yearNrAppointment" (change)="onYearChange2()">
-          <option *ngFor="let year of availableYearsBarChart" [value]="year">
-            {{ year }}
-          </option>
-        </select>
+        <mat-form-field>
+          <mat-label>Year</mat-label>
+          <mat-select [(ngModel)]="yearNrAppointment" (selectionChange)="onYearChange2()" name="year" >
+            @for (year of availableYears; track year) {
+              <mat-option [value]="year">{{year}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
         <div class="chart-wrapper">
           <canvas
             baseChart
-            width="600"
-            height="400"
             type="bar"
             [data]="barChartNoAppointmetnsPerTechnicians"
+          ></canvas>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="1" rowspan="1">
+      <div class="chart-container">
+        <div class="title">Status Appointments</div>
+        <div class="nav"></div>
+        <div class="chart-wrapper">
+          <canvas
+            baseChart
+            height= "500"
+            type="pie"
+            [data]="pieChartStatus"
           ></canvas>
         </div>
       </div>

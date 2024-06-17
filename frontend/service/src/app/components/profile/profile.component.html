@@ -43,7 +43,12 @@
 <div *ngIf="showAppointments" class="table-container">
   <div *ngIf="appointments.length > 0 || appointmentsTechnician.length > 0">
     <div *ngIf="role === 'custom'">
-      <table mat-table [dataSource]="this.dataSource" matSort class="mat-elevation-z8">
+      <table
+        mat-table
+        [dataSource]="this.dataSource"
+        matSort
+        class="mat-elevation-z8"
+      >
         <ng-container matColumnDef="Name">
           <th
             mat-header-cell
@@ -83,7 +88,7 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="Technician" >
+        <ng-container matColumnDef="Technician">
           <th
             mat-header-cell
             *matHeaderCellDef
@@ -347,19 +352,22 @@
   <div *ngFor="let type of types">
     <div class="type-info">
       <div class="label-info-name">
-      <p>Service: {{ type.nameType }}</p>
+        <p>Service: {{ type.nameType }}</p>
       </div>
       <div class="label-info-price">
-      <p>Price: {{ type.price}} Lei</p>
-    </div>
+        <p>Price: {{ type.price }} Lei</p>
+      </div>
       <div class="example-button-row">
-        <button mat-raised-button color="primary" (click)="openDialog(type)">Edit</button>
-        <button mat-raised-button color="warn" (click)="deleteType(type)">Delete</button>
+        <button mat-raised-button color="primary" (click)="openDialog(type)">
+          Edit
+        </button>
+        <button mat-raised-button color="warn" (click)="deleteType(type)">
+          Delete
+        </button>
       </div>
     </div>
   </div>
 </div>
-
 
 <div class="table-container">
   <div *ngIf="showWishlist">
@@ -491,14 +499,19 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="chart-wrapper">
-      <canvas
-        baseChart
-        width="600"
-        height="400"
-        type="bar"
-        [data]="barChartNoAppointmetnsPerUser"
-      ></canvas>
+    <div class="center-charts">
+      <div class="chart-statistics">
+        <div class="chart-wrapper">
+          <canvas
+            baseChart
+            type="bar"
+            [data]="barChartNoAppointmetnsPerUser"
+          ></canvas>
+        </div>
+        <div class="chart-wrapper">
+          <canvas baseChart type="line" [data]="barChartMoney"></canvas>
+        </div>
+      </div>
     </div>
   </div>
 </div>

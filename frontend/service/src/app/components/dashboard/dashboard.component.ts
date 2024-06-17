@@ -25,6 +25,12 @@ export class DashboardComponent{
   labelsNoAppointmetnsPerTechnicians: string[] = [];
   datasetsANoAppointmetnsPerTechnicians: number[] = [];
   availableYearsBarChart: number[] = [2023, 2024, 2025, 2026, 2027];
+
+  pieChartStatus: any;
+  labelStatus: string[] = [];
+  datasetsStatus: number[] = [];
+  availableYearsStatus: number[] = [2023, 2024, 2025, 2026, 2027];
+
   constructor(private review: ReviewService,
               private dashboard: DashboardService
   ) { }
@@ -32,6 +38,7 @@ export class DashboardComponent{
     this.avgTechnicians();
     this.appointmentPerYear();
     this.appointmentPerYearPerTechnician();
+    this.appointmentByStatus();
   }
 
   avgTechnicians() {
@@ -88,6 +95,27 @@ export class DashboardComponent{
             data: this.datasetsANoAppointmetnsPerTechnicians,
             label: 'Nr Appointments Per Technician' ,
             backgroundColor: '#17A2B8'
+          }
+        ]
+      };
+    });
+  }
+  
+
+  appointmentByStatus(){
+    forkJoin({
+      noAppointment: this.dashboard.getTotalAppointments(this.yearNrAppointment),
+      Status: this.dashboard.getStatus(this.yearNrAppointment)
+    }).subscribe(({ noAppointment, Status }) => {
+      this.datasetsStatus = noAppointment;
+      this.labelStatus = Status;
+      this.pieChartStatus = {
+        labels: this.labelStatus,
+        datasets: [
+          {
+            data: this.datasetsStatus,
+            label: 'Status' ,
+            backgroundColor: '#17A2B8',
           }
         ]
       };

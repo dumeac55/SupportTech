@@ -62,13 +62,28 @@ button{
   font-weight: bold;
   margin-bottom: 10px;
 }
+.chart-statistics{
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
 .chart-wrapper {
   border: 1px solid #ccc;
-  border-radius: 5px;
-  overflow: hidden;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin:0 10px;
 }
+
 canvas {
-  display: block;
+  min-width: 100px;
+  min-height: 200px;
+  height: 400px auto;
+  width: 500px auto;
+}
+.center-charts{
+  margin-right: -150px;
 }
 
 .paginator {
