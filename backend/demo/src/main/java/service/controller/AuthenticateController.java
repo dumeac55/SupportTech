@@ -103,7 +103,9 @@ public class AuthenticateController {
             emailDto.setSubject("Welcome");
             emailDto.setMsgBody("Hi," + signUpDto.getUsername() + ",\n" + "\n" + "Your account was created successfully.");
             emailDto.setRecipient(signUpDto.getEmail());
-            emailService.sendSimpleMail(emailDto);
+            new Thread(() -> {
+                emailService.sendSimpleMail(emailDto);
+            }).start();
             userProfileService.addUserProfile(newProfile);
 
             return ResponseEntity.ok("User regisltered successfully");

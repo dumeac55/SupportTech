@@ -3,4 +3,5 @@ export class QuestionForumDto {
     title? : string;
     description? :string;
     username? : string;
+    totalReplies? : number;
 }

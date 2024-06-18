@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ForumService } from '../../service/forum.service';
 import { QuestionForumDto } from '../../model/question-forum-dto';
 import { AnswearForumDto } from '../../model/answear-forum-dto';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-forum',
@@ -17,6 +20,17 @@ export class ForumComponent {
   username?: String | null;
   newQuestionTitle: string = '';
   newQuestionDescription: string = '';
+  showQuestion: boolean = false;
+  showAnswear: boolean = false;
+  displayedColumns: string[] = [
+    'Col1',
+    'Col2',
+    'Col3',
+  ];
+
+  dataSource = new MatTableDataSource<QuestionForumDto>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+
   constructor(
     private route: ActivatedRoute,
     private forumService: ForumService
@@ -29,9 +43,13 @@ export class ForumComponent {
       if (id) {
         await this.getQuestionById(id);
         await this.getAnswersByQuestionId(id);
+        this.showQuestion = false;
+        this.showAnswear =true;
       }
       else{
         await this.getQuestions();
+        this.showQuestion = true;
+        this.showAnswear = false;
       }
     });
   }
@@ -40,6 +58,13 @@ export class ForumComponent {
     const question = await this.forumService.getQuestions();
     if(Array.isArray(question)){
       this.questions = question;
+      for(let i = 0; i<this.questions.length; i++){
+        const idQuestion = this.questions[i].idQuestion;
+        if (idQuestion !== undefined)
+        this.questions[i].totalReplies= await this.forumService.getCountAnswerByQuestion(idQuestion);
+      }
+      this.dataSource.data = this.questions;
+      if (this.paginator) this.dataSource.paginator = this.paginator;
     }
   }
 

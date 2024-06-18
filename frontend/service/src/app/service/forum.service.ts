@@ -19,7 +19,8 @@ export class ForumService {
   async getQuestionById(id: number): Promise<QuestionForumDto | undefined> {
     return await this.http.get<QuestionForumDto>(this.URL + 'forum/'+ id).toPromise();
   }
-  public addQuestion(question : QuestionForumDto) : Observable <AnswearForumDto>{
+
+  addQuestion(question : QuestionForumDto) : Observable <AnswearForumDto>{
     return this.http.post<AnswearForumDto>(this.URL + 'forum/create', question,{ responseType: 'text' as 'json' });
   }
 
@@ -30,11 +31,16 @@ export class ForumService {
   async getAnswearByIdQuestion(id: number): Promise<AnswearForumDto | undefined> {
     return await this.http.get<AnswearForumDto>(this.URL + 'forum/'+ id + "/answear").toPromise();
   }
+
   addAnswearByIdQuestion(answear :AnswearForumDto) : Observable<AnswearForumDto>{
     return this.http.post<AnswearForumDto>(this.URL + 'forum/create/answear', answear,{ responseType: 'text' as 'json' });
   }
 
   async deleteAnswearById(id: number): Promise <void | undefined> {
     return await this.http.delete<void>(this.URL+'forum/delete/'+ id + '/answear',{ responseType: 'text' as 'json' }).toPromise();
+  }
+
+  async getCountAnswerByQuestion(id:number) : Promise<number| undefined>{
+    return this.http.get<number>(this.URL + 'forum/' + id+'/question-answer').toPromise();
   }
 }

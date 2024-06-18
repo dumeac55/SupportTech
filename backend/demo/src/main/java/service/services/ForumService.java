@@ -37,6 +37,7 @@ public class ForumService {
             questionForumDto.setUsername(questionForum.getUser().getUsername());
             questionForumDto.setDescription(questionForum.getDescription());
             questionForumDto.setTitle(questionForum.getTitle());
+
             questionForumDtos.add(questionForumDto);
         }
         return new ResponseEntity<>(questionForumDtos, HttpStatus.OK);
@@ -124,5 +125,10 @@ public class ForumService {
         }
         answearForumRepository.deleteById(id);
         return new ResponseEntity<>("Answear successfull delete", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getCountAnswersById(int id){
+        Long result = answearForumRepository.findAllWithCountAnswer(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

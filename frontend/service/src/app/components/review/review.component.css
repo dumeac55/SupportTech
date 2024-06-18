@@ -8,7 +8,7 @@ mat-expansion-panel-header {
 }
 
 mat-panel-title {
-  font-weight: bold; 
+  font-weight: bold;
   color: #333;
 }
 
@@ -27,4 +27,9 @@ mat-form-field {
 
 .reviews li {
   margin-bottom: 10px;
+}
+
+.review-container{
+  max-width: 800px;
+  margin-left: 500px;
 }

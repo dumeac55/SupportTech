@@ -17,6 +17,7 @@ export class JwtStorageService {
     localStorage.setItem('token', token);
     localStorage.setItem('username', username);
   }
+
   public isTokenExpired(token: string): boolean {
     const expirationDate = this.getTokenExpirationDate(token);
     if (expirationDate === undefined) return false;

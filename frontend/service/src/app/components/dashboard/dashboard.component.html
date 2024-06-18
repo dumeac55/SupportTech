@@ -1,76 +1,47 @@
 <div class="dash-container">
-  <mat-grid-list cols="2" rowHeight="2:1">
-    <mat-grid-tile colspan="1" rowspan="1">
-      <div class="chart-container">
-        <div class="title">No Appointments</div>
-        <div class="nav"></div>
-        <mat-form-field>
-          <mat-label>Year</mat-label>
-          <mat-select [(ngModel)]="yearNrAppointment" (selectionChange)="onYearChange()" name="year" >
-            @for (year of availableYears; track year) {
-              <mat-option [value]="year">{{year}}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-        <div class="chart-wrapper">
-          <canvas
-            baseChart
-            type="line"
-            [data]="lineChartNoAppointmets"
-          ></canvas>
-        </div>
+  <div class="charts-wrapper">
+    <div class="chart-container">
+      <div class="title">Total Appointments</div>
+      <div class="nav"></div>
+      <mat-form-field>
+        <mat-label>Year</mat-label>
+        <mat-select [(ngModel)]="yearNrAppointment" (selectionChange)="onYearChange()" name="year">
+          <mat-option *ngFor="let year of availableYears" [value]="year">{{year}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="chart-wrapper">
+        <canvas baseChart type="line" [data]="lineChartNoAppointmets" width="300" height="300"></canvas>
       </div>
-    </mat-grid-tile>
+    </div>
 
-    <mat-grid-tile colspan="1" rowspan="1">
-      <div class="chart-container">
-        <div class="title">Avg Review of Technicians</div>
-        <div class="nav"></div>
-        <div class="chart-wrapper">
-          <canvas
-            baseChart
-            type="bar"
-            [data]="barChartAvgTechnicians"
-          ></canvas>
-        </div>
+    <div class="chart-container">
+      <div class="title">Avg Review of Technicians</div>
+      <div class="nav"></div>
+      <div class="chart-wrapper">
+        <canvas baseChart type="bar" [data]="barChartAvgTechnicians" width="300" height="300"></canvas>
       </div>
-    </mat-grid-tile>
+    </div>
 
-    <mat-grid-tile colspan="1" rowspan="1">
-      <div class="chart-container">
-        <div class="title">No Appointments</div>
-        <div class="nav"></div>
-        <mat-form-field>
-          <mat-label>Year</mat-label>
-          <mat-select [(ngModel)]="yearNrAppointment" (selectionChange)="onYearChange2()" name="year" >
-            @for (year of availableYears; track year) {
-              <mat-option [value]="year">{{year}}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-        <div class="chart-wrapper">
-          <canvas
-            baseChart
-            type="bar"
-            [data]="barChartNoAppointmetnsPerTechnicians"
-          ></canvas>
-        </div>
+    <div class="chart-container">
+      <div class="title">No Appointments</div>
+      <div class="nav"></div>
+      <mat-form-field>
+        <mat-label>Year</mat-label>
+        <mat-select [(ngModel)]="yearNrAppointment" (selectionChange)="onYearChange2()" name="year">
+          <mat-option *ngFor="let year of availableYears" [value]="year">{{year}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="chart-wrapper">
+        <canvas baseChart type="bar" [data]="barChartNoAppointmetnsPerTechnicians" width="300" height="300"></canvas>
       </div>
-    </mat-grid-tile>
+    </div>
 
-    <mat-grid-tile colspan="1" rowspan="1">
-      <div class="chart-container">
-        <div class="title">Status Appointments</div>
-        <div class="nav"></div>
-        <div class="chart-wrapper">
-          <canvas
-            baseChart
-            height= "500"
-            type="pie"
-            [data]="pieChartStatus"
-          ></canvas>
-        </div>
+    <div class="chart-container">
+      <div class="title">Status Appointments</div>
+      <div class="nav"></div>
+      <div class="chart-wrapper">
+        <canvas baseChart type="pie" [data]="pieChartStatus" width="300" height="300"></canvas>
       </div>
-    </mat-grid-tile>
-  </mat-grid-list>
+    </div>
+  </div>
 </div>

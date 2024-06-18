@@ -5,11 +5,6 @@
   font-family: Arial, sans-serif;
 }
 
-.question-container h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
 .question-container p {
   font-size: 16px;
 }
@@ -27,80 +22,6 @@
   margin-bottom: 5px;
 }
 
-.add-answer-container {
-  margin-top: 20px;
-}
-
-.add-answer-container textarea {
-  width: 100%;
-  height: 100px;
-  padding: 10px;
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.add-answer-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-.add-answer-button:hover {
-  background-color: #0056b3;
-}
-
-.other-questions-container {
-  margin-top: 40px;
-}
-
-.other-questions-container h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.other-question-item a {
-  font-size: 16px;
-  text-decoration: none;
-  color: #007bff;
-}
-
-.other-question-item a:hover {
-  text-decoration: underline;
-}
-
-.no-content {
-  margin-top: 40px;
-  text-align: center;
-}
-
-.no-content p {
-  font-size: 16px;
-}
-
-form input[type="text"],
-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-
-form button[type="submit"] {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #28a745;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-form button[type="submit"]:hover {
-  background-color: #218838;
-}
-
 .answer-item {
   border: 2px solid #ccc;
   padding: 10px;
@@ -112,4 +33,66 @@ form button[type="submit"]:hover {
 
 .answer-description {
   margin-top: 5px;
+}
+
+.questions-container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.add-question-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.add-question-form mat-form-field {
+  width: 100%;
+}
+.add-question-form button {
+  align-self: flex-end;
+}
+
+.questions-container .mat-table {
+  width: 100%;
+  overflow: auto;
+  max-width: 100%;
+}
+
+.questions-container .header-cell {
+  font-weight: bold;
+  background-color: #f1f1f1;
+}
+
+.questions-container .cell {
+  padding: 16px;
+}
+
+
+.small-table {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.mat-list-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-answear-form{
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  width: 800px auto;
 }

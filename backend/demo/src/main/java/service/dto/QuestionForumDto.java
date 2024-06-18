@@ -8,4 +8,5 @@ public class QuestionForumDto {
     private String title;
     private String description;
     private String username;
+    private Long noAnswer;
 }

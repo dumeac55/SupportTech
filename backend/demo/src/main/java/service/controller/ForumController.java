@@ -47,4 +47,9 @@ public class ForumController {
     private ResponseEntity<?> deleteAnswear(@PathVariable("id") int id){
         return forumService.deleteAnswear(id);
     }
+
+    @GetMapping("/{id}/question-answer")
+    private ResponseEntity<?> getCountAnswerByQuestion(@PathVariable("id") int idQuestion){
+        return forumService.getCountAnswersById(idQuestion);
+    }
 }

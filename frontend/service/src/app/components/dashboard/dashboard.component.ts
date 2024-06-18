@@ -100,7 +100,6 @@ export class DashboardComponent{
       };
     });
   }
-  
 
   appointmentByStatus(){
     forkJoin({
@@ -109,13 +108,19 @@ export class DashboardComponent{
     }).subscribe(({ noAppointment, Status }) => {
       this.datasetsStatus = noAppointment;
       this.labelStatus = Status;
+      const backgroundColors = [
+        '#FF6384',
+        '#36A2EB',
+        '#FFCE56',
+        '#4BC0C0'
+      ];
       this.pieChartStatus = {
         labels: this.labelStatus,
         datasets: [
           {
             data: this.datasetsStatus,
             label: 'Status' ,
-            backgroundColor: '#17A2B8',
+            backgroundColor: backgroundColors,
           }
         ]
       };

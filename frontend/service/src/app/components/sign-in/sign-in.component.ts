@@ -43,7 +43,6 @@ export class SignInComponent implements OnInit {
           this.signInService.setIsLogged(true);
           this.notification.showNotification('Login successfull!');
           this.redirectToProfile();
-
         } else {
           this.errorMessage = error.error;
         }
