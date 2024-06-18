@@ -19,7 +19,6 @@ export class SignInComponent implements OnInit {
   constructor(
     private jwt: JwtStorageService,
     private router:Router,
-    private userProfile: UserProfileService,
     private notification: NotificationService,
     private signInService:SignInServiceService
   ) { }

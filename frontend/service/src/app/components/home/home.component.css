@@ -2,5 +2,77 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 250px;
+    margin-top: 150px;
 }
+.home-container {
+    text-align: center;
+}
+
+.home-container h1 {
+    font-size: 50px;
+    color: rgb(23, 30, 129)
+}
+
+.home-container h4 {
+    margin-top: 50px;
+    font-size: 20px;
+    color: rgb(23, 30, 129)
+}
+
+.features{
+    display:flex;
+    justify-content: center;
+    font-size: 15px;
+    margin-top: 30px;
+}
+
+.title-features{
+    margin-top: 30px;
+    display:flex;
+    font-size: 30px;
+    justify-content: center;
+}
+
+.description-features {
+    margin-top: 30px;
+    font-size: 20px;
+    display:flex;
+    justify-content: center;
+}
+
+.our-support{
+    color: rgb(23, 30, 129);
+    width: 100%;
+    height: 400px;
+    background-color: #f2f2f2;
+}
+
+.container {
+    width: 250px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(36, 8, 8, 0.1);
+    text-align: center;
+  }
+
+  .title {
+    color: rgb(23, 30, 129);
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .description {
+    color: rgb(23, 30, 129);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .containers {
+    font-family: sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }

@@ -7,9 +7,6 @@ import { Injectable } from '@angular/core';
 export class JwtStorageService {
 
   constructor(private httpClient: HttpClient) { }
-  public authreq(request: any) {
-    return this.httpClient.post("http://localhost:8080/login", request, { responseType: 'text' as 'json' });
-  }
   public generateToken(request: any) {
     return this.httpClient.post("http://localhost:8080/api/authenticate/signin", request, { responseType: 'text' as 'json' });
   }

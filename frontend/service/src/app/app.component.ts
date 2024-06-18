@@ -14,28 +14,28 @@ export class AppComponent {
   message: string | null = null;
 
   get IsLogged(){
-    return this.signInSerice.getIsLogged();
+    return this.signInService.getIsLogged();
   }
 
 
   constructor(
     private jwt : JwtStorageService,
     private router: Router,
-    private signInSerice: SignInServiceService
+    private signInService: SignInServiceService
   ){}
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
     if (token && !this.jwt.isTokenExpired(token) && localStorage.getItem('isLogged') === "true") {
-      this.signInSerice.setIsLogged(true);
+      this.signInService.setIsLogged(true);
     }
     else{
-      this.signInSerice.setIsLogged(false);
+      this.signInService.setIsLogged(false);
     }
   }
 
   logout(): void {
-    this.signInSerice.setIsLogged(false);
+    this.signInService.setIsLogged(false);
     localStorage.removeItem('token');
     localStorage.removeItem('isLogged');
     this.router.navigate(['/home']);

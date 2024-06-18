@@ -9,6 +9,10 @@ import { TechnicianDto } from '../../model/technician-dto';
 import { TechnicianService } from '../../service/technician.service';
 import { NotificationService } from '../../service/notification.service';
 import { MatTabGroup } from '@angular/material/tabs';
+import { JwtDialogComponent } from '../jwt-dialog/jwt-dialog.component';
+import { Dialog } from '@angular/cdk/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { SignInServiceService } from '../../service/sign-in-service.service';
 @Component({
   selector: 'app-appointment',
   templateUrl: './appointment.component.html',
@@ -28,61 +32,57 @@ export class AppointmentComponent {
   constructor(
     private appointmentService: AppointmentService,
     private technicianService: TechnicianService,
-    private router : Router,
-    private jwt : JwtStorageService,
-    private notification: NotificationService
+    private router: Router,
+    private jwt: JwtStorageService,
+    private notification: NotificationService,
+    private dialog: MatDialog,
+    private signInService: SignInServiceService
   ) {}
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
     if (token && !this.jwt.isTokenExpired(token)) {
       this.getTechnicians();
-    }
-    else{
-      alert("Session Expired");
-      this.redirectToLogin();
+    } else {
+      const dialogRef = this.dialog.open(JwtDialogComponent);
+      dialogRef.afterClosed().subscribe(() => {
+        this.redirectToLogin();
+        this.signInService.setIsLogged(false);
+        localStorage.removeItem('token');
+        localStorage.removeItem('isLogged');
+      });
     }
   }
 
   async getTechnicians(): Promise<void> {
-    const token = localStorage.getItem('token');
-    if (token && !this.jwt.isTokenExpired(token)) {
-      try {
-        const result = await this.appointmentService.getTechnicians();
-        if (Array.isArray(result)) {
-          this.technicians = result;
-        }
-      } catch (error) {
-      }
-    }
-    else{
-      alert("Session Expired");
-      this.redirectToLogin();
+    const result = await this.appointmentService.getTechnicians();
+    if (Array.isArray(result)) {
+      this.technicians = result;
     }
   }
 
   selectTechnician(technician: TechnicianDto): void {
     this.selectedTechnician = technician;
     if (technician.username) {
-      this.technicianService.getTechnicianProfileByUsername(technician.username).then(
-        (idTechnician) => {
+      this.technicianService
+        .getTechnicianProfileByUsername(technician.username)
+        .then((idTechnician) => {
           if (idTechnician !== undefined) {
-            this.appointmentService.getTypesByIdTechnician(idTechnician).then(
-              (types) => {
-                if(this.tabGroup) this.tabGroup.selectedIndex = 1;
-                if(Array.isArray(types))
-                this.types = types;
-              }
-            );
+            this.appointmentService
+              .getTypesByIdTechnician(idTechnician)
+              .then((types) => {
+                if (this.tabGroup) this.tabGroup.selectedIndex = 1;
+                if (Array.isArray(types)) this.types = types;
+              });
           }
-        }
-      ).catch();
+        })
+        .catch();
     }
   }
 
   selectType(type: TypeDto): void {
     this.selectedType = type;
-    if(this.tabGroup) this.tabGroup.selectedIndex = 2;
+    if (this.tabGroup) this.tabGroup.selectedIndex = 2;
   }
 
   AddAppointment(): void {
@@ -110,50 +110,76 @@ export class AppointmentComponent {
               this.selectedTechnician = null;
               this.selectedType = null;
               this.selectedDateTime = null;
-              this.notification.showNotification('Appointment create successfull!');
+              this.notification.showNotification(
+                'Appointment create successfull!'
+              );
               this.redirectToProfile();
             },
             (error) => {
-              if(error.status === 200){
+              if (error.status === 200) {
                 this.selectedTechnician = null;
                 this.selectedType = null;
                 this.selectedDateTime = null;
-                this.notification.showNotification('Appointment create successfull!');
+                this.notification.showNotification(
+                  'Appointment create successfull!'
+                );
                 this.redirectToProfile();
               }
             }
           );
       }
-    }
-    else{
-      alert("Session Expired");
-      this.redirectToLogin();
+    } else {
+      const dialogRef = this.dialog.open(JwtDialogComponent);
+      dialogRef.afterClosed().subscribe(() => {
+        this.redirectToLogin();
+        this.signInService.setIsLogged(false);
+        localStorage.removeItem('token');
+        localStorage.removeItem('isLogged');
+      });
     }
   }
 
   async onDateTimeChange(event: MatDatepickerInputEvent<Date>): Promise<void> {
     const token = localStorage.getItem('token');
     if (token && !this.jwt.isTokenExpired(token)) {
-    if (this.selectedDateTime && this.selectedTechnician) {
+      if (this.selectedDateTime && this.selectedTechnician) {
         try {
           const technicianUsername = this.selectedTechnician.username;
           if (technicianUsername) {
-            const idTechnician = await this.technicianService.getTechnicianProfileByUsername(technicianUsername);
+            const idTechnician =
+              await this.technicianService.getTechnicianProfileByUsername(
+                technicianUsername
+              );
             if (idTechnician !== undefined) {
-              if( event.value){
+              if (event.value) {
                 this.selectedDateTime = event.value;
-                const dataString =  this.selectedDateTime.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
-                const orar = await this.appointmentService.getTechnicianOrar(idTechnician, dataString as unknown as Date).toPromise();
+                const dataString = this.selectedDateTime
+                  .toLocaleDateString('en-CA', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                  })
+                  .replace(/\//g, '-');
+                const orar = await this.appointmentService
+                  .getTechnicianOrar(
+                    idTechnician,
+                    dataString as unknown as Date
+                  )
+                  .toPromise();
                 this.orar = orar;
               }
             }
           }
         } catch (error) {}
       }
-    }
-    else{
-      alert("Session Expired");
-      this.redirectToLogin();
+    } else {
+      const dialogRef = this.dialog.open(JwtDialogComponent);
+      dialogRef.afterClosed().subscribe(() => {
+        this.redirectToLogin();
+        this.signInService.setIsLogged(false);
+        localStorage.removeItem('token');
+        localStorage.removeItem('isLogged');
+      });
     }
   }
 
@@ -174,16 +200,16 @@ export class AppointmentComponent {
     const currentDate = new Date();
     const selectedDate = d || currentDate;
     if (selectedDate < currentDate) {
-        return false;
+      return false;
     }
     const day = selectedDate.getDay();
     return day !== 0 && day !== 6;
-};
+  };
 
-  redirectToProfile(): void{
+  redirectToProfile(): void {
     this.router.navigate(['/profile']);
   }
-  redirectToLogin(): void{
+  redirectToLogin(): void {
     this.router.navigate(['/login']);
   }
 }

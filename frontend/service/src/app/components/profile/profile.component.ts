@@ -24,6 +24,8 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { DialogTypeComponent } from './dialog-type/dialog-type.component';
 import { MatDialog } from '@angular/material/dialog';
 import { TypeService } from '../../service/type.service';
+import { SignInServiceService } from '../../service/sign-in-service.service';
+import { JwtDialogComponent } from '../jwt-dialog/jwt-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -107,7 +109,8 @@ export class ProfileComponent {
     private notification: NotificationService,
     private dashboard: DashboardService,
     private dialog: MatDialog,
-    private typeService: TypeService
+    private typeService: TypeService,
+    private signInService: SignInServiceService,
   ) {
     this.status = 'all';
     this.yearNrAppointment = 2024;
@@ -117,15 +120,17 @@ export class ProfileComponent {
     if (token && !this.jwtStorage.isTokenExpired(token)) {
       this.getProfile();
     } else {
-      alert('Session exirated');
-      this.redirectToLogin();
+      const dialogRef = this.dialog.open(JwtDialogComponent);
+      dialogRef.afterClosed().subscribe(() => {
+        this.redirectToLogin();
+        this.signInService.setIsLogged(false);
+        localStorage.removeItem('token');
+        localStorage.removeItem('isLogged');
+      });
     }
   }
 
   private async getProfile(): Promise<void> {
-    const token = localStorage.getItem('token');
-    if (token && !this.jwtStorage.isTokenExpired(token)) {
-      try {
         this.role = await this.userProfileService.getRoleByUsername(
           localStorage.getItem('username')
         );
@@ -174,11 +179,6 @@ export class ProfileComponent {
               .catch();
           }
         }
-      } catch (error) {}
-    } else {
-      alert('Session exirated');
-      this.redirectToLogin();
-    }
   }
 
   updateAppointmentStatus(id: number, newStatus: string): void {
@@ -188,8 +188,13 @@ export class ProfileComponent {
         .updateAppointment(id, newStatus)
         .subscribe(() => this.updateLocalAppointmentStatus(id, newStatus));
     } else {
-      alert('Session exirated');
-      this.redirectToLogin();
+      const dialogRef = this.dialog.open(JwtDialogComponent);
+      dialogRef.afterClosed().subscribe(() => {
+        this.redirectToLogin();
+        this.signInService.setIsLogged(false);
+        localStorage.removeItem('token');
+        localStorage.removeItem('isLogged');
+      });
     }
   }
 

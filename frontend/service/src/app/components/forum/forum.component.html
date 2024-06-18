@@ -13,8 +13,7 @@
         </div>
         <button
           class="deleteQuestion"
-          mat-button
-          color="warn"
+          mat-raised-button color="warn"
           *ngIf="answer.username === this.username"
           (click)="deleteAnswear(answer.idAnswear)"
         >
@@ -23,85 +22,101 @@
       </li>
     </ul>
   </div>
-
-<div *ngIf="questions.length > 0" class="questions-container">
-  <table
-    mat-table
-    [dataSource]="questions"
-    matSort
-    class="mat-elevation-z8 small-table"
-  >
-    <ng-container matColumnDef="Col1">
-      <th mat-header-cell *matHeaderCellDef class="header-cell">Questions</th>
-      <td mat-cell *matCellDef="let element" class="cell">
-        <mat-list>
-          <mat-list-item>
-            <span matListItemTitle>
-              <a [routerLink]="['/forum', element.idQuestion]">{{ element.title }}</a>
-            </span>
-            <span matListItemLine>{{ element.description }}</span>
-          </mat-list-item>
-        </mat-list>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Col2">
-      <th mat-header-cell *matHeaderCellDef class="header-cell center-cell"></th>
-      <td mat-cell *matCellDef="let element" class="cell"> {{element.totalReplies}} replies</td>
-    </ng-container>
-
-    <ng-container matColumnDef="Col3">
-      <th mat-header-cell *matHeaderCellDef class="header-cell center-cell"></th>
-      <td mat-cell *matCellDef="let element" class="cell">
-        <button
-          class="deleteQuestion"
-          mat-button
-          color="warn"
-          *ngIf="element.username === this.username"
-          (click)="deleteQuestion(element.idQuestion)"
-        >
-          Delete Question
-        </button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-</div>
-
-<div class="paginator">
-  <div [hidden]="!showQuestion">
-    <mat-paginator
-      [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons
+  <div *ngIf="questions.length > 0" class="questions-container">
+    <mat-form-field>
+      <mat-label>Find a problem</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        #input
+      />
+    </mat-form-field>
+    <table
+      mat-table
+      [dataSource]="this.dataSource"
+      class="mat-elevation-z8 small-table"
     >
-    </mat-paginator>
+      <ng-container matColumnDef="Col1">
+        <th mat-header-cell *matHeaderCellDef class="header-cell">Questions</th>
+        <td mat-cell *matCellDef="let element" class="cell">
+          <mat-list>
+            <mat-list-item>
+              <span matListItemTitle>
+                <a [routerLink]="['/forum', element.idQuestion]">{{
+                  element.title
+                }}</a>
+              </span>
+              <span matListItemLine>{{ element.description }}</span>
+            </mat-list-item>
+          </mat-list>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Col2">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="header-cell center-cell"
+        ></th>
+        <td mat-cell *matCellDef="let element" class="cell">
+          {{ element.totalReplies }} replies
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Col3">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="header-cell center-cell"
+        ></th>
+        <td mat-cell *matCellDef="let element" class="cell">
+          <button
+            class="deleteQuestion"
+            mat-raised-button color="warn"
+            *ngIf="element.username === this.username"
+            (click)="deleteQuestion(element.idQuestion)"
+          >
+            Delete Question
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
   </div>
-</div>
+  <div class="paginator">
+    <div [hidden]="!showQuestion">
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </div>
 
+  <div *ngIf="showQuestion" class="add-question-form">
+    <h2>Add New Question</h2>
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="newQuestionTitle" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea matInput [(ngModel)]="newQuestionDescription"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="addQuestion()">
+      Add Question
+    </button>
+  </div>
 
-<div *ngIf="showQuestion" class="add-question-form">
-  <h2>Add New Question</h2>
-  <mat-form-field>
-    <mat-label>Title</mat-label>
-    <input matInput [(ngModel)]="newQuestionTitle">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <textarea matInput [(ngModel)]="newQuestionDescription"></textarea>
-  </mat-form-field>
-  <button mat-raised-button color="primary" (click)="addQuestion()">Add Question</button>
-</div>
-
-<div class="add-answer-container">
-<div *ngIf="showAnswear" class="add-answear-form">
-  <h2>Add Answer</h2>
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <textarea matInput [(ngModel)]="newAnswerDescription"></textarea>
-  </mat-form-field>
-  <button mat-raised-button color="primary" (click)="addAnswear()">Add Answear</button>
-</div>
-
+  <div class="add-answer-container">
+    <div *ngIf="showAnswear" class="add-answear-form">
+      <h2>Add Answer</h2>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="newAnswerDescription"></textarea>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="addAnswear()">
+        Add Answear
+      </button>
+    </div>
+  </div>
 </div>

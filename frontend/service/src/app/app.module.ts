@@ -39,6 +39,8 @@ import { MatGridList, MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogTypeComponent } from './components/profile/dialog-type/dialog-type.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HomeDialogComponent } from './components/home/home-dialog/home-dialog.component';
+import { JwtDialogComponent } from './components/jwt-dialog/jwt-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +55,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ReviewComponent,
     DashboardComponent,
     DialogTypeComponent,
+    HomeDialogComponent,
+    JwtDialogComponent,
   ],
   imports: [
     BrowserModule,
