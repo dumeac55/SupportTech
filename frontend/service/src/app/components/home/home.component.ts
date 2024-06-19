@@ -32,11 +32,19 @@ export class HomeComponent {
     }
   }
 
+  learnMore(){
+    this.redirectToReview();
+  }
+
   public redirectToLogin(): void{
     this.router.navigate(['/login']);
   }
 
   public redirectToAppointments(): void{
     this.router.navigate(['/appointment']);
+  }
+
+  public redirectToReview(): void{
+    this.router.navigate(['/review']);
   }
 }

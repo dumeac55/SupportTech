@@ -5,6 +5,7 @@ import { TechnicianService } from '../../service/technician.service';
 import { ReviewService } from '../../service/review.service';
 import { UserProfileService } from '../../service/user-profile.service';
 import { NotificationService } from '../../service/notification.service';
+import { SignInServiceService } from '../../service/sign-in-service.service';
 
 @Component({
   selector: 'app-review',
@@ -24,11 +25,16 @@ export class ReviewComponent {
     private technicianService: TechnicianService,
     private reviewServide: ReviewService,
     private userProfile: UserProfileService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private SignInService: SignInServiceService
   ) {}
 
   ngOnInit(): void {
     this.loadTechnicians();
+  }
+
+  get IsLogged(){
+    return this.SignInService.getIsLogged();
   }
 
   loadTechnicians(): void {
