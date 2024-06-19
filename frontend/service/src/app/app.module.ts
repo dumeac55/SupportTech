@@ -41,6 +41,8 @@ import { DialogTypeComponent } from './components/profile/dialog-type/dialog-typ
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HomeDialogComponent } from './components/home/home-dialog/home-dialog.component';
 import { JwtDialogComponent } from './components/jwt-dialog/jwt-dialog.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ChatComponent } from './components/chat/chat.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +59,7 @@ import { JwtDialogComponent } from './components/jwt-dialog/jwt-dialog.component
     DialogTypeComponent,
     HomeDialogComponent,
     JwtDialogComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,7 +87,8 @@ import { JwtDialogComponent } from './components/jwt-dialog/jwt-dialog.component
     MatGridList,
     MatGridListModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatAutocompleteModule,
   ],
   providers: [provideAnimationsAsync(), provideNativeDateAdapter()],
   bootstrap: [AppComponent],

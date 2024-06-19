@@ -1,34 +1,23 @@
-<div class="review-container">
+<div class="review-container mat-elevation-z8">
   <h2>Technicians</h2>
-  <mat-accordion >
-    <mat-expansion-panel
-      style="background-color: white"
-      *ngFor="let technician of technicians"
-      (click)="selectTechnician(technician)"
-    >
-      <mat-expansion-panel-header style="background-color: white">
-        <mat-panel-title style="color: black">
-          {{ technician.firstName }}  {{ technician.lastName }}&nbsp;&nbsp;&nbsp;{{ technician.avgGrade }}
-          <mat-icon style="color: rgb(189, 223, 0)">star</mat-icon> ({{
-            technician.countGrade
-          }})
+  <p>Review and rate our technicians below:</p>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let technician of technicians" (click)="selectTechnician(technician)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ technician.firstName }} {{ technician.lastName }}&nbsp;&nbsp;&nbsp;{{ technician.avgGrade }}
+          <mat-icon>star</mat-icon> ({{ technician.countGrade }})
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div *ngIf="selectedTechnician && selectedTechnician === technician">
-        <h3 style="color: black">Reviews for {{ technician.firstName }}</h3>
+        <h3>Reviews for {{ technician.firstName }}</h3>
         <div class="reviews">
           <ul>
-            <li
-              *ngFor="let review of selectedTechnicianReviews"
-              style="color: black"
-            >
-              <strong style="color: black">User :</strong>
-              {{ review.userFirstName }} {{ review.userLastName }} <br />
-              <strong style="color: black">Grade:</strong> {{ review.grade
-              }}<mat-icon style="color: rgb(189, 223, 0)">star</mat-icon> <br />
-              <strong style="color: black">Description:</strong>
-              {{ review.description }} <br />
+            <li *ngFor="let review of selectedTechnicianReviews">
+              <strong>User:</strong> {{ review.userFirstName }} {{ review.userLastName }} <br />
+              <strong>Grade:</strong> {{ review.grade }} <mat-icon>star</mat-icon> <br />
+              <strong>Description:</strong> {{ review.description }} <br />
             </li>
           </ul>
         </div>
@@ -54,10 +43,12 @@
                 <mat-option *ngFor="let grade of grades" [value]="grade">{{ grade }} &#11088;</mat-option>
               </mat-select>
             </mat-form-field>
-            <button mat-raised-button color="primary" (click)="setReview(addReview.description, addReview.grade, technician.username)">Submit</button>
+            <button mat-raised-button color="primary" (click)="setReview(addReview.description, addReview.grade, technician.username)">
+              Submit
+            </button>
           </mat-card-content>
         </form>
-    </div>
+      </div>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

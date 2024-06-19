@@ -21,4 +21,5 @@ public interface CompariRepository extends JpaRepository<Compari, Integer> {
     List<Compari> findByNameProducttCel(String wordSearch, String infRange, String supRange, String domain);
     @Query("SELECT c FROM Compari c WHERE c.nameProduct LIKE %:wordSearch% AND c.company = 'EVOMAG' AND c.price between :infRange and :supRange and c.domain = :domain order by c.price asc")
     List<Compari> findByNameProducttEvomag(String wordSearch, String infRange, String supRange, String domain);
+
 }

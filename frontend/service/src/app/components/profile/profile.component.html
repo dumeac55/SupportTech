@@ -1,6 +1,6 @@
-<div class="profile">
+<div class="profile mat-elevation-z4">
   <h2>Profil utilizator</h2>
-  <div>
+  <div class="profile-details">
     <p><strong>Username:</strong> {{ userProfile.username }}</p>
     <p><strong>Email:</strong> {{ userProfile.email }}</p>
     <p>
@@ -19,12 +19,18 @@
   >
     Appointments
   </button>
-  <button mat-raised-button color="primary" (click)="toggleView('wishlist')">
+  <button
+    mat-raised-button
+    class="button"
+    color="primary"
+    (click)="toggleView('wishlist')"
+  >
     Wishlist
   </button>
   <button
     *ngIf="role === 'custom'"
     mat-raised-button
+    class="button"
     color="primary"
     (click)="toggleView('statistics')"
   >
@@ -33,6 +39,7 @@
   <button
     *ngIf="role === 'technician'"
     mat-raised-button
+    class="button"
     color="primary"
     (click)="toggleView('service')"
   >
@@ -517,7 +524,7 @@
 </div>
 
 <div class="paginator">
-  <div [hidden]="(!showAppointments) || role === 'technician'">
+  <div [hidden]="!showAppointments || role === 'technician'">
     <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons

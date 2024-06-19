@@ -20,4 +20,8 @@ export class CompariService {
   async CompariEvomag(wordSearch:string, infRange:string, supRange:string, domain:string): Promise<CompariDto[] | undefined>{
     return await this.http.get<CompariDto[]>(this.URL + "compari/evomag?wordSearch=" + wordSearch + "&infRange=" + infRange +"&supRange=" + supRange+"&domain="+ domain).toPromise();
   }
+
+  async Domain(wordSearch:string): Promise<CompariDto[] | undefined>{
+    return await this.http.get<CompariDto[]>(this.URL + "compari/test?wordSearch=" + wordSearch).toPromise();
+  }
 }

@@ -9,6 +9,7 @@ import { SignInServiceService } from '../../service/sign-in-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { JwtStorageService } from '../../service/jwt-storage.service';
 import { JwtDialogComponent } from '../jwt-dialog/jwt-dialog.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-compari',
