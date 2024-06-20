@@ -22,9 +22,6 @@ import service.services.EmailService;
 import service.services.UserProfileService;
 import service.services.UserService;
 
-import java.util.Collection;
-import java.util.List;
-
 @RestController
 @RequestMapping("api/authenticate")
 @CrossOrigin(origins = "http://localhost:4200/")

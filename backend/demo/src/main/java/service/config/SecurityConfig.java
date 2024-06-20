@@ -50,9 +50,6 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults())
-                .formLogin(login -> login
-                        .defaultSuccessUrl("/api/authenticate/user-profile", true)
-                )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

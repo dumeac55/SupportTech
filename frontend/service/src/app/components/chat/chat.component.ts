@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ChatDto } from '../../model/chat-dto';
 import { ChatService } from '../../service/chat.service';
 
@@ -7,11 +7,12 @@ import { ChatService } from '../../service/chat.service';
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
-export class ChatComponent {
+export class ChatComponent{
   isChatOpen = false;
   messages: ChatDto[] = [];
-  newMessageText: string = '';
   username: any = localStorage.getItem('username');
+  newMessage: ChatDto = { username: this.username, content: '' };
+
   constructor(private chatService: ChatService) { }
 
   ngOnInit() {
@@ -35,5 +36,22 @@ export class ChatComponent {
         this.messages = response;
       }
     );
+  }
+
+  sendMessage() {
+    if (this.newMessage && this.newMessage.content && this.newMessage.content.trim() !== '') {
+      this.chatService.addMessage(this.newMessage).subscribe(
+        (response) => {
+          this.newMessage.content = '';
+          this.loadMessages();
+        },
+        (error) =>{
+          if(error.status === 201){
+            this.newMessage.content = '';
+            this.loadMessages();
+          }
+        }
+      );
+    }
   }
 }

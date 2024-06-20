@@ -6,11 +6,13 @@
         <mat-toolbar color="primary" class="navbar">
           <div class="menu-home-button">
             <a routerLink="/home">
-              <img src="../assets/dsa.png" alt="Home" class="home-image" />
+              <img src="../assets/HomeButton.png" alt="Home" class="home-image" />
             </a>
           </div>
           <div class="menu-functions">
-            <span *ngIf="IsLogged"><a routerLink="appointment">Appointment</a></span>
+            <span *ngIf="IsLogged"
+              ><a routerLink="appointment">Appointment</a></span
+            >
             <span><a routerLink="dashboard">Dashboard</a></span>
             <span *ngIf="IsLogged"><a routerLink="review">Review</a></span>
             <span *ngIf="IsLogged"><a routerLink="compari">Compari</a></span>
@@ -25,7 +27,9 @@
     <div class="content">
       <router-outlet></router-outlet>
       <app-notification></app-notification>
-      <app-chat></app-chat>
+      <span *ngIf="IsLogged">
+        <app-chat></app-chat>
+      </span>
     </div>
     <footer>
       <hr />

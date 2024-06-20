@@ -17,7 +17,6 @@ export class AppComponent {
     return this.signInService.getIsLogged();
   }
 
-
   constructor(
     private jwt : JwtStorageService,
     private router: Router,

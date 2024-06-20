@@ -15,4 +15,8 @@ export class ChatService {
   getMessage() : Observable <ChatDto[]>{
     return this.http.get<ChatDto[]>(this.URL + 'message');
   }
+
+  addMessage(message: ChatDto): Observable<any>{
+    return this.http.post(this.URL + 'message/create', message, {responseType: 'json' as 'text'});
+  }
 }

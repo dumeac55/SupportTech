@@ -1,16 +1,36 @@
 <div class="chat-container" *ngIf="isChatOpen">
-  <div class="chat-header">
+  <div class="chat-title">
     <span>Chat</span>
     <button (click)="closeChat()">X</button>
   </div>
   <div class="chat-messages">
     <div *ngFor="let message of messages">
-      <p>{{ message.username }}: {{ message.content }}</p>
+      <p
+        [ngClass]="{
+          'my-message': message.username === username,
+          'message': message.username !== username
+        }"
+      >
+        {{ message.username }}: {{ message.content }}
+      </p>
     </div>
   </div>
   <div class="chat-input">
-    <input type="text" placeholder="Scrie un mesaj..." [(ngModel)]="newMessageText" />
-    <button>Trimite</button>
+    <input
+      type="text"
+      placeholder="Write a message..."
+      [(ngModel)]="newMessage.content"
+    />
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      (click)="sendMessage()"
+    >
+      Send
+    </button>
   </div>
 </div>
-<button class="chat-toggle-button" (click)="toggleChat()">Chat</button>
+<button class="chat-button" type="submit" mat-raised-button color="primary" (click)="toggleChat()">
+  Chat
+</button>

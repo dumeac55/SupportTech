@@ -70,7 +70,7 @@
           </p>
           <p><strong>Selected Type:</strong> {{ selectedType.nameType }}</p>
           <div *ngIf="selectedDateTimeFinal">
-            <p><strong>Selected Date and Time:</strong> {{ selectedDateTimeFinal }}</p>
+            <p><strong>Selected Date and Time:</strong> {{ selectedDateTimeFinal | date : "dd/MM/yyyy HH:mm:ss" }} </p>
           </div>
           <div *ngIf="selectedTechnician && selectedType">
             <mat-form-field class="example-full-width">

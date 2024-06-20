@@ -14,8 +14,6 @@ public interface AnswearForumRepository extends JpaRepository<AnswearForum, Inte
     List<AnswearForum> findByQuestionForum_idQuestion(int id);
     void deleteByQuestionForum_idQuestion(int id);
     AnswearForum findByIdAnswear(int id);
-    void deleteByIdAnswear(int id);
-
     @Query("SELECT Count(a) FROM AnswearForum a WHERE a.questionForum.idQuestion = :id")
     Long findAllWithCountAnswer(int id);
 }

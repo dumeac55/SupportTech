@@ -2,10 +2,8 @@ package service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import service.dto.MessageDto;
 import service.services.MessageService;
 
 @RestController
@@ -18,5 +16,10 @@ public class MessageController {
     @GetMapping
     private ResponseEntity<?> getMessage(){
         return this.messageService.getMessage();
+    }
+
+    @PostMapping("/create")
+    private ResponseEntity<?> addMesage(@RequestBody MessageDto messageDto){
+        return this.messageService.addMessage(messageDto);
     }
 }
