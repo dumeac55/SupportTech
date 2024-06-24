@@ -1,6 +1,5 @@
 package service.services;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,13 +50,13 @@ public class AppointmentService {
             appointmentRepository.save(appointment);
             User userAux = userRepository.findByUsername(appointmentDto.getUsernameUser());
             TechnicianProfile technicianProfile1 = technicianProfileRepository.findByUsername(appointmentDto.getUsernameTechnician());
-//            EmailDto emailDto = new EmailDto();
-//            emailDto.setRecipient(userAux.getEmail());
-//            emailDto.setMsgBody("Hi " + userAux.getUsername() + ",\n" + "\n"+ "We received your appointment in date: "+ appointmentDto.getData()+ " for service: " + appointmentDto.getType()+ " at technician "+ technicianProfile1.getFirstName() + " "+ technicianProfile1.getLastName() + "." );
-//            emailDto.setSubject("Your appointment is aproved");
-//            new Thread(() -> {
-//                emailService.sendSimpleMail(emailDto);
-//            }).start();
+            EmailDto emailDto = new EmailDto();
+            emailDto.setRecipient(userAux.getEmail());
+            emailDto.setMsgBody("Hi " + userAux.getUsername() + ",\n" + "\n"+ "We received your appointment in date: "+ appointmentDto.getData()+ " for service: " + appointmentDto.getType()+ " at technician "+ technicianProfile1.getFirstName() + " "+ technicianProfile1.getLastName() + "." );
+            emailDto.setSubject("Your appointment is aproved");
+            new Thread(() -> {
+                emailService.sendSimpleMail(emailDto);
+            }).start();
             return new ResponseEntity<>("Appointment create successfull", HttpStatus.OK);
         }
     }
@@ -119,11 +118,11 @@ public class AppointmentService {
         String oldStatus = existingAppointment.getStatus();
         existingAppointment.setStatus(newStatus);
         User userAux = userRepository.findByUsername(existingAppointment.getUserProfile().getUsername());
-//        EmailDto emailDto = new EmailDto();
-//        emailDto.setRecipient(userAux.getEmail());
-//        emailDto.setMsgBody("Hi " + userAux.getUsername() + ",\n" + "\n"+ "Your appointment from the date of "+ existingAppointment.getDate()+ " for the service " + existingAppointment.getNameType() +" was changed successfull from "+ oldStatus + " to " + existingAppointment.getStatus() + ".");
-//        emailDto.setSubject("Your appointment status was changed");
-//        emailService.sendSimpleMail(emailDto);
+        EmailDto emailDto = new EmailDto();
+        emailDto.setRecipient(userAux.getEmail());
+        emailDto.setMsgBody("Hi " + userAux.getUsername() + ",\n" + "\n"+ "Your appointment from the date of "+ existingAppointment.getDate()+ " for the service " + existingAppointment.getNameType() +" was changed successfull from "+ oldStatus + " to " + existingAppointment.getStatus() + ".");
+        emailDto.setSubject("Your appointment status was changed");
+        emailService.sendSimpleMail(emailDto);
         appointmentRepository.save(existingAppointment);
 
         return new ResponseEntity<>(existingAppointment, HttpStatus.OK);

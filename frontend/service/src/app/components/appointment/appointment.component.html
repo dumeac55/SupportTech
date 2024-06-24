@@ -68,7 +68,7 @@
             <strong>Selected Technician:</strong> {{ selectedTechnician.firstName }}
             {{ selectedTechnician.lastName }}
           </p>
-          <p><strong>Selected Type:</strong> {{ selectedType.nameType }}</p>
+          <p><strong>Selected Type:</strong> {{ selectedType.nameType }} - {{selectedType.price}} lei</p>
           <div *ngIf="selectedDateTimeFinal">
             <p><strong>Selected Date and Time:</strong> {{ selectedDateTimeFinal | date : "dd/MM/yyyy HH:mm:ss" }} </p>
           </div>

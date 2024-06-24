@@ -14,10 +14,10 @@ import java.util.List;
 @Transactional
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
-    @Query("SELECT a FROM Appointment a JOIN a.userProfile up JOIN up.user u WHERE u.idUser = :userId")
+    @Query("SELECT a FROM Appointment a JOIN a.userProfile up JOIN up.user u WHERE u.idUser = :userId order by a.date desc")
     List<Appointment> findByUserProfile_IdProfile(@Param("userId") int userId);
 
-    @Query("SELECT a FROM Appointment a WHERE a.technician.idTechnician = :userId")
+    @Query("SELECT a FROM Appointment a WHERE a.technician.idTechnician = :userId order by a.date desc")
     List<Appointment> findByTechnician(@Param("userId") int userId);
 
     @Query("SELECT a FROM Appointment a WHERE a.technician.idTechnician = :userId and date(a.date) = :date")

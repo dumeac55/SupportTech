@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SignUpDto } from '../../model/SignUpDto';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../service/notification.service';
 

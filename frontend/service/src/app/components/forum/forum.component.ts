@@ -1,11 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ForumService } from '../../service/forum.service';
 import { QuestionForumDto } from '../../model/question-forum-dto';
 import { AnswearForumDto } from '../../model/answear-forum-dto';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable } from 'rxjs';
 import { JwtStorageService } from '../../service/jwt-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { JwtDialogComponent } from '../jwt-dialog/jwt-dialog.component';

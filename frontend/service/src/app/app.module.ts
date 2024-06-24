@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -43,6 +42,7 @@ import { HomeDialogComponent } from './components/home/home-dialog/home-dialog.c
 import { JwtDialogComponent } from './components/jwt-dialog/jwt-dialog.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ChatComponent } from './components/chat/chat.component';
+
 @NgModule({
   declarations: [
     AppComponent,

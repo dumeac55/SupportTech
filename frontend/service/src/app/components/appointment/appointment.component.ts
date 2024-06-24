@@ -4,15 +4,14 @@ import { TypeDto } from '../../model/type-dto';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 import { JwtStorageService } from '../../service/jwt-storage.service';
-import { ReviewService } from '../../service/review.service';
 import { TechnicianDto } from '../../model/technician-dto';
 import { TechnicianService } from '../../service/technician.service';
 import { NotificationService } from '../../service/notification.service';
 import { MatTabGroup } from '@angular/material/tabs';
 import { JwtDialogComponent } from '../jwt-dialog/jwt-dialog.component';
-import { Dialog } from '@angular/cdk/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { SignInServiceService } from '../../service/sign-in-service.service';
+
 @Component({
   selector: 'app-appointment',
   templateUrl: './appointment.component.html',

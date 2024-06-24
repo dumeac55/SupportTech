@@ -10,9 +10,9 @@ public class DashboardDto {
     private Integer month;
     private Long nrAppointments;
     private Long totalMoney;
-
     private String status;
     private Long totalAppointments;
+
     //Avg for Technicians
     public DashboardDto(Double avgGrade, String firstName, String lastName) {
         this.avgGrade = avgGrade;

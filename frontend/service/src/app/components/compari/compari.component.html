@@ -57,7 +57,7 @@
     <div class="compari-item">
       <h3>eMAG Products</h3>
       <ul>
-        <li *ngFor="let product of emagProducts">
+        <li *ngFor="let product of emagProducts | slice : 0 : itemsToShow">
           <div class="compari-test">
             <img [src]="product.linkImage" alt="Product Image" />
             <div class="name-test">
@@ -71,7 +71,7 @@
               color="primary"
               (click)="addProductToWishList(product)"
             >
-              Adauga la favorite
+              Add to favorites
             </button>
           </div>
         </li>
@@ -81,7 +81,7 @@
     <div class="compari-item">
       <h3>Evomag Products</h3>
       <ul>
-        <li *ngFor="let product of evomagProducts">
+        <li *ngFor="let product of evomagProducts | slice : 0 : itemsToShow">
           <div class="compari-test">
             <img [src]="product.linkImage" alt="Product Image" />
             <div class="name-test">
@@ -95,7 +95,7 @@
               color="primary"
               (click)="addProductToWishList(product)"
             >
-              Adauga la favorite
+              Add to favorites
             </button>
           </div>
         </li>
@@ -105,7 +105,7 @@
     <div class="compari-item">
       <h3>Cel Products</h3>
       <ul>
-        <li *ngFor="let product of celProducts">
+        <li *ngFor="let product of celProducts | slice : 0 : itemsToShow">
           <div class="compari-test">
             <img [src]="product.linkImage" alt="Product Image" />
             <div class="name-test">
@@ -119,11 +119,21 @@
               color="primary"
               (click)="addProductToWishList(product)"
             >
-              Adauga la favorite
+              Add to favorites
             </button>
           </div>
         </li>
       </ul>
     </div>
   </div>
+</div>
+<div *ngIf="showProducts" class="show-more">
+  <button
+    mat-raised-button
+    color="warn"
+    *ngIf="numberOfProducts()"
+    (click)="showMore()"
+  >
+    Show More
+  </button>
 </div>

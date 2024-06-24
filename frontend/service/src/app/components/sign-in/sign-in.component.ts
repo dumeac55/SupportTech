@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtStorageService } from '../../service/jwt-storage.service';
 import {Router} from '@angular/router'
-import { UserProfileService } from '../../service/user-profile.service';
 import { SignInDto } from '../../model/sign-in-dto';
 import { SignInServiceService } from '../../service/sign-in-service.service';
 import { NotificationService } from '../../service/notification.service';

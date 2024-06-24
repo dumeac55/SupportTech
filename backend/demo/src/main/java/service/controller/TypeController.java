@@ -1,17 +1,10 @@
 package service.controller;
 
-import com.oracle.svm.core.annotate.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import service.dto.TypeDto;
-import service.entity.Type;
 import service.services.TypeService;
-
-import java.util.List;
-
 
 @RestController
 @RequestMapping("api/utils")

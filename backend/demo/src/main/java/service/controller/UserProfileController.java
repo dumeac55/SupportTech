@@ -3,7 +3,6 @@ package service.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.entity.UserProfile;
 import service.services.AppointmentService;
 import service.services.UserProfileService;
 

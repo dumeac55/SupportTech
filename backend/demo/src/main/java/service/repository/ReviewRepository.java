@@ -5,8 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 import service.dto.DashboardDto;
-import service.dto.ReviewDto;
-import service.dto.TechnicianDto;
 import service.entity.Review;
 
 import java.util.List;

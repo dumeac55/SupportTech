@@ -3,9 +3,7 @@ package service.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.dto.AppointmentDto;
 import service.dto.WishListDto;
-import service.entity.WishList;
 import service.services.WishListService;
 
 @RestController

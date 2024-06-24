@@ -3,6 +3,7 @@ import { WishListDto } from '../model/wish-list-dto';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CompariDto } from '../model/compari-dto';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,9 +16,11 @@ export class WishListService {
     this.id = await this.getUserIdByUserName(localStorage.getItem('username'));
     return await this.http.get<WishListDto[]>(this.URL + "wishlist/" + this.id).toPromise();
   }
+
   async getUserIdByUserName(username: string | null): Promise<number | undefined> {
     return await this.http.get<number>(this.URL + "user/username=" + username).toPromise();
   }
+
   addProductToWishList(compariDto: CompariDto): Observable<any> {
     const wishListDto: WishListDto = {
       nameProduct: "",

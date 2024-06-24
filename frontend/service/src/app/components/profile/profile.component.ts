@@ -1,9 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ViewChild,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { JwtStorageService } from '../../service/jwt-storage.service';
 import { UserProfileService } from '../../service/user-profile.service';
 import { UserProfileDto } from '../../model/user-profile-dto';
@@ -20,7 +15,6 @@ import { NotificationService } from '../../service/notification.service';
 import { TypeDto } from '../../model/type-dto';
 import { forkJoin } from 'rxjs';
 import { DashboardService } from '../../service/dashboard.service';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { DialogTypeComponent } from './dialog-type/dialog-type.component';
 import { MatDialog } from '@angular/material/dialog';
 import { TypeService } from '../../service/type.service';
@@ -99,6 +93,7 @@ export class ProfileComponent {
     "Can't fix",
   ];
   status?: string;
+
   constructor(
     private jwtStorage: JwtStorageService,
     private userProfileService: UserProfileService,
@@ -162,6 +157,8 @@ export class ProfileComponent {
             if (Array.isArray(appointment)) {
               this.appointmentsTechnician = appointment;
               this.haveAppointment = true;
+              this.dataSource.data = this.appointmentsTechnician;
+              if (this.paginator) this.dataSource.paginator = this.paginator;
             } else {
               this.haveAppointment = false;
             }

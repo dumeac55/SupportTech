@@ -170,3 +170,20 @@ justify-content: center;
 .statistics-container{
 margin-left: 500px;
 }
+
+.cancel-icon {
+  color: #f44336;
+}
+
+.done-icon {
+  color: #4caf50;
+}
+
+.cant-fix-icon {
+  color: #ff9800;
+}
+
+.table-container-technician{
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px gray;
+}

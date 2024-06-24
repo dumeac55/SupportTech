@@ -1,26 +1,18 @@
 package service.services;
 
-import org.apache.commons.text.similarity.JaroWinklerDistance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import service.WebScraper.Service.CelService;
 import service.WebScraper.Service.EmagService;
 import service.WebScraper.Service.EvomagService;
 import service.dto.CompariDto;
 import service.entity.Compari;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import service.repository.CompariRepository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -37,13 +29,13 @@ public class CompariService {
     @Autowired
     private EmagService emagService;
 
-//    @Scheduled(cron = " 0 56 17 * * ?")
+    @Scheduled(cron = " 0 27 16 * * ?")
     public void getEvomag(){
         evomagService.fetchData();
     }
-//    @Scheduled(cron = " 0 59 18 * * ?")
+    @Scheduled(cron = " 0 59 18 * * ?")
     public void getCel(){ celService.fetchData();}
-//    @Scheduled(cron = " 0 58 17 * * ?")
+    @Scheduled(cron = " 0 27 16 * * ?")
     public void getEmag(){ emagService.fetchData();}
 
     public ResponseEntity<?> getEvomagProducts(String wordSearch, String infRange, String supRange, String domain){

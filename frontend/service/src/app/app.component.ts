@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
 import { JwtStorageService } from './service/jwt-storage.service';
 import { Router } from '@angular/router';
 import { SignInServiceService } from './service/sign-in-service.service';
-import { NotificationService } from './service/notification.service';
 
 @Component({
   selector: 'app-root',

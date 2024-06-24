@@ -2,14 +2,12 @@ import { Component } from '@angular/core';
 import { CompariService } from '../../service/compari.service';
 import { Router } from '@angular/router';
 import { CompariDto } from '../../model/compari-dto';
-import { WishListDto } from '../../model/wish-list-dto';
 import { WishListService } from '../../service/wish-list.service';
 import { NotificationService } from '../../service/notification.service';
 import { SignInServiceService } from '../../service/sign-in-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { JwtStorageService } from '../../service/jwt-storage.service';
 import { JwtDialogComponent } from '../jwt-dialog/jwt-dialog.component';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-compari',
@@ -39,6 +37,10 @@ export class CompariComponent {
     'Video Card',
     'Processor',
   ];
+  showProducts: boolean = false;
+  itemsToShow: number = 4;
+  increment: number = 4;
+
   constructor(
     private router: Router,
     private compariService: CompariService,
@@ -63,6 +65,8 @@ export class CompariComponent {
     }
   }
   async searchProducts() {
+    this.itemsToShow = 4;
+    this.showProducts = true;
     if (!this.selectedDomain) {
       this.domainSelected = false;
       return;
@@ -119,6 +123,18 @@ export class CompariComponent {
           this.notification.showNotification('Product added successfully');
       }
     );
+  }
+
+  showMore() {
+    this.itemsToShow += this.increment;
+  }
+
+  numberOfProducts() {
+    if (this.evomagProducts) {
+      return this.itemsToShow < this.evomagProducts.length;
+    } else {
+      return false;
+    }
   }
 
   redirectToLogin(): void {

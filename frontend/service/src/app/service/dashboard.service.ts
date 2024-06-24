@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { DashboardDTO } from '../model/dashboard-dto';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })

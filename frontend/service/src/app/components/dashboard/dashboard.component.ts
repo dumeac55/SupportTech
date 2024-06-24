@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import { AppointmentDto } from '../../model/appointment-dto';
+import { Component } from '@angular/core';
 import { ReviewDto } from '../../model/review-dto';
-import { count, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { ReviewService } from '../../service/review.service';
 import { DashboardService } from '../../service/dashboard.service';
 @Component({

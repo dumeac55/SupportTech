@@ -3,11 +3,7 @@ package service.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.dto.TechnicianDto;
-import service.entity.Appointment;
 import service.services.DashboardService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/dashboard")
