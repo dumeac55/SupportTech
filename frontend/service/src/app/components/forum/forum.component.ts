@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ForumService } from '../../service/forum.service';
 import { QuestionForumDto } from '../../model/question-forum-dto';
-import { AnswearForumDto } from '../../model/answear-forum-dto';
+import { AnswerForumDto } from '../../model/answer-forum-dto';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { JwtStorageService } from '../../service/jwt-storage.service';
@@ -13,11 +13,11 @@ import { SignInServiceService } from '../../service/sign-in-service.service';
 @Component({
   selector: 'app-forum',
   templateUrl: './forum.component.html',
-  styleUrl: './forum.component.css'
+  styleUrl: './forum.component.css',
 })
 export class ForumComponent {
-  questions: QuestionForumDto [] = [];
-  answers: AnswearForumDto[] = [];
+  questions: QuestionForumDto[] = [];
+  answers: AnswerForumDto[] = [];
   question: QuestionForumDto | undefined;
   newAnswerDescription: string = '';
   username?: String | null;
@@ -25,11 +25,7 @@ export class ForumComponent {
   newQuestionDescription: string = '';
   showQuestion: boolean = false;
   showAnswear: boolean = false;
-  displayedColumns: string[] = [
-    'Col1',
-    'Col2',
-    'Col3',
-  ];
+  displayedColumns: string[] = ['Col1', 'Col2', 'Col3'];
 
   dataSource = new MatTableDataSource<QuestionForumDto>();
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
@@ -43,43 +39,43 @@ export class ForumComponent {
     private signInService: SignInServiceService
   ) {}
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     const token = localStorage.getItem('token');
     if (token && !this.jwt.isTokenExpired(token)) {
-    this.username = localStorage.getItem('username');
-    this.route.params.subscribe(async params => {
-      const id = params['id'];
-      if (id) {
-        await this.getQuestionById(id);
-        await this.getAnswersByQuestionId(id);
-        this.showQuestion = false;
-        this.showAnswear =true;
-      }
-      else{
-        await this.getQuestions();
-        this.showQuestion = true;
-        this.showAnswear = false;
-      }
-    });
-  }else{
-    const dialogRef = this.dialog.open(JwtDialogComponent);
+      this.username = localStorage.getItem('username');
+      this.route.params.subscribe(async (params) => {
+        const id = params['id'];
+        if (id) {
+          await this.getQuestionById(id);
+          await this.getAnswersByQuestionId(id);
+          this.showQuestion = false;
+          this.showAnswear = true;
+        } else {
+          await this.getQuestions();
+          this.showQuestion = true;
+          this.showAnswear = false;
+        }
+      });
+    } else {
+      const dialogRef = this.dialog.open(JwtDialogComponent);
       dialogRef.afterClosed().subscribe(() => {
         this.redirectToLogin();
         this.signInService.setIsLogged(false);
         localStorage.removeItem('token');
         localStorage.removeItem('isLogged');
       });
-  }
+    }
   }
 
-  async getQuestions(): Promise<void>{
+  async getQuestions(): Promise<void> {
     const question = await this.forumService.getQuestions();
-    if(Array.isArray(question)){
+    if (Array.isArray(question)) {
       this.questions = question;
-      for(let i = 0; i<this.questions.length; i++){
+      for (let i = 0; i < this.questions.length; i++) {
         const idQuestion = this.questions[i].idQuestion;
         if (idQuestion !== undefined)
-        this.questions[i].totalReplies= await this.forumService.getCountAnswerByQuestion(idQuestion);
+          this.questions[i].totalReplies =
+            await this.forumService.getCountAnswerByQuestion(idQuestion);
       }
       this.dataSource.data = this.questions;
       if (this.paginator) this.dataSource.paginator = this.paginator;
@@ -90,11 +86,15 @@ export class ForumComponent {
     this.question = await this.forumService.getQuestionById(id);
   }
 
-  async deleteQuestion(id: number | undefined) : Promise<void >{
-    if(id){
+  async deleteQuestion(id: number | undefined): Promise<void> {
+    if (id) {
       const resposne = await this.forumService.deleteQuestionById(id);
-      this.questions = this.questions.filter(question => question.idQuestion !== id);
-      this.dataSource.data = this.questions.filter(question => question.idQuestion !== id);
+      this.questions = this.questions.filter(
+        (question) => question.idQuestion !== id
+      );
+      this.dataSource.data = this.questions.filter(
+        (question) => question.idQuestion !== id
+      );
     }
   }
 
@@ -111,22 +111,24 @@ export class ForumComponent {
     const newQuestion: QuestionForumDto = {
       description: this.newQuestionDescription,
       username: username,
-      title: this.newQuestionTitle
+      title: this.newQuestionTitle,
     };
 
-    await this.forumService.addQuestion(newQuestion).subscribe(()=>{this.getQuestions()});
+    await this.forumService.addQuestion(newQuestion).subscribe(() => {
+      this.getQuestions();
+    });
     this.newQuestionDescription = '';
     this.newQuestionTitle = '';
   }
 
   async getAnswersByQuestionId(id: number): Promise<void> {
-    const answers = await this.forumService.getAnswearByIdQuestion(id);
+    const answers = await this.forumService.getAnswerByIdQuestion(id);
     if (Array.isArray(answers)) {
       this.answers = answers;
     }
   }
 
-  async addAnswear(): Promise<void> {
+  async addAnswer(): Promise<void> {
     const username = localStorage.getItem('username');
     if (!username) {
       return;
@@ -141,21 +143,22 @@ export class ForumComponent {
       return;
     }
 
-    const newAnswer: AnswearForumDto = {
+    const newAnswer: AnswerForumDto = {
       description: this.newAnswerDescription,
       username: username,
-      idQuestion: idQuestion
+      idQuestion: idQuestion,
     };
 
-    await this.forumService.addAnswearByIdQuestion(newAnswer).subscribe(() =>{this.getQuestionById(idQuestion),
-                                                                              this.getAnswersByQuestionId(idQuestion) });
+    await this.forumService.addAnswerByIdQuestion(newAnswer).subscribe(() => {
+      this.getQuestionById(idQuestion), this.getAnswersByQuestionId(idQuestion);
+    });
     this.newAnswerDescription = '';
   }
 
-  async deleteAnswear(id: number | undefined) : Promise<void >{
-    if(id){
-      const resposne = await this.forumService.deleteAnswearById(id);
-      this.answers = this.answers.filter(answer => answer.idAnswear !== id);
+  async deleteAnswer(id: number | undefined): Promise<void> {
+    if (id) {
+      const resposne = await this.forumService.deleteAnswerById(id);
+      this.answers = this.answers.filter((answer) => answer.idAnswer !== id);
     }
   }
 

@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import service.dto.AnswearForumDto;
+import service.dto.AnswerForumDto;
 import service.dto.QuestionForumDto;
-import service.entity.AnswearForum;
+import service.entity.AnswerForum;
 import service.entity.QuestionForum;
 import service.entity.User;
-import service.repository.AnswearForumRepository;
+import service.repository.AnswerForumRepository;
 import service.repository.QuestionForumRepository;
 import service.repository.UserRepository;
 
@@ -23,7 +23,7 @@ public class ForumService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private AnswearForumRepository answearForumRepository;
+    private AnswerForumRepository answerForumRepository;
 
     public ResponseEntity<?> getQuestionForumAll(){
         List<QuestionForum> questionForumList = questionForumRepository.findAll();
@@ -79,56 +79,56 @@ public class ForumService {
         if(questionForum == null){
             return new ResponseEntity<>("Question not found", HttpStatus.NOT_FOUND);
         }
-        answearForumRepository.deleteByQuestionForum_idQuestion(id);
+        answerForumRepository.deleteByQuestionForum_idQuestion(id);
         questionForumRepository.deleteById(id);
         return new ResponseEntity<>("Question deleted successfull", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> getAnswearByQuestionId(int idQuestion){
+    public ResponseEntity<?> getAnswerByQuestionId(int idQuestion){
         QuestionForum questionForum = questionForumRepository.findById(idQuestion);
         if( questionForum == null){
             return new ResponseEntity<>("Question not found", HttpStatus.NOT_FOUND);
         }
-        List<AnswearForum> answearForums = answearForumRepository.findByQuestionForum_idQuestion(idQuestion);
-        List<AnswearForumDto> answearForumDtos = new ArrayList<>();
-        for(AnswearForum answearForum : answearForums){
-            AnswearForumDto answearForumDto = new AnswearForumDto();
-            answearForumDto.setDescription(answearForum.getDescription());
-            answearForumDto.setIdQuestion(answearForum.getQuestionForum().getIdQuestion());
-            answearForumDto.setUsername(answearForum.getUser().getUsername());
-            answearForumDto.setIdAnswear(answearForum.getIdAnswear());
-            answearForumDtos.add(answearForumDto);
+        List<AnswerForum> answerForums = answerForumRepository.findByQuestionForum_idQuestion(idQuestion);
+        List<AnswerForumDto> answarForumDtos = new ArrayList<>();
+        for(AnswerForum answerForum : answerForums){
+            AnswerForumDto answerForumDto = new AnswerForumDto();
+            answerForumDto.setDescription(answerForum.getDescription());
+            answerForumDto.setIdQuestion(answerForum.getQuestionForum().getIdQuestion());
+            answerForumDto.setUsername(answerForum.getUser().getUsername());
+            answerForumDto.setIdAnswer(answerForum.getIdAnswer());
+            answarForumDtos.add(answerForumDto);
         }
-        return new ResponseEntity<>(answearForumDtos, HttpStatus.OK);
+        return new ResponseEntity<>(answarForumDtos, HttpStatus.OK);
 
     }
 
-    public ResponseEntity<?> addAnswearByQuestionId(AnswearForumDto answearForumDto){
-        User user = userRepository.findByUsername(answearForumDto.getUsername());
-        QuestionForum questionForum = questionForumRepository.findById(answearForumDto.getIdQuestion());
+    public ResponseEntity<?> addAnswerByQuestionId(AnswerForumDto answerForumDto){
+        User user = userRepository.findByUsername(answerForumDto.getUsername());
+        QuestionForum questionForum = questionForumRepository.findById(answerForumDto.getIdQuestion());
         if( user == null || questionForum == null ){
             return new ResponseEntity<>("user/ question not found", HttpStatus.NOT_FOUND);
         }
 
-        AnswearForum answearForum = new AnswearForum();
-        answearForum.setQuestionForum(questionForum);
-        answearForum.setUser(user);
-        answearForum.setDescription(answearForumDto.getDescription());
-        answearForumRepository.save(answearForum);
-        return new ResponseEntity<>("Answear successfull added", HttpStatus.CREATED);
+        AnswerForum answerForum = new AnswerForum();
+        answerForum.setQuestionForum(questionForum);
+        answerForum.setUser(user);
+        answerForum.setDescription(answerForumDto.getDescription());
+        answerForumRepository.save(answerForum);
+        return new ResponseEntity<>("Answer successfull added", HttpStatus.CREATED);
     }
 
-    public ResponseEntity<?> deleteAnswear(int id){
-        AnswearForum answearForum = answearForumRepository.findByIdAnswear(id);
-        if(answearForum == null){
-            return new ResponseEntity<>("Answear not found", HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> deleteAnswer(int id){
+        AnswerForum answerForum = answerForumRepository.findByIdAnswer(id);
+        if(answerForum == null){
+            return new ResponseEntity<>("Answer not found", HttpStatus.NOT_FOUND);
         }
-        answearForumRepository.deleteById(id);
-        return new ResponseEntity<>("Answear successfull delete", HttpStatus.OK);
+        answerForumRepository.deleteById(id);
+        return new ResponseEntity<>("Answer successfull delete", HttpStatus.OK);
     }
 
     public ResponseEntity<?> getCountAnswersById(int id){
-        Long result = answearForumRepository.findAllWithCountAnswer(id);
+        Long result = answerForumRepository.findAllWithCountAnswer(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

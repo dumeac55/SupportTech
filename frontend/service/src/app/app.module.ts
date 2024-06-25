@@ -27,7 +27,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { NotificationComponent } from './components/notification/notification.component';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { HomeComponent } from './components/home/home.component';
 import { ReviewComponent } from './components/review/review.component';
 import { MatListModule } from '@angular/material/list';

@@ -16,7 +16,7 @@
           mat-raised-button
           color="warn"
           *ngIf="answer.username === this.username"
-          (click)="deleteAnswear(answer.idAnswear)"
+          (click)="deleteAnswer(answer.idAnswer)"
         >
           Delete Answer
         </button>
@@ -113,8 +113,8 @@
         <mat-label>Description</mat-label>
         <textarea matInput [(ngModel)]="newAnswerDescription"></textarea>
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="addAnswear()">
-        Add Answear
+      <button mat-raised-button color="primary" (click)="addAnswer()">
+        Add Answer
       </button>
     </div>
   </div>

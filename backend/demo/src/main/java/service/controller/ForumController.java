@@ -3,7 +3,7 @@ package service.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.dto.AnswearForumDto;
+import service.dto.AnswerForumDto;
 import service.dto.QuestionForumDto;
 import service.services.ForumService;
 
@@ -35,17 +35,17 @@ public class ForumController {
 
     @GetMapping("/{id}/answear")
     private ResponseEntity getAnswearsByIdQuestion(@PathVariable("id") int idQuestion){
-        return forumService.getAnswearByQuestionId(idQuestion);
+        return forumService.getAnswerByQuestionId(idQuestion);
     }
 
     @PostMapping("/create/answear")
-    private ResponseEntity addAnswearAtQuestion(@RequestBody AnswearForumDto answearForumDto){
-        return forumService.addAnswearByQuestionId(answearForumDto);
+    private ResponseEntity addAnswearAtQuestion(@RequestBody AnswerForumDto answerForumDto){
+        return forumService.addAnswerByQuestionId(answerForumDto);
     }
 
     @DeleteMapping("/delete/{id}/answear")
     private ResponseEntity<?> deleteAnswear(@PathVariable("id") int id){
-        return forumService.deleteAnswear(id);
+        return forumService.deleteAnswer(id);
     }
 
     @GetMapping("/{id}/question-answer")
